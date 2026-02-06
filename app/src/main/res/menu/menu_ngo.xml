@@ -1,0 +1,32 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_home"
+            android:title="@string/menu_ngo_home" />
+
+        <item
+            android:id="@+id/nav_ngo_postRequest"
+            android:title="@string/menu_ngo_postRequest" />
+
+        <item
+            android:id="@+id/nav_ngo_manageRequests"
+            android:title="@string/menu_ngo_manageRequests" />
+
+        <item
+            android:id="@+id/nav_ngo_applicants"
+            android:title="@string/menu_ngo_applicants" />
+
+        <item
+            android:id="@+id/nav_ngo_profile"
+            android:title="@string/menu_ngo_profile" />
+
+        <item
+            android:id="@+id/nav_ngo_logout"
+            android:title="@string/menu_ngo_logout" />
+        
+    </group>
+</menu>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_volunteer"
+    app:startDestination="@id/nav_volunteer_home">
+
+    <fragment
+        android:id="@+id/nav_volunteer_home"
+        android:name="com.example.sahaysathi.ui.home.HomeFragment"
+        android:label="Home"/>
+
+    <fragment
+        android:id="@+id/nav_volunteer_browseRequest"
+        android:name="com.example.sahaysathi.ui.volunteer.browseRequests.BrowseRequestsFragment"
+        android:label="Browse Requests"/>
+
+    <fragment
+        android:id="@+id/nav_volunteer_myTasks"
+        android:name="com.example.sahaysathi.ui.volunteer.myTasks.MyTasksFragment"
+        android:label="My Tasks"/>
+
+    <fragment
+        android:id="@+id/nav_volunteer_notifications"
+        android:name="com.example.sahaysathi.ui.volunteer.notifications.NotificationsFragment"
+        android:label="Notifications"/>
+
+    <fragment
+        android:id="@+id/nav_volunteer_profile"
+        android:name="com.example.sahaysathi.ui.volunteer.profile.ProfileFragment"
+        android:label="Profile"/>
+
+    <fragment
+        android:id="@+id/nav_volunteer_logout"
+        android:name="com.example.sahaysathi.ui.slideshow.SlideshowFragment"
+        android:label="Settings"/>
+
+</navigation>

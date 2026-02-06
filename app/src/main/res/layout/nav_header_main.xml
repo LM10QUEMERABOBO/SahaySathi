@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/side_nav_bar"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/_10sdp"
+    android:paddingTop="@dimen/_30sdp"
+    android:paddingRight="@dimen/_10sdp"
+    android:paddingBottom="@dimen/_10sdp"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/circleImage"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:contentDescription="Select image"
+        android:src="@drawable/sample_image"
+        android:scaleType="centerCrop"
+        app:shapeAppearanceOverlay="@style/CircleImageViewStyle"/>
+
+    <TextView
+        android:id="@+id/dashboard_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:paddingTop="@dimen/_10sdp"
+        android:text="@string/nav_header_title"
+        android:textStyle="bold"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+    <TextView
+        android:id="@+id/dashboard_email"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_height="wrap_content"
+        android:text="@string/nav_header_subtitle" />
+</LinearLayout>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_ngo"
+    app:startDestination="@id/nav_ngo_home">
+
+    <fragment
+        android:id="@+id/nav_ngo_home"
+        android:name="com.example.sahaysathi.ui.home.HomeFragment"
+        android:label="Home"/>
+
+    <fragment
+        android:id="@+id/nav_ngo_postRequest"
+        android:name="com.example.sahaysathi.ui.ngo.postRequest.PostRequestFragment"
+        android:label="Post Request"/>
+
+    <fragment
+        android:id="@+id/nav_ngo_manageRequests"
+        android:name="com.example.sahaysathi.ui.ngo.manageRequests.ManageRequestsFragment"
+        android:label="Manage Requests"/>
+
+    <fragment
+        android:id="@+id/nav_ngo_applicants"
+        android:name="com.example.sahaysathi.ui.ngo.applicants.ApplicantsFragment"
+        android:label="Applicants"/>
+
+    <fragment
+        android:id="@+id/nav_ngo_profile"
+        android:name="com.example.sahaysathi.ui.ngo.profile.ProfileFragment"
+        android:label="Profile"/>
+
+    <fragment
+        android:id="@+id/nav_ngo_logout"
+        android:name="com.example.sahaysathi.ui.slideshow.SlideshowFragment"
+        android:label="Settings"/>
+
+</navigation>

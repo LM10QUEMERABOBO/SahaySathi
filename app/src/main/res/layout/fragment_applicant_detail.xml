@@ -1,0 +1,110 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:paddingTop="@dimen/_30sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="6dp"
+        app:cardCornerRadius="12dp"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/circleImage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_gravity="center"
+            android:contentDescription="Select image"
+            android:src="@drawable/sample_image"
+            android:scaleType="centerCrop"
+            app:shapeAppearanceOverlay="@style/CircleImageViewStyle"/>
+
+        <TextView
+            android:id="@+id/detailName"
+            android:text="Rahul Sharma"
+            android:textColor="@color/new_red"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"/>
+
+        <TextView
+            android:id="@+id/detailEmail"
+            android:text="Email: rahul@email.com"
+            android:textColor="@color/blue"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"/>
+
+        <TextView
+            android:id="@+id/detailPhone"
+            android:text="Phone: 9876543210"
+            android:textColor="@color/blue"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"/>
+
+        <TextView
+            android:id="@+id/detailCity"
+            android:text="City: Surat"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/blue"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"/>
+
+        <TextView
+            android:id="@+id/detailSkill"
+            android:text="Skill: Medical Volunteer"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/blue"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"/>
+
+        <TextView
+            android:id="@+id/detailExperience"
+            android:text="Experience: 2 Years"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/blue"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="@dimen/_10sdp"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_gravity="center"
+            >
+            <Button
+                android:id="@+id/accept_button"
+                android:background="#008000"
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:text="Accept"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_16sdp"
+                app:backgroundTint="@null"/>
+
+            <Button
+                android:id="@+id/regect_button"
+                android:background="#FF0000"
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:text="Reject"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_16sdp"
+                app:backgroundTint="@null" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

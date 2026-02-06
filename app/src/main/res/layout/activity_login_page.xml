@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/blue"
+    android:orientation="vertical"
+
+    tools:context=".Login_Page">
+
+    <TextView
+        style="@style/textView_30"
+        android:textStyle="bold"
+        android:text="@string/login"
+        android:layout_marginTop="@dimen/_30sdp"
+        />
+
+    <TextView
+        style="@style/textView_15"
+        android:textColor="@color/white"
+        android:text="@string/login_msg"
+        />
+
+    <EditText
+        android:id="@+id/login_email"
+        style="@style/editText"
+        android:hint="@string/email"
+        android:elevation="@dimen/_60sdp"
+        android:drawableStart="@drawable/ic_email"
+        android:drawablePadding="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_30sdp"/>
+
+    <EditText
+        android:id="@+id/login_password"
+        style="@style/editText"
+        android:drawableStart="@drawable/ic_lock"
+        android:inputType="textPassword"
+        android:elevation="@dimen/_60sdp"
+        android:drawablePadding="@dimen/_5sdp"
+        android:hint="@string/password"
+        android:layout_marginTop="@dimen/_12sdp"/>
+
+    <TextView
+        android:id="@+id/forget_password"
+        style="@style/textView_15"
+        android:text="@string/login_forget_password"
+        android:gravity="end"
+        android:textColor="@color/white"
+        android:layout_marginEnd="@dimen/_16sdp"
+        />
+
+    <TextView
+        android:id="@+id/already_account"
+        style="@style/textView_15"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:text="@string/login_new_account"
+        />
+
+    <Button
+        style="@style/button_20"
+        android:id="@+id/login_button"
+        app:backgroundTint="@null"
+        android:text="@string/login_button"
+        android:textColor="@color/white"
+        android:layout_marginTop="@dimen/_10sdp"
+        />
+
+</LinearLayout>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/blue">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <TextView
+        style="@style/textView_30"
+        android:textStyle="bold"
+        android:text="@string/signup"
+        android:layout_marginTop="@dimen/_30sdp"
+        />
+
+    <TextView
+        style="@style/textView_15"
+        android:textColor="@color/white"
+        android:text="@string/signup_msg"
+        />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_40sdp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/volunteer_button"
+            style="@style/button_10"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="@string/volunteer_button"
+            app:backgroundTint="@null"/>
+        <Button
+            style="@style/button_10"
+            android:id="@+id/ngo_button"
+            android:text="@string/ngo_button"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:backgroundTint="@null"
+        />
+    </LinearLayout>
+
+
+    <EditText
+        android:id="@+id/signup_name"
+        style="@style/editText"
+        android:drawableStart="@drawable/ic_name"
+        android:drawablePadding="@dimen/_5sdp"
+        android:hint="@string/username"
+        android:layout_marginTop="@dimen/_10sdp"/>
+
+    <EditText
+        android:id="@+id/signup_email"
+        style="@style/editText"
+        android:inputType="textEmailAddress"
+        android:drawableStart="@drawable/ic_email"
+        android:drawablePadding="@dimen/_5sdp"
+        android:hint="@string/email"
+        android:layout_marginTop="@dimen/_12sdp"/>
+
+    <EditText
+        android:id="@+id/signup_contact"
+        style="@style/editText"
+        android:maxLength="10"
+        android:inputType="phone"
+        android:drawableStart="@drawable/ic_call"
+        android:drawablePadding="@dimen/_5sdp"
+        android:hint="@string/contact"
+        android:layout_marginTop="@dimen/_12sdp"/>
+
+    <EditText
+        android:id="@+id/signup_password"
+        style="@style/editText"
+        android:drawableStart="@drawable/ic_lock"
+        android:drawablePadding="@dimen/_5sdp"
+        android:inputType="textPassword"
+        android:hint="@string/password"
+        android:layout_marginTop="@dimen/_12sdp"/>
+
+    <EditText
+        android:id="@+id/signup_confirm_password"
+        style="@style/editText"
+        android:drawableStart="@drawable/ic_lock"
+        android:inputType="textPassword"
+        android:drawablePadding="@dimen/_5sdp"
+        android:hint="@string/confirm_password"
+        android:layout_marginTop="@dimen/_12sdp"/>
+
+        <EditText
+            android:id="@+id/signup_location"
+            style="@style/editText"
+            android:drawableStart="@drawable/ic_location"
+            android:inputType="text"
+            android:drawablePadding="@dimen/_5sdp"
+            android:hint="@string/location"
+            android:layout_marginTop="@dimen/_12sdp"/>
+
+
+    <TextView
+        android:id="@+id/already_account"
+        style="@style/textView_15"
+        android:textColor="@color/white"
+        android:text="@string/already_account"
+        />
+
+    <Button
+        style="@style/button_20"
+        android:id="@+id/signup_button"
+        app:backgroundTint="@null"
+        android:text="@string/signup_button"
+        android:textColor="@color/white"
+        android:layout_marginTop="@dimen/_10sdp"
+        />
+
+</LinearLayout>
+</ScrollView>

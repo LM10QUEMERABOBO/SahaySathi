@@ -1,0 +1,60 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InitActivity"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="@dimen/_315sdp"
+        android:layout_height="@dimen/_400sdp"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop"
+        android:contentDescription="splash logo"
+        android:src="@drawable/splash_logo" />
+
+    <TextView
+        android:id="@+id/splash_title"
+        android:layout_width="@dimen/_270sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:text="@string/splash_title"
+        android:textColor="@color/new_red"
+        android:textSize="@dimen/_14sdp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginHorizontal="@dimen/_120sdp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:text="@string/splash_loading"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/_13sdp"
+            android:textStyle="bold" />
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:max="50"
+            android:progress="0"
+            android:progressTint="@color/blue"
+            android:textAlignment="center"
+            app:backgroundTint="@null" />
+
+    </LinearLayout>
+</LinearLayout>

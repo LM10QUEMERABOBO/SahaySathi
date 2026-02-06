@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/nav_ngo_home">
+
+    <fragment
+        android:id="@+id/nav_ngo_home"
+        android:name="com.example.sahaysathi.ui.home.HomeFragment"
+        android:label="@string/menu_ngo_home"
+        tools:layout="@layout/fragment_home" />
+
+
+    <fragment
+        android:id="@+id/nav_ngo_logout"
+        android:name="com.example.sahaysathi.ui.slideshow.SlideshowFragment"
+        android:label="@string/menu_ngo_logout"
+        tools:layout="@layout/fragment_slideshow" />
+
+    <fragment
+        android:id="@+id/nav_ngo_applicants"
+        android:name="com.example.sahaysathi.ui.ngo.applicants.ApplicantsFragment"
+        android:label="@string/menu_ngo_applicants"
+        tools:layout="@layout/fragment_applicants" />
+
+
+    <fragment
+        android:id="@+id/nav_ngo_manageRequests"
+        android:name="com.example.sahaysathi.ui.ngo.manageRequests.ManageRequestsFragment"
+        android:label="@string/menu_ngo_manageRequests"
+        tools:layout="@layout/fragment_managerequest" />
+
+    <fragment
+        android:id="@+id/nav_ngo_postRequest"
+        android:name="com.example.sahaysathi.ui.ngo.postRequest.PostRequestFragment"
+        android:label="@string/menu_ngo_postRequest"
+        tools:layout="@layout/fragment_postrequest" />
+
+
+    <fragment
+        android:id="@+id/nav_ngo_profile"
+        android:name="com.example.sahaysathi.ui.ngo.profile.ProfileFragment"
+        android:label="@string/menu_ngo_profile"
+        tools:layout="@layout/fragment_ngoprofile" />
+
+    <fragment
+        android:id="@+id/nav_volunteer_home"
+        android:name="com.example.sahaysathi.ui.home.HomeFragment"
+        android:label="@string/menu_volunteer_home"
+        tools:layout="@layout/fragment_home" />
+
+
+    <fragment
+        android:id="@+id/nav_volunteer_logout"
+        android:name="com.example.sahaysathi.ui.slideshow.SlideshowFragment"
+        android:label="@string/menu_volunteer_logout"
+        tools:layout="@layout/fragment_slideshow" />
+
+    <fragment
+        android:id="@+id/nav_volunteer_browseRequest"
+        android:name="com.example.sahaysathi.ui.volunteer.browseRequests.BrowseRequestsFragment"
+        android:label="@string/menu_volunteer_browseRequest"
+        tools:layout="@layout/fragment_applicants" />
+
+
+    <fragment
+        android:id="@+id/nav_volunteer_myTasks"
+        android:name="com.example.sahaysathi.ui.volunteer.myTasks.MyTasksFragment"
+        android:label="@string/menu_volunteer_myTasks"
+        tools:layout="@layout/fragment_managerequest" />
+
+    <fragment
+        android:id="@+id/nav_volunteer_notifications"
+        android:name="com.example.sahaysathi.ui.volunteer.notifications.NotificationsFragment"
+        android:label="@string/menu_volunteer_notifications"
+        tools:layout="@layout/fragment_postrequest" />
+
+
+    <fragment
+        android:id="@+id/nav_volunteer_profile"
+        android:name="com.example.sahaysathi.ui.volunteer.profile.ProfileFragment"
+        android:label="@string/menu_volunteer_profile"
+        tools:layout="@layout/fragment_ngoprofile" />
+
+</navigation>
