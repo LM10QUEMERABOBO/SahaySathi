@@ -10,8 +10,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.sahaysathi.AuthRepository;
-
 public class Login_Page extends AppCompatActivity {
 
     EditText login_email, login_password;
@@ -64,19 +62,41 @@ public class Login_Page extends AppCompatActivity {
 
             if (success) {
 
-                // Save minimal data (UID)
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString(ConstantSp.userid, authRepository.getCurrentUserId());
-                editor.apply();
+                String userId = authRepository.getCurrentUserId();
 
-                Toast.makeText(this, "Login Successful!", Toast.LENGTH_SHORT).show();
+                // 🔥 Fetch user data (role, name)
+                authRepository.getUserData(userId, userData -> {
 
-                startActivity(new Intent(Login_Page.this, MainActivity.class));
-                finish();
+                    if (userData != null) {
+
+                        String role = userData.get("role");
+                        String name = userData.get("name");
+
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString(ConstantSp.email, email);
+                        editor.putString(ConstantSp.userid, userId);
+                        editor.putString(ConstantSp.role, role);
+                        editor.putString(ConstantSp.name, name);
+                        editor.apply();
+
+                        Toast.makeText(this, "Login Successful!", Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent(Login_Page.this, MainActivity2.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        finish();
+
+                    } else {
+                        Toast.makeText(this, "Failed to load user data", Toast.LENGTH_SHORT).show();
+                    }
+
+                    return null;
+                });
 
             } else {
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
             }
+
             return null;
         });
     }

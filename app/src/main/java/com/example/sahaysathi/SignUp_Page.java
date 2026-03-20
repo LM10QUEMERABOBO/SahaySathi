@@ -1,6 +1,7 @@
 package com.example.sahaysathi;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -19,8 +20,8 @@ public class SignUp_Page extends AppCompatActivity {
 
     TextView already_account;
     Button signup_button, volunteerBtn, ngoBtn;
-
-    String role = "volunteer"; // Firebase-friendly lowercase
+    SharedPreferences sharedPreferences;
+    String role = ""; // Firebase-friendly lowercase
     AuthRepository authRepository;
 
     String email_pattern = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
@@ -126,6 +127,7 @@ public class SignUp_Page extends AppCompatActivity {
                 (success, message) -> {
 
                     if (success) {
+
                         Toast.makeText(this, "Signup Successful!", Toast.LENGTH_LONG).show();
 
                         // Go to Login

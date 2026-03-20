@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.sahaysathi.ConstantSp;
 import com.example.sahaysathi.Login_Page;
 import com.example.sahaysathi.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class SlideshowFragment extends Fragment {
 
@@ -77,9 +78,19 @@ public class SlideshowFragment extends Fragment {
                 .setTitle("Logout")
                 .setMessage("Are you sure you want to logout?")
                 .setPositiveButton("Yes", (dialog, which) -> {
-                    Toast.makeText(getContext(), "Logged out", Toast.LENGTH_SHORT).show();
+
+                    // 🔥 Firebase logout
+                    FirebaseAuth.getInstance().signOut();
+
+                    // 🔥 Clear local data
                     sp.edit().clear().apply();
-                    startActivity(new Intent(getActivity(), Login_Page.class));
+
+                    Toast.makeText(getContext(), "Logged out", Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(getActivity(), Login_Page.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+
                     getActivity().finish();
                 })
                 .setNegativeButton("No", null)

@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class InitActivity extends AppCompatActivity {
 
@@ -25,25 +27,19 @@ public class InitActivity extends AppCompatActivity {
 
         image = findViewById(R.id.imageView);
         sharedPreferences = getSharedPreferences(ConstantSp.pref, MODE_PRIVATE);
-
-        // Load logo using Glide (optional)
-//        Glide.with(this)
-//                .load(R.drawable.app_logo)
-//                .into(image);
-
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
-
-            String userId = sharedPreferences.getString(ConstantSp.userid, null);
-
+            //firebase user check
+            FirebaseUser userId = FirebaseAuth.getInstance().getCurrentUser();
             if (userId == null) {
                 startActivity(new Intent(InitActivity.this, Login_Page.class));
             } else {
                 Intent intent = new Intent(InitActivity.this, MainActivity2.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
+                finish();
+
             }
 
-            finish();
 
         }, 2000);
     }

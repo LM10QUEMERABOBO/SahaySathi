@@ -104,32 +104,35 @@
             android:weightSum="3">
 
             <TextView
+                android:id="@+id/home_request_count"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="80dp"
-                android:text="120\nRequests"
+                android:text="0\nRequests"
                 android:textColor="@color/new_red"
                 android:gravity="center"
                 android:background="@drawable/stat_card"/>
 
             <TextView
+                android:id="@+id/home_volunteer_count"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="80dp"
-                android:text="35\nVolunteers"
+                android:text="0\nVolunteers"
                 android:gravity="center"
                 android:textColor="@color/blue"
                 android:background="@drawable/stat_card"
                 android:layout_marginHorizontal="6dp"/>
 
             <TextView
+                android:id="@+id/home_ngo_count"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="80dp"
-                android:textColor="@color/new_red"
-                android:text="18\nNGOs"
+                android:layout_weight="1"
+                android:background="@drawable/stat_card"
                 android:gravity="center"
-                android:background="@drawable/stat_card"/>
+                android:text="0\nNGOs"
+                android:textColor="@color/new_red" />
 
         </LinearLayout>
 

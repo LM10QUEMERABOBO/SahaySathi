@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,14 +19,19 @@ import androidx.fragment.app.Fragment;
 import com.example.sahaysathi.ConstantSp;
 import com.example.sahaysathi.R;
 import com.example.sahaysathi.databinding.FragmentHomeBinding;
+import com.google.firebase.firestore.AggregateSource;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
     SharedPreferences sharedPreferences;
-    ProgressBar progressBar;
     ImageView imageView;
-    TextView textView;
+    ProgressBar progressBar;
+
+    TextView textView,volunteerCount,ngoCount,requestCount;
     @SuppressLint("SetTextI18n")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -33,12 +39,45 @@ public class HomeFragment extends Fragment {
         sharedPreferences = getActivity().getSharedPreferences(ConstantSp.pref, MODE_PRIVATE);
         textView = view.findViewById(R.id.main_title);
         textView.setText("Welcome "+sharedPreferences.getString(ConstantSp.name,"")+" \uD83D\uDC4B");
-//        progressBar = view.findViewById(R.id.progressBar);
-//        imageView= view.findViewById(R.id.fragment_container);
-//        showLoading();
+        volunteerCount = view.findViewById(R.id.home_volunteer_count);
+        ngoCount = view.findViewById(R.id.home_ngo_count);
+        requestCount = view.findViewById(R.id.home_request_count);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        // simulate loading
-//        new Handler().postDelayed(this::hideLoading, 1000);
+
+        db.collection("users")
+                .get()
+                .addOnSuccessListener(snapshot -> {
+
+                    int ngo = 0;
+                    int volunteer = 0;
+
+                    for (DocumentSnapshot doc : snapshot) {
+                        String role = doc.getString("role");
+
+                        Log.d("ROLE_DEBUG", "Role: " + role);
+
+                        if ("ngo".equalsIgnoreCase(role)) {
+                            ngo++;
+                        } else if ("volunteer".equalsIgnoreCase(role)) {
+                            volunteer++;
+                        }
+                    }
+
+                    ngoCount.setText(ngo + "\nNGOs");
+                    volunteerCount.setText(volunteer + "\nVolunteers");
+                });
+        // REQUEST COUNT
+        db.collection("ngo_requests")
+                .count()
+                .get(AggregateSource.SERVER)
+                .addOnSuccessListener(snapshot -> {
+
+                    long request_count = snapshot.getCount();
+                    requestCount.setText(request_count + "\nRequests");
+
+                });
+
         return view;
     }
 

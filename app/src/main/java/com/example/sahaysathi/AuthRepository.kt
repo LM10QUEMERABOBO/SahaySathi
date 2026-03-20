@@ -2,70 +2,98 @@ package com.example.sahaysathi
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FieldValue
 
 class AuthRepository {
 
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
-    // 🔹 SIGN UP
+    // 🔐 LOGIN
+    fun loginUser(
+        email: String,
+        password: String,
+        callback: (Boolean, String?) -> Unit
+    ) {
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    callback(true, "Login Successful")
+                } else {
+                    callback(false, it.exception?.message)
+                }
+            }
+    }
+
+    // 📝 REGISTER USER (FIXED)
     fun registerUser(
         name: String,
         email: String,
         password: String,
-        role: String, // "volunteer" or "ngo"
-        onResult: (Boolean, String) -> Unit
+        role: String,
+        callback: (Boolean, String?) -> Unit
     ) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
+
                 if (task.isSuccessful) {
+
                     val userId = auth.currentUser?.uid ?: ""
 
                     val userMap = hashMapOf(
-                        "id" to userId,
+                        "userId" to userId, // ✅ ADD THIS
                         "name" to name,
                         "email" to email,
                         "role" to role,
-                        "createdAt" to System.currentTimeMillis()
+                        "createdAt" to FieldValue.serverTimestamp() // ✅ ADD THIS
                     )
 
-                    db.collection("users").document(userId)
+                    db.collection("users")
+                        .document(userId) // ✅ FIX: use userId as docId
                         .set(userMap)
                         .addOnSuccessListener {
-                            onResult(true, "User Registered")
+                            callback(true, "Signup Successful")
                         }
                         .addOnFailureListener {
-                            onResult(false, it.message ?: "Error saving user")
+                            callback(false, it.message)
                         }
+
                 } else {
-                    onResult(false, task.exception?.message ?: "Signup Failed")
+                    callback(false, task.exception?.message)
                 }
             }
     }
 
-    // 🔹 LOGIN
-    fun loginUser(
-        email: String,
-        password: String,
-        onResult: (Boolean, String) -> Unit
+    // 👤 GET USER ID
+    fun getCurrentUserId(): String {
+        return auth.currentUser?.uid ?: ""
+    }
+
+    // 🔍 GET USER DATA
+    fun getUserData(
+        userId: String,
+        callback: (HashMap<String, String>?) -> Unit
     ) {
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    onResult(true, "Login Successful")
+        db.collection("users")
+            .document(userId)
+            .get()
+            .addOnSuccessListener { doc ->
+
+                if (doc.exists()) {
+
+                    val data = HashMap<String, String>()
+                    data["name"] = doc.getString("name") ?: ""
+                    data["email"] = doc.getString("email") ?: ""
+                    data["role"] = doc.getString("role") ?: ""
+
+                    callback(data)
+
                 } else {
-                    onResult(false, task.exception?.message ?: "Login Failed")
+                    callback(null)
                 }
             }
-    }
-
-    // 🔹 LOGOUT
-    fun logout() {
-        auth.signOut()
-    }
-
-    // 🔹 CURRENT USER
-    fun getCurrentUserId(): String? {
-        return auth.currentUser?.uid
+            .addOnFailureListener {
+                callback(null)
+            }
     }
 }

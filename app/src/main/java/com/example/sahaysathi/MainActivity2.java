@@ -34,13 +34,20 @@ public class MainActivity2 extends AppCompatActivity {
         binding = ActivityMain2Binding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        sharedPreferences = getSharedPreferences(ConstantSp.pref, MODE_PRIVATE);
         Toolbar toolbar = binding.appBarMain.toolbar;
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
+        android.view.View headerView = navigationView.getHeaderView(0);
 
-        sharedPreferences = getSharedPreferences(ConstantSp.pref, MODE_PRIVATE);
+        TextView email = headerView.findViewById(R.id.dashboard_email);
+        TextView name = headerView.findViewById(R.id.dashboard_name);
+
+        email.setText(sharedPreferences.getString(ConstantSp.email, ""));
+        name.setText(sharedPreferences.getString(ConstantSp.name, ""));
+
         String role = sharedPreferences.getString(ConstantSp.role, "");
 
         // Get NavHostFragment safely
@@ -53,7 +60,7 @@ public class MainActivity2 extends AppCompatActivity {
         navigationView.getMenu().clear();
 
         // Load menu + navigation graph based on role
-        if ("VOLUNTEER".equals(role)) {
+        if ("volunteer".equals(role)) {
 
             navigationView.inflateMenu(R.menu.menu_volunteer);
 
@@ -63,7 +70,7 @@ public class MainActivity2 extends AppCompatActivity {
                     R.id.nav_volunteer_home
             ).setOpenableLayout(drawer).build();
 
-        } else if ("NGO".equals(role)) {
+        } else if ("ngo".equals(role)) {
 
             navigationView.inflateMenu(R.menu.menu_ngo);
 
