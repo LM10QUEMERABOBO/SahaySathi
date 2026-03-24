@@ -18,7 +18,7 @@
             android:id="@+id/main_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Welcome User 👋"
+            android:text="@string/home_title"
             android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="@color/white"/>
@@ -26,7 +26,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ready to make a difference today?"
+            android:text="@string/home_msg"
             android:textSize="14sp"
             android:textColor="@color/white"
             android:layout_marginBottom="20dp"/>
@@ -52,10 +52,11 @@
                     android:id="@+id/btn_requestHelp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Request Help"
+                    android:text="@string/btn_requestHelp"
                     android:textColor="@color/new_red"
                     android:gravity="center"
                     android:textStyle="bold"
+                    android:enabled="false"
                     android:textSize="16sp"/>
 
             </com.google.android.material.card.MaterialCardView>
@@ -73,7 +74,8 @@
                     android:id="@+id/btn_offerHelp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Offer Help"
+                    android:text="@string/btn_requestHelp"
+                    android:enabled="false"
                     android:textColor="@color/blue"
                     android:gravity="center"
                     android:textStyle="bold"
@@ -88,7 +90,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Impact Statistics"
+            android:text="@string/home_stats_title"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/white"
@@ -108,7 +110,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="80dp"
-                android:text="0\nRequests"
+                android:text="@string/home_request_count"
                 android:textColor="@color/new_red"
                 android:gravity="center"
                 android:background="@drawable/stat_card"/>
@@ -118,7 +120,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="80dp"
-                android:text="0\nVolunteers"
+                android:text="@string/home_volunteer_count"
                 android:gravity="center"
                 android:textColor="@color/blue"
                 android:background="@drawable/stat_card"
@@ -131,7 +133,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/stat_card"
                 android:gravity="center"
-                android:text="0\nNGOs"
+                android:text="@string/home_ngo_count"
                 android:textColor="@color/new_red" />
 
         </LinearLayout>

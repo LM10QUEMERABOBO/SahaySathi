@@ -9,9 +9,10 @@
     <string name="login_new_account">New User? Sign Up</string>
 
 
-    <!--splash screen    -->
-    <string name="splash_title">Connecting Hearts For The Social Change</string>
+    <!--splash screen-->
+    <string name="splash_title">Connecting Hearts For \n The Social Change</string>
     <string name="splash_loading">Loading</string>
+
 
 
 
@@ -31,6 +32,44 @@
     <string name="main_Title">Welcome User!</string>
     <string name="main_msg">Welcome to the volunteer panel,\n Here you can perform the intended task regarding the event management in your college.</string>
 
+    <!--home fragment    -->
+    <string name="home_title">Welcome User 👋</string>
+    <string name="home_msg">Ready to make a difference today?</string>
+    <string name="btn_requestHelp">Request Help</string>
+    <string name="btn_offerHelp">Offer Help</string>
+    <string name="home_stats_title">Impact Statistics</string>
+    <string name="home_request_count">0\nRequests</string>
+    <string name="home_volunteer_count">0\nVolunteers"</string>
+    <string name="home_ngo_count">0\nNGOs</string>
+
+    <!--    post request fragment-->
+    <string name="pr_event_title">Event Details</string>
+    <string name="pr_event_name">Event Name</string>
+    <string name="pr_event_description">Event Description</string>
+    <string name="pr_location_title">Location &amp; Time</string>
+    <string name="pr_location_name">Event Location</string>
+    <string name="pr_location_date">Select Date</string>
+    <string name="pr_location_time">Select Time</string>
+    <string name="pr_volunteer_title">Volunteer Requirements</string>
+    <string name="pr_volunteer_count">Number of Volunteers</string>
+    <string name="pr_volunteer_experience">Required Experience</string>
+    <string name="pr_media_title">Event Images</string>
+    <string name="pr_deadline_title">Submission Deadline</string>
+    <string name="pr_deadline">Submission deadline</string>
+    <string name="pr_submit_button">Post Volunteer Request</string>
+
+
+    <!--    manage request fragment-->
+    <string name="mr_no_data_title">Uh! oh, No requests found!!</string>
+    <string name="mr_event_title">Event Details</string>
+    <string name="mr_event_name">Event Name</string>
+    <string name="mr_location_name">Location</string>
+    <string name="mr_location_date">Date</string>
+    <string name="mr_applied_count">Applied: 0</string>
+    <string name="mr_selected_count">Selected: 0</string>
+
+
+
     <!--Common fields-->
     <string name="username">Name</string>
     <string name="contact">Contact</string>
@@ -45,6 +84,35 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="location">Location</string>
+
+    <!--settings fragement    -->
+    <string name="setting_profile_name">Name: User</string>
+    <string name="setting_profile_email">Email:user@gmail.com</string>
+    <string name="setting_switch_mode">Dark Mode</string>
+    <string name="setting_switch_notifications">Enable Notifications</string>
+    <string name="setting_btnLogout">Logout</string>
+
+    <!--    ngo profile fragment-->
+    <string name="ngo_organization_title">Organization Details</string>
+    <string name="ngo_organization_name">Organization Name</string>
+    <string name="ngo_organization_reg_no">Registration Number</string>
+    <string name="ngo_organization_address">Address</string>
+    <string name="ngo_organization_update_btn">Update</string>
+    <string name="ngo_contact_title">Contact Information</string>
+    <string name="ngo_contact_phone">Phone</string>
+    <string name="ngo_contact_email">Email</string>
+    <string name="ngo_contact_update_btn">Update</string>
+
+    <!-- ngo applicants fragment   -->
+    <string name="applicant_name">Name</string>
+    <string name="applicant_city">City</string>
+    <string name="applicant_skill">Skill</string>
+    <string name="applicant_email">Email</string>
+    <string name="applicant_phone">Phone</string>
+    <string name="applicant_experience">Experience</string>
+    <string name="applicant_accept_button">Accept</string>
+    <string name="applicant_reject_button">Reject</string>
+    <string name="applicant_no_data_title">Uh! oh, No applicants found!!</string>
 
 
     <!--menu of volunteer    -->

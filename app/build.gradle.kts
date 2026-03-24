@@ -59,6 +59,13 @@ dependencies {
     implementation ("com.google.android.material:material:1.4.0")
     implementation ("com.google.android.material:material:1.11.0")
     implementation ("com.journeyapps:zxing-android-embedded:4.3.0")
-    implementation("com.google.firebase:firebase-auth-ktx:22.3.1")
-    implementation("com.google.firebase:firebase-firestore-ktx:24.10.0")
+//    implementation("com.google.firebase:firebase-auth-ktx:22.3.1")
+//    implementation("com.google.firebase:firebase-firestore-ktx:24.10.0")
+//    implementation("com.google.firebase:firebase-storage-ktx:22.0.0")
+//    implementation("com.google.android.gms:play-services-auth:21.0.1")
+    implementation(platform("com.google.firebase:firebase-bom:33.5.1"))
+
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.firebase:firebase-firestore-ktx")
+    implementation("com.google.firebase:firebase-storage-ktx")
 }

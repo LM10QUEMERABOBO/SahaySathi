@@ -6,6 +6,17 @@
     android:paddingTop="@dimen/_20sdp"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/noDataText"
+        android:text="@string/mr_no_data_title"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerEvents"
         android:layout_width="match_parent"

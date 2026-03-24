@@ -5,26 +5,32 @@
     <group android:checkableBehavior="single">
 
         <item
+            android:icon="@drawable/ic_home"
             android:id="@+id/nav_home"
             android:title="@string/menu_volunteer_home" />
 
         <item
+            android:icon="@drawable/ic_browse"
             android:id="@+id/nav_volunteer_browseRequest"
             android:title="@string/menu_volunteer_browseRequest" />
 
         <item
+            android:icon="@drawable/ic_tasks"
             android:id="@+id/nav_volunteer_myTasks"
             android:title="@string/menu_volunteer_myTasks" />
 
         <item
+            android:icon="@drawable/ic_notifications"
             android:id="@+id/nav_volunteer_notifications"
             android:title="@string/menu_volunteer_notifications" />
 
         <item
+            android:icon="@drawable/ic_profile"
             android:id="@+id/nav_volunteer_profile"
             android:title="@string/menu_volunteer_profile" />
 
         <item
+            android:icon="@drawable/ic_settings"
             android:id="@+id/nav_volunteer_logout"
             android:title="@string/menu_volunteer_logout" />
 

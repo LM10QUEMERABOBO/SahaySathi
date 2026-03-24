@@ -7,6 +7,15 @@
     android:padding="10dp"
     android:background="@color/blue">
 
+    <TextView
+        android:id="@+id/noApplicantText"
+        style="@style/textView_15"
+        android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:text="uh oh, no any applicants found!"
+        />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerApplicants"
         android:layout_width="match_parent"

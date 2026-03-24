@@ -13,7 +13,20 @@
           "package_name": "com.example.sahaysathi"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "677190165658-jk5sbqsjiu0hg1aog5lgaecv40384aq6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sahaysathi",
+            "certificate_hash": "f12fc62693b6e734b6dcb3a2c713ea5da146f368"
+          }
+        },
+        {
+          "client_id": "677190165658-c0ecjg463gqhida9kj8hih7jl64mak1m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyB999IUHJI08sDeTSnl_g1IgEGZQXLzWow"
@@ -21,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "677190165658-c0ecjg463gqhida9kj8hih7jl64mak1m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

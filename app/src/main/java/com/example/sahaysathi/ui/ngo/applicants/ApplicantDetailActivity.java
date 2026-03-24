@@ -8,49 +8,57 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sahaysathi.R;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ApplicantDetailActivity extends AppCompatActivity {
 
-    TextView name, city, skill;
+    TextView name, city, skill,email,experience,phone;
     Button btnAccept, btnReject;
+
+    String applicationId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_applicant_detail);
+
         name = findViewById(R.id.detailName);
         city = findViewById(R.id.detailCity);
         skill = findViewById(R.id.detailSkill);
+        email = findViewById(R.id.detailEmail);
+        phone = findViewById(R.id.detailPhone);
+        experience = findViewById(R.id.detailExperience);
 
         btnAccept = findViewById(R.id.accept_button);
         btnReject = findViewById(R.id.regect_button);
 
-        // Receive data from adapter
-        String applicantName = getIntent().getStringExtra("name");
-        String applicantCity = getIntent().getStringExtra("city");
-        String applicantSkill = getIntent().getStringExtra("skill");
+        applicationId = getIntent().getStringExtra("applicationId");
 
-        // Set data to views
-        name.setText(applicantName);
-        city.setText("City: " + applicantCity);
-        skill.setText("Skill: " + applicantSkill);
+        name.setText(getIntent().getStringExtra("name"));
+        city.setText("City: " + getIntent().getStringExtra("city"));
+        skill.setText("Skill: " + getIntent().getStringExtra("skill"));
 
-        // Accept button
-        btnAccept.setOnClickListener(v -> {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-            Toast.makeText(this,"Volunteer Accepted",Toast.LENGTH_SHORT).show();
+        btnAccept.setOnClickListener(v -> updateStatus(db, "accepted"));
+        btnReject.setOnClickListener(v -> updateStatus(db, "rejected"));
+    }
 
-            // Here you can update database status = accepted
+    private void updateStatus(FirebaseFirestore db, String status) {
 
-        });
+        if (applicationId == null) {
+            Toast.makeText(this, "Invalid application", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        // Reject button
-        btnReject.setOnClickListener(v -> {
-
-            Toast.makeText(this,"Volunteer Rejected",Toast.LENGTH_SHORT).show();
-
-            // Here you can update database status = rejected
-
-        });
+        db.collection("applications")
+                .document(applicationId)
+                .update("status", status)
+                .addOnSuccessListener(unused ->
+                        Toast.makeText(this, "Status updated", Toast.LENGTH_SHORT).show()
+                )
+                .addOnFailureListener(e ->
+                        Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show()
+                );
     }
 }

@@ -7,11 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sahaysathi.R;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
@@ -25,14 +27,11 @@ public class ApplicantAdapter extends RecyclerView.Adapter<ApplicantAdapter.View
         this.applicantList = applicantList;
     }
 
-    // ViewHolder Class
     public static class ViewHolder extends RecyclerView.ViewHolder {
-
         TextView name, city, skill;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
             name = itemView.findViewById(R.id.applicantName);
             city = itemView.findViewById(R.id.applicantCity);
             skill = itemView.findViewById(R.id.applicantSkill);
@@ -42,10 +41,8 @@ public class ApplicantAdapter extends RecyclerView.Adapter<ApplicantAdapter.View
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_applicant_card, parent, false);
-
         return new ViewHolder(view);
     }
 
@@ -54,42 +51,61 @@ public class ApplicantAdapter extends RecyclerView.Adapter<ApplicantAdapter.View
 
         Applicant applicant = applicantList.get(position);
 
-        holder.name.setText(applicant.name);
-        holder.city.setText(applicant.city);
-        holder.skill.setText("Skill: " + applicant.skill);
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle(applicant.name);
+        holder.name.setText(applicant.getName() != null ? applicant.getName() : "N/A");
+        holder.city.setText(applicant.getCity() != null ? applicant.getCity() : "N/A");
+        holder.skill.setText("Skill: " + (applicant.getSkill() != null ? applicant.getSkill() : "N/A"));
 
-        builder.setMessage(
-                "City: " + applicant.city + "\n" +
-                        "Skill: " + applicant.skill
-        );
+        // Fade animation
+        holder.itemView.setAlpha(0f);
+        holder.itemView.animate().alpha(1f).setDuration(300).start();
 
-        builder.setPositiveButton("Accept", (dialog, which) -> {
-            // Accept logic
-        });
-
-        builder.setNegativeButton("Reject", (dialog, which) -> {
-            // Reject logic
-        });
-
-        builder.setNeutralButton("View Details", (dialog, which) -> {
-            Intent intent = new Intent(context, ApplicantDetailActivity.class);
-            intent.putExtra("name", applicant.name);
-            context.startActivity(intent);
-        });
-
-
-
-        // Open Applicant Detail Page
         holder.itemView.setOnClickListener(view -> {
 
-            Intent intent = new Intent(context, ApplicantDetailActivity.class);
-            intent.putExtra("name", applicant.name);
-            intent.putExtra("city", applicant.city);
-            intent.putExtra("skill", applicant.skill);
-           builder.show();
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle(applicant.getName());
+
+            builder.setMessage(
+                    "City: " + applicant.getCity() + "\n" +
+                            "Skill: " + applicant.getSkill()
+            );
+
+            builder.setPositiveButton("Accept", (dialog, which) ->
+                    updateStatus(applicant, position, "accepted"));
+
+            builder.setNegativeButton("Reject", (dialog, which) ->
+                    updateStatus(applicant, position, "rejected"));
+
+            builder.setNeutralButton("View Details", (dialog, which) -> {
+                Intent intent = new Intent(context, ApplicantDetailActivity.class);
+                intent.putExtra("applicationId", applicant.getApplicationId());
+                intent.putExtra("name", applicant.getName());
+                intent.putExtra("city", applicant.getCity());
+                intent.putExtra("skill", applicant.getSkill());
+                context.startActivity(intent);
+            });
+
+            builder.show();
         });
+    }
+
+    private void updateStatus(Applicant applicant, int position, String status) {
+
+        FirebaseFirestore.getInstance()
+                .collection("applications")
+                .document(applicant.getApplicationId())
+                .update("status", status)
+                .addOnSuccessListener(unused -> {
+
+                    // 🔥 Instant UI removal
+                    applicantList.remove(position);
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position, applicantList.size());
+
+                    Toast.makeText(context, "Updated", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e ->
+                        Toast.makeText(context, "Failed: " + e.getMessage(), Toast.LENGTH_SHORT).show()
+                );
     }
 
     @Override

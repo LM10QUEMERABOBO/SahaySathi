@@ -18,7 +18,7 @@
         <!-- Event Title -->
         <TextView
             android:id="@+id/eventTitle"
-            android:text="Food Donation Drive"
+            android:text="@string/mr_event_name"
             android:textColor="@color/new_red"
             android:textStyle="bold"
             android:textSize="18sp"
@@ -28,7 +28,7 @@
         <!-- Location -->
         <TextView
             android:id="@+id/eventLocation"
-            android:text="Surat"
+            android:text="@string/mr_location_name"
             android:textColor="@color/blue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -36,7 +36,7 @@
         <!-- Date -->
         <TextView
             android:id="@+id/eventDate"
-            android:text="12 March 2026"
+            android:text="@string/mr_location_date"
             android:textColor="@color/blue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -50,7 +50,7 @@
 
             <TextView
                 android:id="@+id/appliedCount"
-                android:text="Applied: 10"
+                android:text="@string/mr_applied_count"
                 android:textColor="@color/new_red"
                 android:layout_weight="1"
                 android:layout_width="0dp"
@@ -58,7 +58,7 @@
 
             <TextView
                 android:id="@+id/selectedCount"
-                android:text="Selected: 4"
+                android:text="@string/mr_selected_count"
                 android:textColor="#4CAF50"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>

@@ -1,7 +1,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/blue"
     android:paddingTop="@dimen/_30sdp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -12,6 +12,8 @@
         app:cardElevation="6dp"
         app:cardCornerRadius="12dp"
         android:orientation="vertical"
+        android:layout_marginTop="@dimen/_120sdp"
+        android:background="@color/white"
         android:padding="20dp">
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -28,7 +30,7 @@
 
         <TextView
             android:id="@+id/detailName"
-            android:text="Rahul Sharma"
+            android:text="@string/applicant_name"
             android:textColor="@color/new_red"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -37,7 +39,7 @@
 
         <TextView
             android:id="@+id/detailEmail"
-            android:text="Email: rahul@email.com"
+            android:text="@string/applicant_email"
             android:textColor="@color/blue"
             android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
@@ -45,7 +47,7 @@
 
         <TextView
             android:id="@+id/detailPhone"
-            android:text="Phone: 9876543210"
+            android:text="@string/applicant_phone"
             android:textColor="@color/blue"
             android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
@@ -53,7 +55,7 @@
 
         <TextView
             android:id="@+id/detailCity"
-            android:text="City: Surat"
+            android:text="@string/applicant_city"
             android:layout_marginTop="10dp"
             android:textColor="@color/blue"
             android:layout_height="wrap_content"
@@ -61,7 +63,7 @@
 
         <TextView
             android:id="@+id/detailSkill"
-            android:text="Skill: Medical Volunteer"
+            android:text="@string/applicant_skill"
             android:layout_marginTop="10dp"
             android:textColor="@color/blue"
             android:layout_height="wrap_content"
@@ -69,7 +71,7 @@
 
         <TextView
             android:id="@+id/detailExperience"
-            android:text="Experience: 2 Years"
+            android:text="@string/applicant_experience"
             android:layout_marginTop="10dp"
             android:textColor="@color/blue"
             android:layout_marginBottom="@dimen/_20sdp"
@@ -90,7 +92,7 @@
                 android:layout_width="@dimen/_120sdp"
                 android:layout_height="@dimen/_40sdp"
                 android:layout_marginRight="@dimen/_10sdp"
-                android:text="Accept"
+                android:text="@string/applicant_accept_button"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_16sdp"
                 app:backgroundTint="@null"/>
@@ -101,7 +103,7 @@
                 android:layout_width="@dimen/_120sdp"
                 android:layout_height="@dimen/_40sdp"
                 android:layout_marginLeft="@dimen/_10sdp"
-                android:text="Reject"
+                android:text="@string/applicant_reject_button"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_16sdp"
                 app:backgroundTint="@null" />

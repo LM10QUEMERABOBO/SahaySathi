@@ -23,14 +23,14 @@
             <!-- Name -->
             <TextView
                 android:id="@+id/tvName"
-                android:text="Name: User"
+                android:text="@string/setting_profile_name"
                 android:textColor="@color/blue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <!-- Email -->
             <TextView
                 android:id="@+id/tvEmail"
-                android:text="Email: user@gmail.com"
+                android:text="@string/setting_profile_email"
                 android:textColor="@color/blue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -53,7 +53,7 @@
             <!-- Dark Mode -->
             <Switch
                 android:id="@+id/switchDarkMode"
-                android:text="Dark Mode"
+                android:text="@string/setting_switch_mode"
                 android:textColor="@color/new_red"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
             <!-- Notifications -->
             <Switch
                 android:id="@+id/switchNotifications"
-                android:text="Enable Notifications"
+                android:text="@string/setting_switch_notifications"
                 android:textColor="@color/new_red"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -74,14 +74,14 @@
     <!-- Logout -->
     <Button
         android:id="@+id/btnLogout"
-        android:text="Logout"
+        android:text="@string/setting_btnLogout"
         style="@style/button_20"
         android:layout_marginTop="30dp"
         android:layout_marginHorizontal="@dimen/_50sdp"
         app:backgroundTint="@null"
         android:textStyle="bold"
         android:backgroundTint="@android:color/holo_red_dark"
-        android:textColor="@android:color/white"
+        android:textColor="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

@@ -5,8 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.example.sahaysathi.R;
+
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.sahaysathi.R;
 
 import java.util.ArrayList;
 
@@ -14,10 +16,16 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
     Context context;
     ArrayList<Event> list;
+    OnItemClickListener listener;
 
-    public EventAdapter(Context context, ArrayList<Event> list) {
+    public interface OnItemClickListener {
+        void onClick(Event event);
+    }
+
+    public EventAdapter(Context context, ArrayList<Event> list, OnItemClickListener listener) {
         this.context = context;
         this.list = list;
+        this.listener = listener;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -37,10 +45,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         View view = LayoutInflater.from(context)
                 .inflate(R.layout.fragement_managerequest_card, parent, false);
-
         return new ViewHolder(view);
     }
 
@@ -54,6 +60,12 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         holder.date.setText(event.date);
         holder.applied.setText("Applied: " + event.appliedCount);
         holder.selected.setText("Selected: " + event.selectedCount);
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onClick(event);
+            }
+        });
     }
 
     @Override
