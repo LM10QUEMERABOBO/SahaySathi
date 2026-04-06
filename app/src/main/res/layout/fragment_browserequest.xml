@@ -14,12 +14,23 @@
         android:orientation="vertical"
         android:background="@color/blue">
 
+        <TextView
+            android:id="@+id/tvNoEventData"
+            style="@style/textView_15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/noEventText"
+            android:textSize="16sp"
+            android:textColor="@android:color/darker_gray"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
+
         <!-- Search Bar -->
         <EditText
             android:id="@+id/etSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Search by city or event"
+            android:hint="@string/editSearchEvent"
             android:padding="10dp"
             style="@style/editText"
             android:textColor="@color/black"

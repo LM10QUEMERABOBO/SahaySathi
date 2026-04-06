@@ -132,5 +132,7 @@
     <string name="menu_ngo_postRequest">Post Request</string>
     <string name="menu_ngo_manageRequests">Manage Requests</string>
     <string name="menu_ngo_applicants">Applicants</string>
+    <string name="noEventText">No events found</string>
+    <string name="editSearchEvent">Search by city or event</string>
 
 </resources>

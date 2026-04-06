@@ -1,0 +1,27 @@
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        style="@style/textView_30"
+        android:id="@+id/title"
+        android:textStyle="bold"/>
+
+    <TextView
+        style="@style/textView_15"
+        android:id="@+id/city"/>
+
+    <TextView
+        style="@style/textView_15"
+        android:id="@+id/instructions"
+        android:padding="10dp"/>
+
+    <ImageView
+        android:id="@+id/qrImage"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center"/>
+
+</LinearLayout>
