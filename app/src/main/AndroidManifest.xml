@@ -42,7 +42,8 @@
         <activity
             android:name=".ui.ngo.applicants.ApplicantDetailActivity"
             android:exported="true"/>
-
+        <activity android:name=".ui.volunteer.browseRequests.EventDetailActivity"
+            android:exported="true"/>
     </application>
     <queries>
         <package android:name="com.google.android.gms" />

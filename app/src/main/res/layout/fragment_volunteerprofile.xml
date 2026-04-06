@@ -1,30 +1,254 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/blue"
-    tools:context=".ui.volunteer.profile.ProfileFragment">
+    android:paddingTop="@dimen/_20sdp"
+    android:background="@color/blue">
 
-    <TextView
-        android:id="@+id/text_volunteerProfile_fragment"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_250sdp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:text="This is a volunteer profile Fragment!"
-        android:textStyle="bold"
-        android:visibility="gone"
-        android:textColor="@color/white" />
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="@dimen/_250sdp"
-        android:layout_gravity="center"
-        android:visibility="gone" />
-</LinearLayout>
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardVolunteerLogo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/_12sdp"
+            app:cardElevation="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_12sdp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <!-- HEADER -->
+
+                <TextView
+                    android:id="@+id/dropVolunteerLogo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/new_red"
+                    android:text="Upload Volunteer Logo"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:padding="16dp"/>
+
+                <!-- EXPANDABLE CONTENT -->
+
+                <LinearLayout
+
+                    android:id="@+id/formVolunteerLogo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/white"
+                    android:visibility="visible"
+                    android:padding="16dp">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/circleImage"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:contentDescription="Select image"
+                        android:src="@drawable/sample_image"
+                        android:scaleType="centerCrop"
+                        app:shapeAppearanceOverlay="@style/CircleImageViewStyle"/>
+
+
+
+                    <Button
+                        android:id="@+id/btnUpdateVolunteerLogo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/button_20"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        app:backgroundTint="@null"
+                        android:textColor="@color/white"
+                        android:text="@string/ngo_organization_update_btn"
+                        android:layout_marginTop="12dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <!-- Volunteer DETAILS CARD -->
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardVolunteerDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/_12sdp"
+            app:cardElevation="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_12sdp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <!-- HEADER -->
+
+                <TextView
+                    android:id="@+id/dropVolunteerDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/new_red"
+                    android:text="@string/ngo_organization_title"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:padding="16dp"/>
+
+                <!-- EXPANDABLE CONTENT -->
+                <LinearLayout
+                    android:id="@+id/formVolunteerDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/white"
+                    android:visibility="gone"
+                    android:padding="16dp">
+
+                    <EditText
+                        android:id="@+id/etVolunteerName"
+                        android:layout_width="match_parent"
+                        android:drawableStart="@drawable/ic_name"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:layout_height="wrap_content"
+                        style="@style/editText"
+                        android:hint="@string/ngo_organization_name"/>
+
+                    <EditText
+                        android:id="@+id/etRegNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLength="10"
+                        style="@style/editText"
+                        android:hint="@string/ngo_organization_reg_no"
+                        android:layout_marginTop="10dp"/>
+
+                    <EditText
+                        android:id="@+id/etAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_location"
+                        android:drawablePadding="@dimen/_5sdp"
+                        style="@style/editText"
+                        android:hint="@string/ngo_organization_address"
+                        android:layout_marginTop="10dp"/>
+
+                    <Button
+                        android:id="@+id/btnUpdateVolunteer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/button_20"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        app:backgroundTint="@null"
+                        android:textColor="@color/white"
+                        android:text="@string/ngo_organization_update_btn"
+                        android:layout_marginTop="12dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- CONTACT CARD -->
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/_12sdp"
+            app:cardElevation="@dimen/_4sdp"
+            android:layout_marginBottom="@dimen/_12sdp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/dropContact"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/new_red"
+                    android:text="@string/ngo_contact_title"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:padding="16dp"/>
+
+                <LinearLayout
+                    android:id="@+id/formContact"
+                    android:background="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:padding="16dp">
+
+                    <EditText
+                        android:id="@+id/etPhone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_call"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:maxLength="10"
+                        style="@style/editText"
+                        android:hint="@string/ngo_contact_phone"/>
+
+                    <EditText
+                        android:id="@+id/etEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_email"
+                        android:drawablePadding="@dimen/_5sdp"
+                        style="@style/editText"
+                        android:hint="@string/ngo_contact_email"
+                        android:enabled="false"
+                        android:layout_marginTop="10dp"/>
+
+                    <Button
+                        android:id="@+id/btnUpdateContact"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/button_20"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        app:backgroundTint="@null"
+                        android:textColor="@color/white"
+                        android:text="@string/ngo_contact_update_btn"
+                        android:layout_marginTop="12dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ProgressBar -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="@dimen/_250sdp"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+</ScrollView>

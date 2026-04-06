@@ -8,23 +8,15 @@
     android:background="@color/blue"
     tools:context=".ui.volunteer.notifications.NotificationsFragment">
 
-    <TextView
-        android:id="@+id/text_notifications_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_250sdp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:text="This is a notifications Fragment!"
-        android:textStyle="bold"
-        android:visibility="gone"
-        android:textColor="@color/white" />
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:background="@color/blue">-->
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="@dimen/_250sdp"
-        android:layout_gravity="center"
-        android:visibility="gone" />
-</LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerNotifications"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+<!--</LinearLayout>-->

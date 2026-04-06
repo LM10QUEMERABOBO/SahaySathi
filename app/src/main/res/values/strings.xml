@@ -86,16 +86,17 @@
     <string name="location">Location</string>
 
     <!--settings fragement    -->
-    <string name="setting_profile_name">Name: User</string>
+    <string name="setting_profile_name">Welcome User 👋</string>
     <string name="setting_profile_email">Email:user@gmail.com</string>
     <string name="setting_switch_mode">Dark Mode</string>
+    <string name="setting_user_preference">User Preferences</string>
     <string name="setting_switch_notifications">Enable Notifications</string>
     <string name="setting_btnLogout">Logout</string>
 
-    <!--    ngo profile fragment-->
-    <string name="ngo_organization_title">Organization Details</string>
-    <string name="ngo_organization_name">Organization Name</string>
-    <string name="ngo_organization_reg_no">Registration Number</string>
+    <!-- profile fragment-->
+    <string name="ngo_organization_title">Individual Information</string>
+    <string name="ngo_organization_name">Name</string>
+    <string name="ngo_organization_reg_no">Registration/contact Number</string>
     <string name="ngo_organization_address">Address</string>
     <string name="ngo_organization_update_btn">Update</string>
     <string name="ngo_contact_title">Contact Information</string>

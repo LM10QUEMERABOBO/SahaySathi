@@ -13,42 +13,70 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sahaysathi.ConstantSp;
 import com.example.sahaysathi.R;
 import com.example.sahaysathi.databinding.FragmentSlideshowBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class NotificationsFragment extends Fragment {
 
-    private FragmentSlideshowBinding binding;
+    RecyclerView recyclerView;
+    List<ApplicationModel> list = new ArrayList<>();
+    NotificationAdapter adapter;
     SharedPreferences sharedPreferences;
-    TextView textView;
-    ProgressBar progressBar;
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_notifications, container, false);
-        sharedPreferences = getActivity().getSharedPreferences(ConstantSp.pref, MODE_PRIVATE);
-        progressBar = view.findViewById(R.id.progressBar);
-        textView = view.findViewById(R.id.text_notifications_fragment);
 
-        showLoading();
+        recyclerView = view.findViewById(R.id.recyclerNotifications);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // simulate loading
-        new Handler().postDelayed(this::hideLoading, 1500);
+        // SharedPreferences
+        sharedPreferences = requireActivity().getSharedPreferences(ConstantSp.pref, MODE_PRIVATE);
+        adapter = new NotificationAdapter(getContext(), list);
+        recyclerView.setAdapter(adapter);
+
+        loadData();
+
         return view;
     }
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
-    private void showLoading(){
-        progressBar.setVisibility(View.VISIBLE);
-        textView.setVisibility(View.GONE);
-    }
 
-    private void hideLoading(){
-        progressBar.setVisibility(View.GONE);
-        textView.setVisibility(View.VISIBLE);
+    private void loadData() {
+
+        String uid = sharedPreferences.getString(ConstantSp.userid,"");
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("applications");
+
+        ref.orderByChild("userId").equalTo(uid)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        list.clear();
+
+                        for (DataSnapshot ds : snapshot.getChildren()) {
+                            ApplicationModel model = ds.getValue(ApplicationModel.class);
+                            list.add(model);
+                        }
+
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {}
+                });
     }
 }

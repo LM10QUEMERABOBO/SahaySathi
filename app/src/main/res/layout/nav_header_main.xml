@@ -13,7 +13,7 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/circleImage"
+        android:id="@+id/circleImage1"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:clickable="true"

@@ -53,6 +53,8 @@ public class SignUp_Page extends AppCompatActivity {
             role = "volunteer";
             locationField.setVisibility(View.GONE);
             signup_contact.setVisibility(View.VISIBLE);
+            volunteerBtn.setBackgroundColor(getResources().getColor(R.color.new_blue));
+            ngoBtn.setBackgroundColor(getResources().getColor(R.color.new_red));
             Toast.makeText(this, "Volunteer Selected", Toast.LENGTH_SHORT).show();
         });
 
@@ -60,6 +62,8 @@ public class SignUp_Page extends AppCompatActivity {
             role = "ngo";
             locationField.setVisibility(View.VISIBLE);
             signup_contact.setVisibility(View.GONE);
+            ngoBtn.setBackgroundColor(getResources().getColor(R.color.new_blue));
+            volunteerBtn.setBackgroundColor(getResources().getColor(R.color.new_red));
             Toast.makeText(this, "NGO Selected", Toast.LENGTH_SHORT).show();
         });
 

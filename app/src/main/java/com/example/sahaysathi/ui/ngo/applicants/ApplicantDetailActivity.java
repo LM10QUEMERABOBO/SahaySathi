@@ -15,7 +15,7 @@ public class ApplicantDetailActivity extends AppCompatActivity {
     TextView name, city, skill,email,experience,phone;
     Button btnAccept, btnReject;
 
-    String applicationId;
+    String applicationId,volunteerId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +33,9 @@ public class ApplicantDetailActivity extends AppCompatActivity {
         btnReject = findViewById(R.id.regect_button);
 
         applicationId = getIntent().getStringExtra("applicationId");
-
+        volunteerId = getIntent().getStringExtra("volunteerId");
         name.setText(getIntent().getStringExtra("name"));
+
         city.setText("City: " + getIntent().getStringExtra("city"));
         skill.setText("Skill: " + getIntent().getStringExtra("skill"));
 

@@ -13,6 +13,77 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardNgoLogo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/_12sdp"
+            app:cardElevation="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_12sdp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <!-- HEADER -->
+
+                <TextView
+                    android:id="@+id/dropNgoLogo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/new_red"
+                    android:text="Upload Ngo Logo"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:padding="16dp"/>
+
+                <!-- EXPANDABLE CONTENT -->
+
+                <LinearLayout
+
+                    android:id="@+id/formNgoLogo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/white"
+                    android:visibility="visible"
+                    android:padding="16dp">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/circleImage"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:contentDescription="Select image"
+                        android:src="@drawable/sample_image"
+                        android:scaleType="centerCrop"
+                        app:shapeAppearanceOverlay="@style/CircleImageViewStyle"/>
+
+
+
+                    <Button
+                        android:id="@+id/btnUpdateNgoLogo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/button_20"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        app:backgroundTint="@null"
+                        android:textColor="@color/white"
+                        android:text="@string/ngo_organization_update_btn"
+                        android:layout_marginTop="12dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
         <!-- NGO DETAILS CARD -->
 
         <com.google.android.material.card.MaterialCardView
@@ -49,7 +120,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:background="@color/white"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:padding="16dp">
 
                     <EditText
@@ -86,6 +157,7 @@
                         android:layout_height="wrap_content"
                         style="@style/button_20"
                         android:gravity="center"
+                        android:layout_gravity="center"
                         app:backgroundTint="@null"
                         android:textColor="@color/white"
                         android:text="@string/ngo_organization_update_btn"
@@ -158,6 +230,7 @@
                         android:layout_height="wrap_content"
                         style="@style/button_20"
                         android:gravity="center"
+                        android:layout_gravity="center"
                         app:backgroundTint="@null"
                         android:textColor="@color/white"
                         android:text="@string/ngo_contact_update_btn"

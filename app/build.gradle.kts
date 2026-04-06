@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.navigation.ui)
     implementation(libs.core.ktx)
     implementation(libs.firebase.firestore)
+    implementation(libs.firebase.database)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -64,7 +65,7 @@ dependencies {
 //    implementation("com.google.firebase:firebase-storage-ktx:22.0.0")
 //    implementation("com.google.android.gms:play-services-auth:21.0.1")
     implementation(platform("com.google.firebase:firebase-bom:33.5.1"))
-
+    implementation("com.journeyapps:zxing-android-embedded:4.3.0")
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.firebase:firebase-firestore-ktx")
     implementation("com.google.firebase:firebase-storage-ktx")

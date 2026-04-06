@@ -1,73 +1,275 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:paddingTop="@dimen/_30sdp"
     android:layout_width="match_parent"
-    android:background="@color/blue"
-    android:layout_height="match_parent">
-
-    <androidx.cardview.widget.CardView
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/blue">
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:cardElevation="6dp"
         android:background="@color/blue"
-        app:cardCornerRadius="12dp">
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvName"
+            style="@style/textView_15"
+            android:text="@string/setting_profile_name"
+            android:layout_gravity="start"
+            android:textStyle="bold"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+<!--    <androidx.cardview.widget.CardView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_margin="10dp"-->
+<!--        app:cardElevation="6dp"-->
+<!--        android:background="@color/blue"-->
+<!--        app:cardCornerRadius="12dp">-->
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:padding="12dp"-->
+<!--            android:background="@color/white"-->
+<!--            android:orientation="vertical">-->
+<!--            &lt;!&ndash; Name &ndash;&gt;-->
+<!--            -->
+<!--            &lt;!&ndash; Email &ndash;&gt;-->
+<!--            <TextView-->
+<!--                android:id="@+id/tvEmail"-->
+<!--                android:text="@string/setting_profile_email"-->
+<!--                android:textColor="@color/blue"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"/>-->
+<!--        </LinearLayout>-->
+<!--    </androidx.cardview.widget.CardView>-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp"
-            android:background="@color/white"
-            android:orientation="vertical">
-            <!-- Name -->
-            <TextView
-                android:id="@+id/tvName"
-                android:text="@string/setting_profile_name"
-                android:textColor="@color/blue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <!-- Email -->
-            <TextView
-                android:id="@+id/tvEmail"
-                android:text="@string/setting_profile_email"
-                android:textColor="@color/blue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+            android:orientation="vertical"
+            android:padding="16dp">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:cardElevation="6dp"
-        android:background="@color/blue"
-        app:cardCornerRadius="12dp">
-        <LinearLayout
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/userPreferenceCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/_12sdp"
+                app:cardElevation="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_12sdp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+            <!-- HEADER -->
+
+            <TextView
+                android:id="@+id/dropUserPreference"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/new_red"
+                android:text="@string/setting_user_preference"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:padding="16dp"/>
+
+
+                <LinearLayout
+                    android:id="@+id/formUserPreference"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+                    <!-- Dark Mode -->
+                    <Switch
+                        android:id="@+id/switchDarkMode"
+                        android:text="@string/setting_switch_mode"
+                        android:textColor="@color/new_red"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+                    <!-- Notifications -->
+                    <Switch
+                        android:id="@+id/switchNotifications"
+                        android:text="@string/setting_switch_notifications"
+                        android:textColor="@color/new_red"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <!-- NGO DETAILS CARD -->
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardNgoDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp"
-            android:background="@color/white"
-            android:orientation="vertical">
-            <!-- Dark Mode -->
-            <Switch
-                android:id="@+id/switchDarkMode"
-                android:text="@string/setting_switch_mode"
-                android:textColor="@color/new_red"
+            app:cardCornerRadius="@dimen/_12sdp"
+            app:cardElevation="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_12sdp">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:ignore="UseSwitchCompatOrMaterialXml" />
-            <!-- Notifications -->
-            <Switch
-                android:id="@+id/switchNotifications"
-                android:text="@string/setting_switch_notifications"
-                android:textColor="@color/new_red"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <!-- HEADER -->
+
+                <TextView
+                    android:id="@+id/dropNgoDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/new_red"
+                    android:text="@string/ngo_organization_title"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:padding="16dp"/>
+
+                <!-- EXPANDABLE CONTENT -->
+
+                <LinearLayout
+                    android:id="@+id/formNgoDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/white"
+                    android:visibility="gone"
+                    android:padding="16dp">
+
+                    <EditText
+                        android:id="@+id/etNgoName"
+                        android:layout_width="match_parent"
+                        android:drawableStart="@drawable/ic_name"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:layout_height="wrap_content"
+                        style="@style/editText"
+                        android:hint="@string/ngo_organization_name"/>
+
+                    <EditText
+                        android:id="@+id/etRegNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLength="10"
+                        style="@style/editText"
+                        android:hint="@string/ngo_organization_reg_no"
+                        android:layout_marginTop="10dp"/>
+
+                    <EditText
+                        android:id="@+id/etAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_location"
+                        android:drawablePadding="@dimen/_5sdp"
+                        style="@style/editText"
+                        android:hint="@string/ngo_organization_address"
+                        android:layout_marginTop="10dp"/>
+
+                    <Button
+                        android:id="@+id/btnUpdateNgo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/button_20"
+                        android:gravity="center"
+                        app:backgroundTint="@null"
+                        android:textColor="@color/white"
+                        android:text="@string/ngo_organization_update_btn"
+                        android:layout_marginTop="12dp"/>
+
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- CONTACT CARD -->
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/_12sdp"
+            app:cardElevation="@dimen/_4sdp"
+            android:layout_marginBottom="@dimen/_12sdp">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:ignore="UseSwitchCompatOrMaterialXml" />
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/dropContact"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/new_red"
+                    android:text="@string/ngo_contact_title"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:padding="16dp"/>
+
+                <LinearLayout
+                    android:id="@+id/formContact"
+                    android:background="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:padding="16dp">
+
+                    <EditText
+                        android:id="@+id/etPhone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_call"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:maxLength="10"
+                        style="@style/editText"
+                        android:hint="@string/ngo_contact_phone"/>
+
+                    <EditText
+                        android:id="@+id/etEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_email"
+                        android:drawablePadding="@dimen/_5sdp"
+                        style="@style/editText"
+                        android:hint="@string/ngo_contact_email"
+                        android:enabled="false"
+                        android:layout_marginTop="10dp"/>
+
+                    <Button
+                        android:id="@+id/btnUpdateContact"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/button_20"
+                        android:gravity="center"
+                        app:backgroundTint="@null"
+                        android:textColor="@color/white"
+                        android:text="@string/ngo_contact_update_btn"
+                        android:layout_marginTop="12dp"/>
+
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- ProgressBar -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="@dimen/_250sdp"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
+    </LinearLayout>
 
 
 
@@ -76,7 +278,6 @@
         android:id="@+id/btnLogout"
         android:text="@string/setting_btnLogout"
         style="@style/button_20"
-        android:layout_marginTop="30dp"
         android:layout_marginHorizontal="@dimen/_50sdp"
         app:backgroundTint="@null"
         android:textStyle="bold"
@@ -86,3 +287,4 @@
         android:layout_height="wrap_content"/>
 
 </LinearLayout>
+</ScrollView>

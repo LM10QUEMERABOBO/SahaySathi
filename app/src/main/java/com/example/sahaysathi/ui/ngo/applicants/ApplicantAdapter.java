@@ -69,15 +69,12 @@ public class ApplicantAdapter extends RecyclerView.Adapter<ApplicantAdapter.View
                             "Skill: " + applicant.getSkill()
             );
 
-            builder.setPositiveButton("Accept", (dialog, which) ->
-                    updateStatus(applicant, position, "accepted"));
-
-            builder.setNegativeButton("Reject", (dialog, which) ->
-                    updateStatus(applicant, position, "rejected"));
-
+            builder.setPositiveButton("Yes", null);
+            builder.setNegativeButton("No",null);
             builder.setNeutralButton("View Details", (dialog, which) -> {
                 Intent intent = new Intent(context, ApplicantDetailActivity.class);
                 intent.putExtra("applicationId", applicant.getApplicationId());
+                intent.putExtra("volunteerId",applicant.getVolunteerId());
                 intent.putExtra("name", applicant.getName());
                 intent.putExtra("city", applicant.getCity());
                 intent.putExtra("skill", applicant.getSkill());

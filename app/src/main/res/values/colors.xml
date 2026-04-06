@@ -3,8 +3,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="new_red">#FF4F00</color>
-    <color name="new_blue">#008080</color>
-    <color name="blue">#0E26B1</color>
+    <color name="new_blue">#008000</color>
+    <color name="blue">#0e37b1</color>
     <color name="grey_border">#F1F4FF</color>
     <color name="grey">#616161</color>
 </resources>

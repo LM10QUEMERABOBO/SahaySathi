@@ -21,6 +21,26 @@ public class Applicant {
         this.status = status;
     }
 
+    public void setApplicationId(String applicationId) {
+        this.applicationId = applicationId;
+    }
+
+    public void setVolunteerId(String volunteerId) {
+        this.volunteerId = volunteerId;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setSkill(String skill) {
+        this.skill = skill;
+    }
+
     public String getApplicationId() { return applicationId; }
     public String getVolunteerId() { return volunteerId; }
     public String getName() { return name; }

@@ -7,7 +7,6 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/_10sdp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp">
@@ -53,10 +52,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="@string/btn_requestHelp"
+                    android:clickable="true"
                     android:textColor="@color/new_red"
                     android:gravity="center"
                     android:textStyle="bold"
-                    android:enabled="false"
                     android:textSize="16sp"/>
 
             </com.google.android.material.card.MaterialCardView>
@@ -74,8 +73,8 @@
                     android:id="@+id/btn_offerHelp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="@string/btn_requestHelp"
-                    android:enabled="false"
+                    android:text="@string/btn_offerHelp"
+                    android:clickable="true"
                     android:textColor="@color/blue"
                     android:gravity="center"
                     android:textStyle="bold"
