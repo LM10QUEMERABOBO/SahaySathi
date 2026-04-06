@@ -2,59 +2,65 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="@dimen/_200sdp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white">
+    android:background="@color/blue">
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/blue"
-        android:layout_marginTop="@dimen/_200sdp"
-        android:padding="16dp">
+        android:layout_margin="8dp"
+        app:cardElevation="6dp"
+        app:cardCornerRadius="12dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:padding="16dp">
 
-        <!-- Event Title -->
-        <TextView
-            android:id="@+id/dispEventTitle"
-            style="@style/textView_30"
-            android:text="Event Title"
-            android:textStyle="bold"
-            android:textColor="@color/white" />
+            <TextView
+                android:id="@+id/dispEventTitle"
+                style="@style/textView_30"
+                android:text="Event Title"
+                android:textStyle="bold"
+                android:textColor="@color/new_red" />
 
-        <!-- City -->
-        <TextView
-            android:id="@+id/dispEventCity"
-            style="@style/textView_15"
-            android:text="City"
-            android:layout_marginTop="8dp"
-            android:textColor="@color/white" />
+            <!-- City -->
+            <TextView
+                android:id="@+id/dispEventCity"
+                style="@style/textView_15"
+                android:text="City"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/blue" />
 
-        <!-- Description Label -->
-        <TextView
+            <!-- Description Label -->
+            <TextView
 
-            style="@style/textView_15"
-            android:text="Description"
-            android:textStyle="bold"
-            android:textColor="@color/white" />
+                style="@style/textView_15"
+                android:text="Description"
+                android:textStyle="bold"
+                android:textColor="@color/new_red" />
 
-        <!-- Description -->
-        <TextView
-            style="@style/textView_15"
-            android:id="@+id/dispEventDesc"
-            android:text="Event description will appear here"
-            android:textColor="@color/white" />
+            <!-- Description -->
+            <TextView
+                style="@style/textView_15"
+                android:id="@+id/dispEventDesc"
+                android:text="Event description will appear here"
+                android:textColor="@color/blue" />
 
-        <!-- Apply Button -->
-        <Button
-            android:id="@+id/btnApply"
-            style="@style/button_10"
-            android:text="Apply for Event"
-            android:layout_marginTop="24dp"
-            android:layout_gravity="center"
-            android:background="@color/new_red"
-            app:backgroundTint="@null"
-            android:textColor="@color/white" />
+            <!-- Apply Button -->
+            <Button
+                android:id="@+id/btnApply"
+                style="@style/button_10"
+                android:text="Apply for Event"
+                android:layout_marginTop="24dp"
+                android:layout_gravity="center"
+                android:background="@color/new_red"
+                app:backgroundTint="@null"
+                android:textColor="@color/white" />
 
-    </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 </ScrollView>

@@ -2,17 +2,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue"
-    android:paddingTop="@dimen/_30sdp"
+    android:paddingTop="@dimen/_150sdp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:cardElevation="6dp"
+        app:cardCornerRadius="12dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="6dp"
-        app:cardCornerRadius="12dp"
         android:orientation="vertical"
-        android:layout_marginTop="@dimen/_120sdp"
         android:background="@color/white"
         android:padding="20dp">
 
@@ -95,6 +98,7 @@
                 android:text="@string/applicant_accept_button"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_16sdp"
+                app:cardCornerRadius="12dp"
                 app:backgroundTint="@null"/>
 
             <Button
@@ -102,11 +106,13 @@
                 android:background="#FF0000"
                 android:layout_width="@dimen/_120sdp"
                 android:layout_height="@dimen/_40sdp"
-                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_6sdp"
                 android:text="@string/applicant_reject_button"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_16sdp"
+                app:cardCornerRadius="12dp"
                 app:backgroundTint="@null" />
         </LinearLayout>
     </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </ScrollView>
