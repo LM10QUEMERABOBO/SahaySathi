@@ -1,25 +1,42 @@
-<androidx.cardview.widget.CardView android:layout_margin="10dp"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_margin="8dp"
+    app:cardElevation="6dp"
+    android:background="@color/blue"
+    app:cardCornerRadius="12dp">
 
     <LinearLayout
-        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="15dp"
+        android:background="@color/white"
         android:layout_width="match_parent"
-        android:padding="12dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
+
+        <!-- Event Title -->
+        <TextView
+            android:id="@+id/tvTaskName"
+            android:text="@string/mr_event_name"
+            android:textColor="@color/new_red"
+            android:textStyle="bold"
+            android:textSize="@dimen/_25sdp"
+            style="@style/textView_15"/>
 
         <TextView
-            style="@style/textView_30"
-            android:id="@+id/tvName"
-            android:textStyle="bold"/>
-
-        <TextView
+            android:id="@+id/tvTaskCity"
+            android:text="@string/mr_location_name"
             style="@style/textView_15"
-            android:id="@+id/tvCity"/>
+            android:textColor="@color/blue"/>
 
         <TextView
-            style="@style/textView_15"
-            android:id="@+id/tvInstructions"/>
+            android:id="@+id/tvTaskInstructions"
+            android:text="@string/mr_event_status"
+            android:textColor="@color/blue"
+            style="@style/textView_15"/>
+
+
     </LinearLayout>
+
 </androidx.cardview.widget.CardView>
