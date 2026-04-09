@@ -70,7 +70,7 @@ public class ApplicantsFragment extends Fragment {
                     }
 
                     for (DocumentSnapshot appDoc : applicationSnapshots) {
-                        String volunteerId = appDoc.getString("volunteerId");
+                        String volunteerId = appDoc.getString("userId");
                         String status = appDoc.getString("status");
                         String appId = appDoc.getId();
 

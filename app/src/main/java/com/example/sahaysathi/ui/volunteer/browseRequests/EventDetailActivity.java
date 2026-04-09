@@ -124,7 +124,6 @@ public class EventDetailActivity extends AppCompatActivity {
                 });
     }
 
-    // 📅 Deadline check
     private boolean isDeadlinePassed() {
         try {
             if (deadline == null) return false;

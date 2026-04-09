@@ -27,8 +27,6 @@
                 android:background="@color/white"
                 android:orientation="vertical">
 
-                <!-- HEADER -->
-
                 <TextView
                     android:id="@+id/dropNgoLogo"
                     android:layout_width="match_parent"

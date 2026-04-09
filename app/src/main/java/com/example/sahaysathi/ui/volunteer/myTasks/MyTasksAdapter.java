@@ -36,15 +36,15 @@ public class MyTasksAdapter extends RecyclerView.Adapter<MyTasksAdapter.ViewHold
 
         ApplicationModel model = list.get(position);
 
-        holder.name.setText(model.getEventName());
-        holder.city.setText(model.getCity());
-        holder.instructions.setText(model.getInstructions());
+        holder.name.setText(model.getEventName() != null ? model.getEventName() : "N/A");
+        holder.city.setText(model.getlocation() != null ? model.getlocation() : "N/A");
+        holder.instructions.setText(model.getInstructions() != null ? model.getInstructions() : "No instructions");
 
         holder.itemView.setOnClickListener(v -> {
             Intent i = new Intent(context, QRActivity.class);
             i.putExtra("eventId", model.getEventId());
             i.putExtra("eventName", model.getEventName());
-            i.putExtra("city", model.getCity());
+            i.putExtra("city", model.getlocation());
             i.putExtra("instructions", model.getInstructions());
             context.startActivity(i);
         });

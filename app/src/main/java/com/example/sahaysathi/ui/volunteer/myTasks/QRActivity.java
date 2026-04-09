@@ -9,7 +9,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sahaysathi.R;
+import com.example.sahaysathi.ui.volunteer.notifications.ApplicationModel;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.zxing.BarcodeFormat;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
@@ -30,12 +32,30 @@ public class QRActivity extends AppCompatActivity {
 
         Intent i = getIntent();
 
+        String eventId = i.getStringExtra("eventId");
+        String userId = FirebaseAuth.getInstance().getUid();
+
         title.setText(i.getStringExtra("eventName"));
         city.setText(i.getStringExtra("city"));
         instructions.setText(i.getStringExtra("instructions"));
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        String eventId = i.getStringExtra("eventId");
-        String userId = FirebaseAuth.getInstance().getUid();
+        db.collection("applications")
+                .document(eventId)
+                .get()
+                .addOnSuccessListener(doc -> {
+
+                    if (doc.exists()) {
+
+                        ApplicationModel model = doc.toObject(ApplicationModel.class);
+
+                        if (model != null) {
+                            title.setText(model.getEventName());
+                            city.setText(model.getlocation());
+                            instructions.setText(model.getInstructions());
+                        }
+                    }
+                });
 
         generateQR(eventId + "_" + userId);
     }

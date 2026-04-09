@@ -21,7 +21,8 @@
 
             <TextView
                 android:id="@+id/dispEventTitle"
-                style="@style/textView_30"
+                style="@style/textView_15"
+                android:textSize="@dimen/_20sdp"
                 android:text="Event Title"
                 android:textStyle="bold"
                 android:textColor="@color/new_red" />
@@ -31,12 +32,10 @@
                 android:id="@+id/dispEventCity"
                 style="@style/textView_15"
                 android:text="City"
-                android:layout_marginTop="8dp"
                 android:textColor="@color/blue" />
 
             <!-- Description Label -->
             <TextView
-
                 style="@style/textView_15"
                 android:text="Description"
                 android:textStyle="bold"

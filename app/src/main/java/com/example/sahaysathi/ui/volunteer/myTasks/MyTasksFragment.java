@@ -43,6 +43,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,30 +74,31 @@ public class MyTasksFragment extends Fragment {
 
     private void loadTasks() {
 
-        String uid = sharedPreferences.getString(ConstantSp.userid,"");
+        String uid = sharedPreferences.getString(ConstantSp.userid, "");
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("applications");
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        ref.orderByChild("userId").equalTo(uid)
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+        db.collection("applications")
+                .whereEqualTo("userId", uid)
+                .whereEqualTo("status", "accepted")
+                .orderBy("timestamp")
+                .addSnapshotListener((value, error) -> {
 
-                        list.clear();
+                    if (error != null) return;
 
-                        for (DataSnapshot ds : snapshot.getChildren()) {
-                            ApplicationModel model = ds.getValue(ApplicationModel.class);
+                    list.clear();
 
-                            if (model.getStatus().equals("accepted")) {
-                                list.add(model);
-                            }
-                        }
+                    for (QueryDocumentSnapshot doc : value) {
 
-                        adapter.notifyDataSetChanged();
+                        ApplicationModel model = doc.toObject(ApplicationModel.class);
+
+                        // Set document ID if needed
+                        model.setApplicationId(doc.getId());
+
+                        list.add(model);
                     }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {}
+                    adapter.notifyDataSetChanged();
                 });
     }
 }

@@ -35,21 +35,23 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         ApplicationModel model = list.get(position);
-
         holder.name.setText(model.getEventName());
-        holder.city.setText(model.getCity());
+        holder.city.setText(model.getlocation());
         holder.status.setText(model.getStatus());
-
-        switch (model.getStatus()) {
-            case "accepted":
-                holder.status.setBackgroundColor(Color.GREEN);
-                break;
-            case "pending":
-                holder.status.setBackgroundColor(Color.YELLOW);
-                break;
-            case "rejected":
-                holder.status.setBackgroundColor(Color.RED);
-                break;
+        String status = model.getStatus();
+        holder.status.setText(status != null ? status : "unknown");
+        if (status != null) {
+            switch (status) {
+                case "accepted":
+                    holder.status.setBackgroundColor(Color.GREEN);
+                    break;
+                case "pending":
+                    holder.status.setBackgroundColor(Color.YELLOW);
+                    break;
+                case "rejected":
+                    holder.status.setBackgroundColor(Color.RED);
+                    break;
+            }
         }
     }
 
@@ -62,9 +64,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            name = itemView.findViewById(R.id.tvName);
-            city = itemView.findViewById(R.id.tvCity);
-            status = itemView.findViewById(R.id.tvStatus);
+            name = itemView.findViewById(R.id.tvEventName);
+            city = itemView.findViewById(R.id.tvEventCity);
+            status = itemView.findViewById(R.id.tvEventStatus);
         }
     }
 }

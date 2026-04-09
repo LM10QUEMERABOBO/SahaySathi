@@ -16,12 +16,13 @@ public class ApplicantDetailActivity extends AppCompatActivity {
     Button btnAccept, btnReject;
 
     String applicationId,volunteerId;
+    FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_applicant_detail);
-
+        db = FirebaseFirestore.getInstance();
         name = findViewById(R.id.detailName);
         city = findViewById(R.id.detailCity);
         skill = findViewById(R.id.detailSkill);
@@ -38,11 +39,19 @@ public class ApplicantDetailActivity extends AppCompatActivity {
 
         city.setText("City: " + getIntent().getStringExtra("city"));
         skill.setText("Skill: " + getIntent().getStringExtra("skill"));
+        db.collection("users").document(volunteerId).get()
+                .addOnSuccessListener(userDoc -> {
+                            if (userDoc.exists()) {
+                                 email.setText("Email: " +userDoc.getString("email"));
+                                 phone.setText("Phone: " +userDoc.getString("phone") != null ? userDoc.getString("phone") : "N/A");
+                                 experience.setText("Experience: " + userDoc.getString("experience") != null ? userDoc.getString("experience") : "N/A");
+                            }
+                        });
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        btnAccept.setOnClickListener(v -> updateStatus(db, "accepted"));
-        btnReject.setOnClickListener(v -> updateStatus(db, "rejected"));
+        btnAccept.setOnClickListener(v -> updateStatus(db, "accept"));
+        btnReject.setOnClickListener(v -> updateStatus(db, "reject"));
     }
 
     private void updateStatus(FirebaseFirestore db, String status) {
