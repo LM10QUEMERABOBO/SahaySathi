@@ -240,14 +240,6 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- ProgressBar -->
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="@dimen/_250sdp"
-            android:layout_gravity="center"
-            android:visibility="gone"/>
     </LinearLayout>
 
 </ScrollView>

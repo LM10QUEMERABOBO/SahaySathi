@@ -135,5 +135,8 @@
     <string name="noEventText">No events found</string>
     <string name="editSearchEvent">Search by city or event</string>
     <string name="mr_event_status">Status</string>
+    <string name="mr_tasks_instructions">instructions</string>
+    <string name="mr_tasks_qr">Click To See the QRCode -></string>
+    <string name="ngo_experience">Enter Volunteer Experience(Yrs.) If Any.</string>
 
 </resources>

@@ -53,7 +53,6 @@ public class ProfileFragment extends Fragment {
     Button btnUpdateNgoLogo;
     Uri imageUri;
 
-    ProgressBar progressBar;
 
     String userId;
 
@@ -94,8 +93,6 @@ public class ProfileFragment extends Fragment {
         circleImage = view.findViewById(R.id.circleImage);
         btnUpdateNgoLogo = view.findViewById(R.id.btnUpdateNgoLogo);
 
-        progressBar = view.findViewById(R.id.progressBar);
-
         // Toggle dropdowns
         dropNgoDetails.setOnClickListener(v -> toggle(formNgoDetails));
         dropContact.setOnClickListener(v -> toggle(formContact));
@@ -121,13 +118,11 @@ public class ProfileFragment extends Fragment {
     // 🔥 LOAD PROFILE
     private void loadProfile() {
 
-        progressBar.setVisibility(View.VISIBLE);
 
         db.collection("users")
                 .document(userId)
                 .get()
                 .addOnSuccessListener(doc -> {
-                    progressBar.setVisibility(View.GONE);
 
                     if (doc.exists()) {
 
@@ -148,7 +143,6 @@ public class ProfileFragment extends Fragment {
                     }
                 })
                 .addOnFailureListener(e -> {
-                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(getContext(), "Failed to load", Toast.LENGTH_SHORT).show();
                 });
     }
@@ -165,8 +159,6 @@ public class ProfileFragment extends Fragment {
             return;
         }
 
-        progressBar.setVisibility(View.VISIBLE);
-
         HashMap<String, Object> map = new HashMap<>();
         map.put("name", name);
         map.put("registrationNumber", regNo);
@@ -176,11 +168,9 @@ public class ProfileFragment extends Fragment {
                 .document(userId)
                 .update(map)
                 .addOnSuccessListener(unused -> {
-                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(getContext(), "NGO updated", Toast.LENGTH_SHORT).show();
                 })
                 .addOnFailureListener(e -> {
-                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(getContext(), "Update failed", Toast.LENGTH_SHORT).show();
                 });
     }
@@ -191,8 +181,6 @@ public class ProfileFragment extends Fragment {
         String phone = etPhone.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
 
-        progressBar.setVisibility(View.VISIBLE);
-
         HashMap<String, Object> map = new HashMap<>();
         map.put("phone", phone);
         map.put("email", email);
@@ -201,11 +189,9 @@ public class ProfileFragment extends Fragment {
                 .document(userId)
                 .update(map)
                 .addOnSuccessListener(unused -> {
-                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(getContext(), "Contact updated", Toast.LENGTH_SHORT).show();
                 })
                 .addOnFailureListener(e -> {
-                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(getContext(), "Update failed", Toast.LENGTH_SHORT).show();
                 });
     }
@@ -218,8 +204,6 @@ public class ProfileFragment extends Fragment {
             return;
         }
 
-        progressBar.setVisibility(View.VISIBLE);
-
         byte[] imageBytes = imageViewToByte(circleImage);
         String base64Image = Base64.encodeToString(imageBytes, Base64.DEFAULT);
 
@@ -230,11 +214,9 @@ public class ProfileFragment extends Fragment {
                 .document(userId)
                 .update(map)
                 .addOnSuccessListener(unused -> {
-                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(getContext(), "Logo updated", Toast.LENGTH_SHORT).show();
                 })
                 .addOnFailureListener(e -> {
-                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(getContext(), "Logo update failed", Toast.LENGTH_SHORT).show();
                 });
     }

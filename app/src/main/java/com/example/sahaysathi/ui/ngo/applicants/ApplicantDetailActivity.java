@@ -1,28 +1,34 @@
 package com.example.sahaysathi.ui.ngo.applicants;
 
 import android.os.Bundle;
+import android.text.InputType;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sahaysathi.R;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ApplicantDetailActivity extends AppCompatActivity {
 
-    TextView name, city, skill,email,experience,phone;
+    TextView name, city, skill, email, experience, phone;
     Button btnAccept, btnReject;
 
-    String applicationId,volunteerId;
+    String applicationId, volunteerId;
+
     FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_applicant_detail);
-        db = FirebaseFirestore.getInstance();
+
+        // Initialize views
         name = findViewById(R.id.detailName);
         city = findViewById(R.id.detailCity);
         skill = findViewById(R.id.detailSkill);
@@ -33,28 +39,82 @@ public class ApplicantDetailActivity extends AppCompatActivity {
         btnAccept = findViewById(R.id.accept_button);
         btnReject = findViewById(R.id.regect_button);
 
+        // Get data from intent
         applicationId = getIntent().getStringExtra("applicationId");
         volunteerId = getIntent().getStringExtra("volunteerId");
-        name.setText(getIntent().getStringExtra("name"));
 
+        name.setText(getIntent().getStringExtra("name"));
         city.setText("City: " + getIntent().getStringExtra("city"));
         skill.setText("Skill: " + getIntent().getStringExtra("skill"));
-        db.collection("users").document(volunteerId).get()
-                .addOnSuccessListener(userDoc -> {
-                            if (userDoc.exists()) {
-                                 email.setText("Email: " +userDoc.getString("email"));
-                                 phone.setText("Phone: " +userDoc.getString("phone") != null ? userDoc.getString("phone") : "N/A");
-                                 experience.setText("Experience: " + userDoc.getString("experience") != null ? userDoc.getString("experience") : "N/A");
-                            }
-                        });
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance();
 
-        btnAccept.setOnClickListener(v -> updateStatus(db, "accept"));
-        btnReject.setOnClickListener(v -> updateStatus(db, "reject"));
+        // Button Clicks
+        btnAccept.setOnClickListener(v -> showConfirmationDialog());
+        btnReject.setOnClickListener(v -> updateStatus("rejected"));
     }
 
-    private void updateStatus(FirebaseFirestore db, String status) {
+    // 🔹 Step 1: Confirmation Dialog
+    private void showConfirmationDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Confirm Selection")
+                .setMessage("Are you sure you want to accept this volunteer?")
+                .setPositiveButton("Yes", (dialog, which) -> showInstructionDialog())
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
+
+    // 🔹 Step 2: Instruction Input Dialog
+    private void showInstructionDialog() {
+
+        EditText input = new EditText(this);
+        input.setHint("Enter instructions for volunteer");
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+        input.setPadding(40, 40, 40, 40);
+
+        new AlertDialog.Builder(this)
+                .setTitle("Provide Instructions")
+                .setView(input)
+                .setPositiveButton("Submit", (dialog, which) -> {
+
+                    String instructions = input.getText().toString().trim();
+
+                    if (instructions.isEmpty()) {
+                        Toast.makeText(this, "Instructions are required", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    saveAcceptanceWithInstructions(instructions);
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
+
+    // 🔹 Step 3: Save Accepted Status + Instructions
+    private void saveAcceptanceWithInstructions(String instructions) {
+
+        if (applicationId == null) {
+            Toast.makeText(this, "Invalid application", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        db.collection("applications")
+                .document(applicationId)
+                .update(
+                        "status", "accepted",
+                        "instructions", instructions,
+                        "acceptedAt", FieldValue.serverTimestamp()
+                )
+                .addOnSuccessListener(unused ->
+                        Toast.makeText(this, "Volunteer accepted successfully", Toast.LENGTH_SHORT).show()
+                )
+                .addOnFailureListener(e ->
+                        Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show()
+                );
+    }
+
+    // 🔹 Reject Logic (unchanged but cleaned)
+    private void updateStatus(String status) {
 
         if (applicationId == null) {
             Toast.makeText(this, "Invalid application", Toast.LENGTH_SHORT).show();

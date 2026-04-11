@@ -29,7 +29,6 @@
         android:id="@+id/qrImage"
         android:layout_marginTop="@dimen/_20sdp"
         android:layout_width="250dp"
-        android:src="@drawable/app_logo"
         android:layout_height="250dp"
         android:layout_gravity="center"/>
 

@@ -46,6 +46,7 @@ public class MyTasksAdapter extends RecyclerView.Adapter<MyTasksAdapter.ViewHold
             i.putExtra("eventName", model.getEventName());
             i.putExtra("city", model.getlocation());
             i.putExtra("instructions", model.getInstructions());
+            i.putExtra("applicationId", model.getApplicationId());
             context.startActivity(i);
         });
     }
@@ -60,9 +61,9 @@ public class MyTasksAdapter extends RecyclerView.Adapter<MyTasksAdapter.ViewHold
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            name = itemView.findViewById(R.id.tvName);
-            city = itemView.findViewById(R.id.tvCity);
-            instructions = itemView.findViewById(R.id.tvInstructions);
+            name = itemView.findViewById(R.id.tvTasksTitle);
+            city = itemView.findViewById(R.id.tvTasksCity);
+            instructions = itemView.findViewById(R.id.tvTasksInstructions);
         }
     }
 }

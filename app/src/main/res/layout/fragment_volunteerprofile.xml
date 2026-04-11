@@ -4,7 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="@dimen/_20sdp"
     android:background="@color/blue">
 
     <LinearLayout
@@ -137,7 +136,7 @@
                         android:layout_height="wrap_content"
                         android:maxLength="10"
                         style="@style/editText"
-                        android:hint="@string/ngo_organization_reg_no"
+                        android:hint="@string/ngo_experience"
                         android:layout_marginTop="10dp"/>
 
                     <EditText
@@ -240,15 +239,6 @@
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
-
-        <!-- ProgressBar -->
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="@dimen/_250sdp"
-            android:layout_gravity="center"
-            android:visibility="gone"/>
     </LinearLayout>
 
 </ScrollView>

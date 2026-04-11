@@ -92,7 +92,6 @@ public class MyTasksFragment extends Fragment {
 
                         ApplicationModel model = doc.toObject(ApplicationModel.class);
 
-                        // Set document ID if needed
                         model.setApplicationId(doc.getId());
 
                         list.add(model);

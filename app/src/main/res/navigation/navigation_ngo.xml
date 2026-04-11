@@ -30,6 +30,11 @@
         android:label="Profile"/>
 
     <fragment
+        android:id="@+id/nav_ngo_qrScanner"
+        android:name="com.example.sahaysathi.ui.ngo.qrscanner.QRScannerFragment"
+        android:label="QRScanner"/>
+
+    <fragment
         android:id="@+id/nav_ngo_logout"
         android:name="com.example.sahaysathi.ui.slideshow.SlideshowFragment"
         android:label="Settings"/>
