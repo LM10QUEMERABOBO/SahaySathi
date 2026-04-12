@@ -39,7 +39,7 @@ public class ApplicantsFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recyclerApplicants);
         noDataText = view.findViewById(R.id.noApplicantText);
-        noDataText.setVisibility(View.GONE);
+
         SharedPreferences sp = requireActivity()
                 .getSharedPreferences(ConstantSp.pref, MODE_PRIVATE);
 
@@ -51,61 +51,64 @@ public class ApplicantsFragment extends Fragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
-
+        noDataText.setVisibility(View.GONE);
         fetchApplicants();
 
         return view;
     }
 
     private void fetchApplicants() {
+
         db.collection("applications")
                 .whereEqualTo("ngoId", ngoId)
                 .get()
                 .addOnSuccessListener(applicationSnapshots -> {
+
                     applicantList.clear();
+
                     if (applicationSnapshots.isEmpty()) {
                         noDataText.setVisibility(View.VISIBLE);
                         adapter.notifyDataSetChanged();
                         return;
+                    } else {
+                        noDataText.setVisibility(View.GONE);
                     }
 
                     for (DocumentSnapshot appDoc : applicationSnapshots) {
+
                         String volunteerId = appDoc.getString("userId");
                         String status = appDoc.getString("status");
                         String appId = appDoc.getId();
+                        String eventName = appDoc.getString("eventName");
+                        String location = appDoc.getString("location");
 
-                        // Nested query to get volunteer details
-                        db.collection("users").document(volunteerId).get()
+                        db.collection("users")
+                                .document(volunteerId)
+                                .get()
                                 .addOnSuccessListener(userDoc -> {
+
                                     if (userDoc.exists()) {
+
                                         String name = userDoc.getString("name");
                                         String city = userDoc.getString("city");
                                         String skill = userDoc.getString("skill");
 
                                         applicantList.add(new Applicant(
-                                                appId, volunteerId, name,
+                                                appId,
+                                                volunteerId,
+                                                name != null ? name : "N/A",
                                                 city != null ? city : "N/A",
-                                                skill, status
+                                                skill != null ? skill : "N/A",
+                                                status,
+                                                eventName != null ? eventName : "N/A",
+                                                location != null ? location : "N/A"
                                         ));
 
-                                        // Notify adapter as each item is loaded
                                         adapter.notifyDataSetChanged();
-                                        noDataText.setVisibility(View.GONE);
                                     }
                                 });
                     }
                 })
                 .addOnFailureListener(e -> noDataText.setVisibility(View.VISIBLE));
     }
-
-
-//    private void getVolunteer(String volunteerId) {
-//        db.collection("users")
-//                .whereEqualTo("userId",volunteerId).get().addOnSuccessListener(volunteerSnapshots -> {
-//                    for (DocumentSnapshot doc : volunteerSnapshots){
-//                        String name = doc.getString("name");
-//                        String city = doc.getString("city");
-//                        String skill = doc.getString("skill");
-//                    }
-//                });}
 }

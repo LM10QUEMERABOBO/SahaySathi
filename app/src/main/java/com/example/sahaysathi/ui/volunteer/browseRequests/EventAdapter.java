@@ -34,16 +34,24 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Event event = list.get(position);
+
         holder.title.setText(event.getEventName());
         holder.city.setText(event.getLocation());
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, EventDetailActivity.class);
+
             intent.putExtra("eventId", event.getRequestId());
             intent.putExtra("title", event.getEventName());
             intent.putExtra("location", event.getLocation());
             intent.putExtra("description", event.getDescription());
             intent.putExtra("deadline", event.getDeadline());
+
+            // ✅ NEW
+            intent.putExtra("date", event.getDate());
+            intent.putExtra("time", event.getTime());
+            intent.putExtra("volunteerCount", event.getVolunteerCount());
+
             context.startActivity(intent);
         });
     }

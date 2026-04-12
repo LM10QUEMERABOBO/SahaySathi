@@ -32,6 +32,7 @@ public class InitActivity extends AppCompatActivity {
             FirebaseUser userId = FirebaseAuth.getInstance().getCurrentUser();
             if (userId == null) {
                 startActivity(new Intent(InitActivity.this, Login_Page.class));
+                finish();
             } else {
                 Intent intent = new Intent(InitActivity.this, MainActivity2.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

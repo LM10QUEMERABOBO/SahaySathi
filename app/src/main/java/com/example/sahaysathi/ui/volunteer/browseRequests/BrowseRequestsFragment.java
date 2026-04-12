@@ -39,7 +39,7 @@ public class BrowseRequestsFragment extends Fragment {
     private final Handler handler = new Handler(Looper.getMainLooper());
     private Runnable searchRunnable;
 
-    private static final long SEARCH_DELAY = 400; // ms
+    private static final long SEARCH_DELAY = 400;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -1,6 +1,6 @@
 package com.example.sahaysathi.ui.ngo.applicants;
 
-import android.app.AlertDialog;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sahaysathi.R;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
@@ -28,81 +27,54 @@ public class ApplicantAdapter extends RecyclerView.Adapter<ApplicantAdapter.View
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView name, city, skill;
+
+        TextView name, city, skill, eventName,status;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.applicantName);
             city = itemView.findViewById(R.id.applicantCity);
             skill = itemView.findViewById(R.id.applicantSkill);
+            eventName = itemView.findViewById(R.id.applicantEventName);
+            status = itemView.findViewById(R.id.applicantEventStatus);
         }
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
+    public ApplicantAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context)
                 .inflate(R.layout.fragment_applicant_card, parent, false);
         return new ViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ApplicantAdapter.ViewHolder holder, int position) {
 
         Applicant applicant = applicantList.get(position);
 
         holder.name.setText(applicant.getName() != null ? applicant.getName() : "N/A");
         holder.city.setText(applicant.getCity() != null ? applicant.getCity() : "N/A");
         holder.skill.setText("Skill: " + (applicant.getSkill() != null ? applicant.getSkill() : "N/A"));
+        holder.eventName.setText("Event: " + (applicant.getEventName() != null ? applicant.getEventName() : "N/A"));
+        holder.status.setText("Status: " + (applicant.getStatus() != null ? applicant.getStatus() : "N/A"));
 
-        // Fade animation
-        holder.itemView.setAlpha(0f);
-        holder.itemView.animate().alpha(1f).setDuration(300).start();
-
-        holder.itemView.setOnClickListener(view -> {
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setTitle(applicant.getName());
-
-            builder.setMessage(
-                    "City: " + applicant.getCity() + "\n" +
-                            "Skill: " + applicant.getSkill()
-            );
-
-            builder.setPositiveButton("Yes", null);
-            builder.setNegativeButton("No",null);
-            builder.setNeutralButton("View Details", (dialog, which) -> {
-                Intent intent = new Intent(context, ApplicantDetailActivity.class);
-                intent.putExtra("applicationId", applicant.getApplicationId());
-                intent.putExtra("volunteerId",applicant.getVolunteerId());
-                intent.putExtra("name", applicant.getName());
-                intent.putExtra("city", applicant.getCity());
-                intent.putExtra("skill", applicant.getSkill());
-                context.startActivity(intent);
-            });
-
-            builder.show();
+        holder.itemView.setOnClickListener(v -> {
+            if ("accepted".equalsIgnoreCase(applicant.getStatus())) {
+                Toast.makeText(context, "Due Security Seasons,\nYou Can Not Revert The Status!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Intent intent = new Intent(context, ApplicantDetailActivity.class);
+            intent.putExtra("applicationId", applicant.getApplicationId());
+            intent.putExtra("volunteerId", applicant.getVolunteerId());
+            intent.putExtra("name", applicant.getName());
+            intent.putExtra("city", applicant.getCity());
+            intent.putExtra("skill", applicant.getSkill());
+            intent.putExtra("eventName", applicant.getEventName());
+            intent.putExtra("location", applicant.getLocation());
+            context.startActivity(intent);
         });
-    }
-
-    private void updateStatus(Applicant applicant, int position, String status) {
-
-        FirebaseFirestore.getInstance()
-                .collection("applications")
-                .document(applicant.getApplicationId())
-                .update("status", status)
-                .addOnSuccessListener(unused -> {
-
-                    // 🔥 Instant UI removal
-                    applicantList.remove(position);
-                    notifyItemRemoved(position);
-                    notifyItemRangeChanged(position, applicantList.size());
-
-                    Toast.makeText(context, "Updated", Toast.LENGTH_SHORT).show();
-                })
-                .addOnFailureListener(e ->
-                        Toast.makeText(context, "Failed: " + e.getMessage(), Toast.LENGTH_SHORT).show()
-                );
     }
 
     @Override

@@ -32,6 +32,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/editSearchEvent"
             android:padding="10dp"
+            android:drawableStart="@drawable/ic_browse"
             style="@style/editText"
             android:textColor="@color/black"
             android:layout_margin="10dp"/>

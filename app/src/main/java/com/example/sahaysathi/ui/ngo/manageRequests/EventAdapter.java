@@ -1,14 +1,23 @@
 package com.example.sahaysathi.ui.ngo.manageRequests;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sahaysathi.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.AggregateQuery;
+import com.google.firebase.firestore.AggregateQuerySnapshot;
+import com.google.firebase.firestore.AggregateSource;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 
@@ -58,9 +67,36 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         holder.title.setText(event.title);
         holder.location.setText(event.location);
         holder.date.setText(event.date);
-        holder.applied.setText("Applied: " + event.appliedCount);
-        holder.selected.setText("Selected: " + event.selectedCount);
 
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        holder.applied.setText("Applied: ...");
+        holder.selected.setText("Accepted: ...");
+
+        String eventId = event.id;
+        db.collection("applications")
+                .whereEqualTo("eventId", eventId)
+                .count()
+                .get(AggregateSource.SERVER)
+                .addOnSuccessListener(snapshot -> {
+
+                    long count = snapshot.getCount();
+                    holder.applied.setText("Applied: " + count);
+
+                    Log.d("TAG", "Applied Count: " + count);
+                });
+        db.collection("applications")
+                .whereEqualTo("eventId", eventId)
+                .whereEqualTo("status", "accepted")
+                .count()
+                .get(AggregateSource.SERVER)
+                .addOnSuccessListener(snapshot -> {
+
+                    long count = snapshot.getCount();
+                    holder.selected.setText("Accepted: " + count);
+
+                    Log.d("TAG", "Accepted Count: " + count);
+                });
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onClick(event);

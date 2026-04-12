@@ -17,6 +17,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class ApplicantDetailActivity extends AppCompatActivity {
 
     TextView name, city, skill, email, experience, phone;
+
+    // NEW EVENT FIELDS
+    TextView eventName, eventLocation;
+
     Button btnAccept, btnReject;
 
     String applicationId, volunteerId;
@@ -35,26 +39,39 @@ public class ApplicantDetailActivity extends AppCompatActivity {
         email = findViewById(R.id.detailEmail);
         phone = findViewById(R.id.detailPhone);
         experience = findViewById(R.id.detailExperience);
-
+        eventName = findViewById(R.id.detailEventName);
+        eventLocation = findViewById(R.id.detailEventLocation);
         btnAccept = findViewById(R.id.accept_button);
         btnReject = findViewById(R.id.regect_button);
 
-        // Get data from intent
+        db = FirebaseFirestore.getInstance();
         applicationId = getIntent().getStringExtra("applicationId");
         volunteerId = getIntent().getStringExtra("volunteerId");
 
+        db.collection("users")
+                .document(volunteerId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        email.setText("Email: "+documentSnapshot.getString("email"));
+                        phone.setText("Contact: "+documentSnapshot.getString("phone"));
+                        if(documentSnapshot.getString("experience")!=null){
+                            experience.setText("Experience: "+documentSnapshot.getString("experience"));
+                        }
+                        else{
+                            experience.setText("Experience: N/A");
+                        }
+                    }
+                });
         name.setText(getIntent().getStringExtra("name"));
         city.setText("City: " + getIntent().getStringExtra("city"));
         skill.setText("Skill: " + getIntent().getStringExtra("skill"));
-
-        db = FirebaseFirestore.getInstance();
-
-        // Button Clicks
+        eventName.setText("Event: " + getIntent().getStringExtra("eventName"));
+        eventLocation.setText("Location: " + getIntent().getStringExtra("location"));
         btnAccept.setOnClickListener(v -> showConfirmationDialog());
         btnReject.setOnClickListener(v -> updateStatus("rejected"));
     }
 
-    // 🔹 Step 1: Confirmation Dialog
     private void showConfirmationDialog() {
         new AlertDialog.Builder(this)
                 .setTitle("Confirm Selection")
@@ -64,7 +81,6 @@ public class ApplicantDetailActivity extends AppCompatActivity {
                 .show();
     }
 
-    // 🔹 Step 2: Instruction Input Dialog
     private void showInstructionDialog() {
 
         EditText input = new EditText(this);
@@ -77,21 +93,20 @@ public class ApplicantDetailActivity extends AppCompatActivity {
                 .setView(input)
                 .setPositiveButton("Submit", (dialog, which) -> {
 
-                    String instructions = input.getText().toString().trim();
+                    String instructionText = input.getText().toString().trim();
 
-                    if (instructions.isEmpty()) {
+                    if (instructionText.isEmpty()) {
                         Toast.makeText(this, "Instructions are required", Toast.LENGTH_SHORT).show();
                         return;
                     }
 
-                    saveAcceptanceWithInstructions(instructions);
+                    saveAcceptanceWithInstructions(instructionText);
                 })
                 .setNegativeButton("Cancel", null)
                 .show();
     }
 
-    // 🔹 Step 3: Save Accepted Status + Instructions
-    private void saveAcceptanceWithInstructions(String instructions) {
+    private void saveAcceptanceWithInstructions(String instructionText) {
 
         if (applicationId == null) {
             Toast.makeText(this, "Invalid application", Toast.LENGTH_SHORT).show();
@@ -102,7 +117,7 @@ public class ApplicantDetailActivity extends AppCompatActivity {
                 .document(applicationId)
                 .update(
                         "status", "accepted",
-                        "instructions", instructions,
+                        "instructions", instructionText,
                         "acceptedAt", FieldValue.serverTimestamp()
                 )
                 .addOnSuccessListener(unused ->
@@ -113,7 +128,6 @@ public class ApplicantDetailActivity extends AppCompatActivity {
                 );
     }
 
-    // 🔹 Reject Logic (unchanged but cleaned)
     private void updateStatus(String status) {
 
         if (applicationId == null) {

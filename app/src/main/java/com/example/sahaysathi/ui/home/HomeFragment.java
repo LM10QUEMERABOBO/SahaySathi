@@ -36,6 +36,7 @@ import com.google.firebase.firestore.AggregateSource;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.messaging.FirebaseMessaging;
 //import com.example.sahaysathi.ui.ngo.PostRequestFragment;
 
 
@@ -61,7 +62,7 @@ public class HomeFragment extends Fragment {
         requestHelp = view.findViewById(R.id.btn_requestHelp);
         offerHelp = view.findViewById(R.id.btn_offerHelp);
         role = sharedPreferences.getString(ConstantSp.role,"");
-
+        saveFcmToken();
 
         requestHelp.setOnClickListener(v -> new AlertDialog.Builder(getContext())
                 .setTitle("Guide to the Request Volunteer Help!")
@@ -125,5 +126,21 @@ public class HomeFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    private void saveFcmToken() {
+        String userId = sharedPreferences.getString(ConstantSp.userid, "");
+        if (userId == null || userId.isEmpty()) return;
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        FirebaseMessaging.getInstance().getToken()
+                .addOnSuccessListener(token -> {
+
+                    db.collection("users")
+                            .document(userId)
+                            .update("fcmToken", token);
+
+                });
     }
 }

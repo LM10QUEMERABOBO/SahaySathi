@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="@dimen/_200sdp"
+    android:paddingTop="@dimen/_40sdp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/blue">
 
@@ -39,7 +39,8 @@
                 style="@style/textView_15"
                 android:text="Description"
                 android:textStyle="bold"
-                android:textColor="@color/new_red" />
+                android:textColor="@color/new_red"
+                />
 
             <!-- Description -->
             <TextView
@@ -47,6 +48,31 @@
                 android:id="@+id/dispEventDesc"
                 android:text="Event description will appear here"
                 android:textColor="@color/blue" />
+
+            <TextView
+                android:id="@+id/dispEventDate"
+                style="@style/textView_15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/blue"
+                android:text="Date" />
+
+            <TextView
+                android:id="@+id/dispEventTime"
+                style="@style/textView_15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/blue"
+                android:text="Time" />
+
+            <TextView
+                android:id="@+id/dispDeadlineStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/textView_15"
+                android:textStyle="bold"
+                android:textColor="@color/new_red"
+                android:text="Deadline Status" />
 
             <!-- Apply Button -->
             <Button

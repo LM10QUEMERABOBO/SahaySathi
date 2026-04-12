@@ -1,5 +1,4 @@
 package com.example.sahaysathi.ui.ngo.applicants;
-
 public class Applicant {
 
     private String applicationId;
@@ -9,36 +8,24 @@ public class Applicant {
     private String skill;
     private String status;
 
-    public Applicant() {} // required for Firestore
+    // NEW FIELDS
+    private String eventName;
+    private String location;
+
+    public Applicant() {}
 
     public Applicant(String applicationId, String volunteerId,
-                     String name, String city, String skill, String status) {
+                     String name, String city, String skill, String status,
+                     String eventName, String location) {
+
         this.applicationId = applicationId;
         this.volunteerId = volunteerId;
         this.name = name;
         this.city = city;
         this.skill = skill;
         this.status = status;
-    }
-
-    public void setApplicationId(String applicationId) {
-        this.applicationId = applicationId;
-    }
-
-    public void setVolunteerId(String volunteerId) {
-        this.volunteerId = volunteerId;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public void setSkill(String skill) {
-        this.skill = skill;
+        this.eventName = eventName;
+        this.location = location;
     }
 
     public String getApplicationId() { return applicationId; }
@@ -47,6 +34,6 @@ public class Applicant {
     public String getCity() { return city; }
     public String getSkill() { return skill; }
     public String getStatus() { return status; }
-
-    public void setStatus(String status) { this.status = status; }
+    public String getEventName() { return eventName; }
+    public String getLocation() { return location; }
 }
