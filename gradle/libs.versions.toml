@@ -15,8 +15,13 @@ coreKtx = "1.18.0"
 googleGmsGoogleServices = "4.4.4"
 firebaseFirestore = "26.1.1"
 firebaseDatabase = "22.0.1"
+poi = "5.2.3"
+desugar_jdk_libs = "2.1.4"
 
 [libraries]
+desugar_jdk_libs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
+poi = { group = "org.apache.poi", name = "poi", version.ref = "poi" }
+poi-ooxml = { group = "org.apache.poi", name = "poi-ooxml", version.ref = "poi" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

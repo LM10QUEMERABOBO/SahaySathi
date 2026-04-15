@@ -35,6 +35,7 @@
         <TextView
             android:id="@+id/applicantSkill"
             android:text="@string/applicant_skill"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:textColor="@color/blue"
             android:layout_height="wrap_content"/>
