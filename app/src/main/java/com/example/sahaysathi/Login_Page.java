@@ -33,11 +33,16 @@ public class Login_Page extends AppCompatActivity {
         already_account = findViewById(R.id.already_account);
         login_button = findViewById(R.id.login_button);
 
-        forget_password.setOnClickListener(v ->
-                startActivity(new Intent(Login_Page.this, Forget_Password.class)));
+        forget_password.setOnClickListener(v -> {
+            Intent intent = new Intent(Login_Page.this, Forget_Password.class);
+            startActivity(intent);
+        });
 
-        already_account.setOnClickListener(v ->
-                startActivity(new Intent(Login_Page.this, SignUp_Page.class)));
+        already_account.setOnClickListener(v -> {
+            Intent intent = new Intent(Login_Page.this, SignUp_Page.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        });
 
         login_button.setOnClickListener(v -> loginUser());
     }
@@ -82,7 +87,6 @@ public class Login_Page extends AppCompatActivity {
                         Toast.makeText(this, "Login Successful!", Toast.LENGTH_SHORT).show();
 
                         Intent intent = new Intent(Login_Page.this, MainActivity2.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                         finish();
 

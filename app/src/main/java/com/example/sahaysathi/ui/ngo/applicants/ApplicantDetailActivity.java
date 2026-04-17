@@ -1,9 +1,14 @@
 package com.example.sahaysathi.ui.ngo.applicants;
 
+import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Base64;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,9 +22,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class ApplicantDetailActivity extends AppCompatActivity {
 
     TextView name, city, skill, email, experience, phone;
-
-    // NEW EVENT FIELDS
     TextView eventName, eventLocation;
+
+    ImageView volunteerImage;
 
     Button btnAccept, btnReject;
 
@@ -27,12 +32,15 @@ public class ApplicantDetailActivity extends AppCompatActivity {
 
     FirebaseFirestore db;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_applicant_detail);
 
         // Initialize views
+        volunteerImage = findViewById(R.id.detailVolunteerImage);
+
         name = findViewById(R.id.detailName);
         city = findViewById(R.id.detailCity);
         skill = findViewById(R.id.detailSkill);
@@ -48,28 +56,61 @@ public class ApplicantDetailActivity extends AppCompatActivity {
         applicationId = getIntent().getStringExtra("applicationId");
         volunteerId = getIntent().getStringExtra("volunteerId");
 
-        db.collection("users")
-                .document(volunteerId)
-                .get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()) {
-                        email.setText("Email: "+documentSnapshot.getString("email"));
-                        phone.setText("Contact: "+documentSnapshot.getString("phone"));
-                        if(documentSnapshot.getString("experience")!=null){
-                            experience.setText("Experience: "+documentSnapshot.getString("experience"));
-                        }
-                        else{
-                            experience.setText("Experience: N/A");
-                        }
-                    }
-                });
         name.setText(getIntent().getStringExtra("name"));
         city.setText("City: " + getIntent().getStringExtra("city"));
         skill.setText("Skill: " + getIntent().getStringExtra("skill"));
         eventName.setText("Event: " + getIntent().getStringExtra("eventName"));
         eventLocation.setText("Location: " + getIntent().getStringExtra("location"));
+
+        loadVolunteerDetails();
+
         btnAccept.setOnClickListener(v -> showConfirmationDialog());
         btnReject.setOnClickListener(v -> updateStatus("rejected"));
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void loadVolunteerDetails() {
+        if (volunteerId == null || volunteerId.isEmpty()) {
+            Toast.makeText(this, "Volunteer not found", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        db.collection("users")
+                .document(volunteerId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+
+                        String emailText = documentSnapshot.getString("email");
+                        String phoneText = documentSnapshot.getString("phone");
+                        String experienceText = documentSnapshot.getString("experience");
+                        String base64Image = documentSnapshot.getString("profileImage");
+
+                        email.setText("Email: " + (emailText != null ? emailText : "N/A"));
+                        phone.setText("Contact: " + (phoneText != null ? phoneText : "N/A"));
+
+                        if (experienceText != null && !experienceText.isEmpty()) {
+                            experience.setText("Experience: " + experienceText);
+                        } else {
+                            experience.setText("Experience: N/A");
+                        }
+
+                        // Load volunteer image
+                        if (base64Image != null && !base64Image.isEmpty()) {
+                            try {
+                                byte[] bytes = Base64.decode(base64Image, Base64.DEFAULT);
+                                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                volunteerImage.setImageBitmap(bitmap);
+                            } catch (Exception e) {
+                                volunteerImage.setImageResource(R.drawable.sample_image);
+                            }
+                        } else {
+                            volunteerImage.setImageResource(R.drawable.sample_image);
+                        }
+                    }
+                })
+                .addOnFailureListener(e ->
+                        Toast.makeText(this, "Failed to load volunteer details", Toast.LENGTH_SHORT).show());
     }
 
     private void showConfirmationDialog() {
@@ -121,11 +162,9 @@ public class ApplicantDetailActivity extends AppCompatActivity {
                         "acceptedAt", FieldValue.serverTimestamp()
                 )
                 .addOnSuccessListener(unused ->
-                        Toast.makeText(this, "Volunteer accepted successfully", Toast.LENGTH_SHORT).show()
-                )
+                        Toast.makeText(this, "Volunteer accepted successfully", Toast.LENGTH_SHORT).show())
                 .addOnFailureListener(e ->
-                        Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show()
-                );
+                        Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 
     private void updateStatus(String status) {
@@ -139,10 +178,8 @@ public class ApplicantDetailActivity extends AppCompatActivity {
                 .document(applicationId)
                 .update("status", status)
                 .addOnSuccessListener(unused ->
-                        Toast.makeText(this, "Status updated", Toast.LENGTH_SHORT).show()
-                )
+                        Toast.makeText(this, "Status updated", Toast.LENGTH_SHORT).show())
                 .addOnFailureListener(e ->
-                        Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show()
-                );
+                        Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 }

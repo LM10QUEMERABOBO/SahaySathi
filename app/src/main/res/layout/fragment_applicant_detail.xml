@@ -30,7 +30,7 @@
             android:textStyle="bold" />
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/circleImage"
+            android:id="@+id/detailVolunteerImage"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:clickable="true"

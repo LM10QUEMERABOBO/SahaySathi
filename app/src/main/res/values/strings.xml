@@ -119,7 +119,7 @@
     <!--menu of volunteer    -->
     <string name="menu_volunteer_home">Home</string>
     <string name="menu_volunteer_browseRequest">Browse Request</string>
-    <string name="menu_volunteer_profile">Update Profile</string>
+    <string name="menu_volunteer_profile">My Profile</string>
     <string name="menu_volunteer_logout">Settings</string>
     <string name="menu_volunteer_myTasks">My Tasks</string>
     <string name="menu_volunteer_notifications">Notifications</string>
@@ -127,7 +127,7 @@
 
     <!--menu of ngo-->
     <string name="menu_ngo_home">Home</string>
-    <string name="menu_ngo_profile">Update Profile</string>
+    <string name="menu_ngo_profile">My Profile</string>
     <string name="menu_ngo_logout">Settings</string>
     <string name="menu_ngo_postRequest">Post Request</string>
     <string name="menu_ngo_manageRequests">Manage Requests</string>

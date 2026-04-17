@@ -67,8 +67,11 @@ public class SignUp_Page extends AppCompatActivity {
             Toast.makeText(this, "NGO Selected", Toast.LENGTH_SHORT).show();
         });
 
-        already_account.setOnClickListener(v ->
-                startActivity(new Intent(SignUp_Page.this, Login_Page.class)));
+        already_account.setOnClickListener(v -> {
+            Intent intent = new Intent(SignUp_Page.this, Login_Page.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(intent);
+        });
 
         signup_button.setOnClickListener(v -> registerUser());
     }

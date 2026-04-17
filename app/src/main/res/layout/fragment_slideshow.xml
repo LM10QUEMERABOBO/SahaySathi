@@ -2,26 +2,28 @@
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/blue">
+
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:background="@color/blue"
-        android:layout_height="wrap_content">
+        android:paddingBottom="24dp">
 
         <TextView
             android:id="@+id/tvName"
             style="@style/textView_15"
-            android:text="@string/setting_profile_name"
-            android:layout_gravity="start"
-            android:textStyle="bold"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:textColor="@color/white"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:text="@string/setting_profile_name"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,76 +31,199 @@
             android:orientation="vertical"
             android:padding="16dp">
 
+            <!-- User Preference Card -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/userPreferenceCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_12sdp"
                 app:cardCornerRadius="@dimen/_12sdp"
-                app:cardElevation="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_12sdp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="vertical">
-
-            <!-- HEADER -->
-
-            <TextView
-                android:id="@+id/dropUserPreference"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/new_red"
-                android:text="@string/setting_user_preference"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:padding="16dp"/>
-
+                app:cardElevation="@dimen/_10sdp">
 
                 <LinearLayout
-                    android:id="@+id/formUserPreference"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="12dp"
-                    android:background="@color/white"
-                    android:orientation="vertical">
-                    <!-- Dark Mode -->
-                    <Switch
-                        android:id="@+id/switchDarkMode"
-                        android:text="@string/setting_switch_mode"
-                        android:textColor="@color/new_red"
+                    android:orientation="vertical"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:id="@+id/dropUserPreference"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        tools:ignore="UseSwitchCompatOrMaterialXml" />
-                    <!-- Notifications -->
-                    <Switch
-                        android:id="@+id/switchNotifications"
-                        android:text="@string/setting_switch_notifications"
+                        android:padding="16dp"
+                        android:text="User Preferences"
                         android:textColor="@color/new_red"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/formUserPreference"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+                        android:orientation="vertical"
+                        android:background="@color/white"
+                        android:padding="12dp">
+
+                        <Switch
+                            android:id="@+id/switchDarkMode"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Dark Mode"
+                            android:textColor="@color/new_red"
+                            tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+                        <Switch
+                            android:id="@+id/switchNotifications"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Notifications"
+                            android:textColor="@color/new_red"
+                            tools:ignore="UseSwitchCompatOrMaterialXml" />
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+            </com.google.android.material.card.MaterialCardView>
 
+            <!-- About Us Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/aboutUsCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_12sdp"
+                app:cardCornerRadius="@dimen/_12sdp"
+                app:cardElevation="@dimen/_10sdp">
 
-</LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/white">
 
+                    <TextView
+                        android:id="@+id/dropAboutUs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:text="About Us"
+                        android:textColor="@color/new_red"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
-    <!-- Logout -->
-    <Button
-        android:id="@+id/btnLogout"
-        android:text="@string/setting_btnLogout"
-        style="@style/button_20"
-        android:layout_marginHorizontal="@dimen/_50sdp"
-        app:backgroundTint="@null"
-        android:textStyle="bold"
-        android:backgroundTint="@android:color/holo_red_dark"
-        android:textColor="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+                    <LinearLayout
+                        android:id="@+id/formAboutUs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        android:padding="16dp">
 
-</LinearLayout>
+                        <TextView
+                            android:id="@+id/tvAboutApp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="SahaySathi is a volunteer and NGO collaboration platform that helps NGOs post service opportunities and allows volunteers to browse, apply, receive instructions, and participate in meaningful events. The application is designed to simplify request management, volunteer coordination, communication, and attendance tracking."
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="Development Team"
+                            android:textColor="@color/new_red"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvTeamInfo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="1. Krish Soni (Co-Founder &amp; CEO)\n2. Bijal Vasita (Co-Founder &amp; Support)"
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Contact Us Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/contactUsCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_12sdp"
+                app:cardCornerRadius="@dimen/_12sdp"
+                app:cardElevation="@dimen/_10sdp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/white">
+
+                    <TextView
+                        android:id="@+id/dropContactUs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:text="Contact Us"
+                        android:textColor="@color/new_red"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/formContactUs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:id="@+id/tvContactInfo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="For support, suggestions, or issue reporting,please contact the development team.Thank you!!"
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tvContactEmail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Email: sahaysathi.support@gmail.com"
+                            android:textColor="@color/new_red"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <Button
+                            android:id="@+id/btnContactMail"
+                            style="@style/button_20"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="12dp"
+                            android:text="Send Email"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            app:backgroundTint="@android:color/holo_blue_dark" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Logout -->
+            <Button
+                android:id="@+id/btnLogout"
+                style="@style/button_20"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_50sdp"
+                android:backgroundTint="@android:color/holo_red_dark"
+                android:text="Logout"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:backgroundTint="@null" />
+
+        </LinearLayout>
+    </LinearLayout>
 </ScrollView>

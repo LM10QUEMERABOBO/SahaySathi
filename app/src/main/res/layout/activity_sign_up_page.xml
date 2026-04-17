@@ -12,6 +12,7 @@
         android:orientation="vertical">
     <TextView
         style="@style/textView_30"
+        android:textColor="@color/white"
         android:textStyle="bold"
         android:text="@string/signup"
         android:layout_marginTop="@dimen/_30sdp"

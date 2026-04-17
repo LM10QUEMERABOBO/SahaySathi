@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="@dimen/_20sdp"
-    android:background="@color/blue">
+    android:background="@color/blue"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,104 +12,140 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <!-- STATUS CARD -->
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardNgoLogo"
+            android:id="@+id/cardProfileStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
             app:cardCornerRadius="@dimen/_12sdp"
-            app:cardElevation="@dimen/_10sdp"
-            android:layout_marginBottom="@dimen/_12sdp">
+            app:cardElevation="@dimen/_8sdp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:background="@color/white"
-                android:orientation="vertical">
+                android:visibility="gone"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/tvProfileStatusTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="NGO Profile Review Status"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="@color/new_red" />
+
+                <TextView
+                    android:id="@+id/tvProfileStatusBadge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingHorizontal="14dp"
+                    android:paddingVertical="8dp"
+                    android:text="Not Submitted"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/bg_status_pending" />
+
+                <TextView
+                    android:id="@+id/tvReviewInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="After submission, your NGO profile will be reviewed by our background team within 24-48 hours."
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- NGO LOGO -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardNgoLogo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:cardCornerRadius="@dimen/_12sdp"
+            app:cardElevation="@dimen/_8sdp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white">
 
                 <TextView
                     android:id="@+id/dropNgoLogo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="NGO Logo"
                     android:textColor="@color/new_red"
-                    android:text="Upload Ngo Logo"
                     android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:padding="16dp"/>
-
-                <!-- EXPANDABLE CONTENT -->
+                    android:textStyle="bold" />
 
                 <LinearLayout
-
                     android:id="@+id/formNgoLogo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:background="@color/white"
-                    android:visibility="visible"
-                    android:padding="16dp">
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:visibility="gone">
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/circleImage"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
                         android:layout_gravity="center"
                         android:clickable="true"
+                        android:contentDescription="Select NGO logo"
                         android:focusable="true"
-                        android:contentDescription="Select image"
-                        android:src="@drawable/sample_image"
                         android:scaleType="centerCrop"
-                        app:shapeAppearanceOverlay="@style/CircleImageViewStyle"/>
-
-
+                        android:src="@drawable/sample_image"
+                        app:shapeAppearanceOverlay="@style/CircleImageViewStyle" />
 
                     <Button
                         android:id="@+id/btnUpdateNgoLogo"
+                        style="@style/button_20"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/button_20"
-                        android:gravity="center"
                         android:layout_gravity="center"
-                        app:backgroundTint="@null"
+                        android:layout_marginTop="12dp"
+                        android:text="Save Logo"
                         android:textColor="@color/white"
-                        android:text="@string/ngo_organization_update_btn"
-                        android:layout_marginTop="12dp"/>
-
+                        app:backgroundTint="@null" />
                 </LinearLayout>
-
             </LinearLayout>
-
         </com.google.android.material.card.MaterialCardView>
 
-
-        <!-- NGO DETAILS CARD -->
-
+        <!-- NGO DETAILS -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardNgoDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
             app:cardCornerRadius="@dimen/_12sdp"
-            app:cardElevation="@dimen/_10sdp"
-            android:layout_marginBottom="@dimen/_12sdp">
+            app:cardElevation="@dimen/_8sdp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="vertical">
-
-                <!-- HEADER -->
+                android:orientation="vertical"
+                android:background="@color/white">
 
                 <TextView
                     android:id="@+id/dropNgoDetails"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="NGO Details"
                     android:textColor="@color/new_red"
-                    android:text="@string/ngo_organization_title"
                     android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:padding="16dp"/>
-
-                <!-- EXPANDABLE CONTENT -->
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:id="@+id/formNgoDetails"
@@ -118,128 +153,316 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:background="@color/white"
-                    android:visibility="gone"
-                    android:padding="16dp">
+                    android:padding="16dp"
+                    android:visibility="gone">
 
                     <EditText
                         android:id="@+id/etNgoName"
-                        android:layout_width="match_parent"
-                        android:drawableStart="@drawable/ic_name"
-                        android:drawablePadding="@dimen/_5sdp"
-                        android:layout_height="wrap_content"
                         style="@style/editText"
-                        android:hint="@string/ngo_organization_name"/>
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="NGO Name"
+                        android:inputType="textCapWords" />
 
                     <EditText
                         android:id="@+id/etRegNo"
+                        style="@style/editText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:maxLength="10"
+                        android:layout_marginTop="10dp"
+                        android:hint="Reg. No. (i.e UP/2023/0123456)"
+                        android:inputType="textCapCharacters" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="NGO Category"
+                        android:textColor="@color/new_red"
+                        android:layout_marginHorizontal="@dimen/_25sdp"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/spNgoCategory"
                         style="@style/editText"
-                        android:hint="@string/ngo_organization_reg_no"
-                        android:layout_marginTop="10dp"/>
+                        android:layout_marginHorizontal="@dimen/_25sdp"
+                        android:padding="12dp" />
+
+                    <EditText
+                        android:id="@+id/etCity"
+                        style="@style/editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:hint="City"
+                        android:inputType="textCapWords" />
 
                     <EditText
                         android:id="@+id/etAddress"
+                        style="@style/editText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_location"
-                        android:drawablePadding="@dimen/_5sdp"
+                        android:layout_marginTop="10dp"
+                        android:hint="Full Address"
+                        android:inputType="textPostalAddress" />
+
+                    <EditText
+                        android:id="@+id/etYearEstablished"
                         style="@style/editText"
-                        android:hint="@string/ngo_organization_address"
-                        android:layout_marginTop="10dp"/>
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:hint="Year Established"
+                        android:inputType="number" />
+
+                    <EditText
+                        android:id="@+id/etTeamSize"
+                        style="@style/editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:hint="Team Size"
+                        android:inputType="number" />
+
+                    <EditText
+                        android:id="@+id/etWebsite"
+                        style="@style/editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:hint="Website (optional)"
+                        android:inputType="textUri" />
+
+                    <EditText
+                        android:id="@+id/etMission"
+                        style="@style/editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="top|start"
+                        android:hint="Mission / About NGO"
+                        android:inputType="textMultiLine"
+                        android:minLines="3" />
 
                     <Button
                         android:id="@+id/btnUpdateNgo"
+                        style="@style/button_20"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/button_20"
-                        android:gravity="center"
                         android:layout_gravity="center"
-                        app:backgroundTint="@null"
+                        android:layout_marginTop="14dp"
+                        android:text="Save NGO Details"
                         android:textColor="@color/white"
-                        android:text="@string/ngo_organization_update_btn"
-                        android:layout_marginTop="12dp"/>
+                        app:backgroundTint="@null" />
 
                 </LinearLayout>
-
             </LinearLayout>
-
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- CONTACT CARD -->
-
+        <!-- FOCUS AREAS -->
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardNgoFocus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
             app:cardCornerRadius="@dimen/_12sdp"
-            app:cardElevation="@dimen/_4sdp"
-            android:layout_marginBottom="@dimen/_12sdp">
+            app:cardElevation="@dimen/_8sdp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/dropNgoFocus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="Areas of Work"
+                    android:textColor="@color/new_red"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/formNgoFocus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/white"
+                    android:padding="16dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Select NGO Focus Areas"
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chipGroupNgoFocus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        app:chipSpacingHorizontal="8dp"
+                        app:chipSpacingVertical="8dp"
+                        app:singleLine="false"
+                        app:singleSelection="false">
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipEducation"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checkable="true"
+                            android:text="Education" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipHealth"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checkable="true"
+                            android:text="Health" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipEnvironment"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checkable="true"
+                            android:text="Environment" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipWomenEmpowerment"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checkable="true"
+                            android:text="Women Empowerment" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipChildWelfare"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checkable="true"
+                            android:text="Child Welfare" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipDisasterRelief"
+                            style="@style/Widget.MaterialComponents.Chip.Filter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checkable="true"
+                            android:text="Disaster Relief" />
+
+                    </com.google.android.material.chip.ChipGroup>
+
+                    <Button
+                        android:id="@+id/btnUpdateNgoFocus"
+                        style="@style/button_20"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="14dp"
+                        android:text="Save Focus Areas"
+                        android:textColor="@color/white"
+                        app:backgroundTint="@null" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- CONTACT DETAILS -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardContact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:cardCornerRadius="@dimen/_12sdp"
+            app:cardElevation="@dimen/_8sdp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white">
 
                 <TextView
                     android:id="@+id/dropContact"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="Contact Information"
                     android:textColor="@color/new_red"
-                    android:text="@string/ngo_contact_title"
                     android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:padding="16dp"/>
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:id="@+id/formContact"
-                    android:background="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:visibility="gone"
-                    android:padding="16dp">
+                    android:background="@color/white"
+                    android:padding="16dp"
+                    android:visibility="gone">
 
                     <EditText
                         android:id="@+id/etPhone"
+                        style="@style/editText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_call"
-                        android:drawablePadding="@dimen/_5sdp"
-                        android:maxLength="10"
-                        style="@style/editText"
-                        android:hint="@string/ngo_contact_phone"/>
+                        android:hint="Phone Number"
+                        android:inputType="phone"
+                        android:maxLength="10" />
 
                     <EditText
                         android:id="@+id/etEmail"
+                        style="@style/editText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_email"
-                        android:drawablePadding="@dimen/_5sdp"
-                        style="@style/editText"
-                        android:hint="@string/ngo_contact_email"
+                        android:layout_marginTop="10dp"
                         android:enabled="false"
-                        android:layout_marginTop="10dp"/>
+                        android:hint="Email" />
+
+                    <EditText
+                        android:id="@+id/etAlternatePhone"
+                        style="@style/editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:hint="Alternate Contact Number"
+                        android:inputType="phone"
+                        android:maxLength="10" />
 
                     <Button
                         android:id="@+id/btnUpdateContact"
+                        style="@style/button_20"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/button_20"
-                        android:gravity="center"
                         android:layout_gravity="center"
-                        app:backgroundTint="@null"
+                        android:layout_marginTop="14dp"
+                        android:text="Save Contact Details"
                         android:textColor="@color/white"
-                        android:text="@string/ngo_contact_update_btn"
-                        android:layout_marginTop="12dp"/>
+                        app:backgroundTint="@null" />
 
                 </LinearLayout>
-
             </LinearLayout>
-
         </com.google.android.material.card.MaterialCardView>
 
-    </LinearLayout>
+        <Button
+            android:id="@+id/btnSubmitProfile"
+            style="@style/button_20"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="20dp"
+            android:text="Submit NGO Profile For Review"
+            android:visibility="gone"
+            android:textColor="@color/white"
+            app:backgroundTint="@null" />
 
+    </LinearLayout>
 </ScrollView>
