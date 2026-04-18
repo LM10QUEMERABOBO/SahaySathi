@@ -2,14 +2,19 @@ package com.example.sahaysathi.ui.volunteer.profile;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.GradientDrawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -26,6 +31,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -33,15 +40,19 @@ import androidx.fragment.app.Fragment;
 
 import com.example.sahaysathi.ConstantSp;
 import com.example.sahaysathi.R;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class ProfileFragment extends Fragment {
@@ -66,9 +77,14 @@ public class ProfileFragment extends Fragment {
 
     private Button btnUpdateVolunteer, btnUpdateContact, btnUpdateSkills;
     private Button btnUpdateVolunteerLogo, btnSubmitProfile;
+    private Button btnUseCurrentLocation, btnOpenInMaps;
 
     private Uri imageUri;
     private String userId;
+
+    private FusedLocationProviderClient fusedLocationClient;
+    private double selectedLatitude = 0.0;
+    private double selectedLongitude = 0.0;
 
     private final String[] genderOptions = {
             "Select Gender", "Male", "Female", "Other", "Prefer not to say"
@@ -77,6 +93,18 @@ public class ProfileFragment extends Fragment {
     private final String[] availabilityOptions = {
             "Select Availability", "Weekdays", "Weekends", "Evenings", "Full Time", "Flexible"
     };
+
+    private final ActivityResultLauncher<String[]> locationPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), result -> {
+                boolean fineGranted = Boolean.TRUE.equals(result.get(Manifest.permission.ACCESS_FINE_LOCATION));
+                boolean coarseGranted = Boolean.TRUE.equals(result.get(Manifest.permission.ACCESS_COARSE_LOCATION));
+
+                if (fineGranted || coarseGranted) {
+                    fetchCurrentLocation();
+                } else {
+                    Toast.makeText(getContext(), "Location permission denied", Toast.LENGTH_SHORT).show();
+                }
+            });
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -87,6 +115,7 @@ public class ProfileFragment extends Fragment {
         sharedPreferences = requireActivity().getSharedPreferences(ConstantSp.pref, MODE_PRIVATE);
         db = FirebaseFirestore.getInstance();
         userId = sharedPreferences.getString(ConstantSp.userid, "");
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
 
         initViews(view);
         setupSpinners();
@@ -134,6 +163,9 @@ public class ProfileFragment extends Fragment {
         btnUpdateVolunteerLogo = view.findViewById(R.id.btnUpdateVolunteerLogo);
         btnSubmitProfile = view.findViewById(R.id.btnSubmitProfile);
 
+        btnUseCurrentLocation = view.findViewById(R.id.btnUseCurrentLocation);
+        btnOpenInMaps = view.findViewById(R.id.btnOpenInMaps);
+
         circleImage = view.findViewById(R.id.circleImage);
     }
 
@@ -166,6 +198,9 @@ public class ProfileFragment extends Fragment {
         btnUpdateSkills.setOnClickListener(v -> updateSkillsDetails());
         btnUpdateVolunteerLogo.setOnClickListener(v -> updateVolunteerLogo());
         btnSubmitProfile.setOnClickListener(v -> submitProfileForReview());
+
+        btnUseCurrentLocation.setOnClickListener(v -> checkLocationPermissionAndFetch());
+        btnOpenInMaps.setOnClickListener(v -> openLocationInGoogleMaps());
 
         circleImage.setOnClickListener(v -> openImagePicker());
     }
@@ -200,6 +235,11 @@ public class ProfileFragment extends Fragment {
         etPreferredWork.setText(doc.getString("preferredWork"));
         etLanguages.setText(doc.getString("languages"));
         etMotivation.setText(doc.getString("motivation"));
+
+        Double lat = doc.getDouble("latitude");
+        Double lng = doc.getDouble("longitude");
+        if (lat != null) selectedLatitude = lat;
+        if (lng != null) selectedLongitude = lng;
 
         setSpinnerSelection(spGender, genderOptions, doc.getString("gender"));
         setSpinnerSelection(spAvailability, availabilityOptions, doc.getString("availability"));
@@ -285,6 +325,94 @@ public class ProfileFragment extends Fragment {
         tvProfileStatusBadge.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.white));
     }
 
+    private void checkLocationPermissionAndFetch() {
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            fetchCurrentLocation();
+        } else {
+            locationPermissionLauncher.launch(new String[]{
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+            });
+        }
+    }
+
+    private void fetchCurrentLocation() {
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(location -> {
+                    if (location == null) {
+                        Toast.makeText(getContext(), "Unable to get current location", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    selectedLatitude = location.getLatitude();
+                    selectedLongitude = location.getLongitude();
+
+                    getAddressFromLatLng(selectedLatitude, selectedLongitude);
+                })
+                .addOnFailureListener(e ->
+                        Toast.makeText(getContext(), "Failed to fetch location", Toast.LENGTH_SHORT).show());
+    }
+
+    private void getAddressFromLatLng(double latitude, double longitude) {
+        Geocoder geocoder = new Geocoder(requireContext(), Locale.getDefault());
+
+        try {
+            List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
+
+            if (addresses != null && !addresses.isEmpty()) {
+                Address address = addresses.get(0);
+
+                String fullAddress = address.getAddressLine(0);
+                String city = address.getLocality();
+
+                if (TextUtils.isEmpty(city)) {
+                    city = address.getSubAdminArea();
+                }
+                if (TextUtils.isEmpty(city)) {
+                    city = address.getAdminArea();
+                }
+
+                etAddress.setText(fullAddress != null ? fullAddress : "");
+                etCity.setText(city != null ? city : "");
+
+                Toast.makeText(getContext(), "Location added successfully", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getContext(), "Address not found", Toast.LENGTH_SHORT).show();
+            }
+        } catch (IOException e) {
+            Toast.makeText(getContext(), "Geocoder failed", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void openLocationInGoogleMaps() {
+        if (selectedLatitude == 0.0 && selectedLongitude == 0.0) {
+            Toast.makeText(getContext(), "No saved location found. Please use current location first.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Uri gmmIntentUri = Uri.parse("geo:" + selectedLatitude + "," + selectedLongitude +
+                "?q=" + selectedLatitude + "," + selectedLongitude + "(Selected Location)");
+
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+
+        if (mapIntent.resolveActivity(requireActivity().getPackageManager()) != null) {
+            startActivity(mapIntent);
+        } else {
+            startActivity(new Intent(Intent.ACTION_VIEW, gmmIntentUri));
+        }
+    }
+
     private void updateVolunteerDetails() {
         if (!validatePersonalSection()) return;
 
@@ -296,6 +424,8 @@ public class ProfileFragment extends Fragment {
         map.put("address", etAddress.getText().toString().trim());
         map.put("occupation", etOccupation.getText().toString().trim());
         map.put("experience", etExperience.getText().toString().trim());
+        map.put("latitude", selectedLatitude);
+        map.put("longitude", selectedLongitude);
 
         db.collection("users")
                 .document(userId)
@@ -352,6 +482,8 @@ public class ProfileFragment extends Fragment {
         map.put("address", etAddress.getText().toString().trim());
         map.put("occupation", etOccupation.getText().toString().trim());
         map.put("experience", etExperience.getText().toString().trim());
+        map.put("latitude", selectedLatitude);
+        map.put("longitude", selectedLongitude);
 
         map.put("phone", etPhone.getText().toString().trim());
         map.put("email", etEmail.getText().toString().trim());

@@ -173,22 +173,33 @@
                         android:hint="Age"
                         android:inputType="number" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="Gender"
-                        android:textColor="@android:color/black"
-                        android:textStyle="bold" />
-
                     <Spinner
                         android:id="@+id/spGender"
+                        style="@style/editText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginHorizontal="@dimen/_25sdp"
-                        android:background="@drawable/spinner_bg"
                         android:padding="12dp" />
+
+                    <Button
+                        android:id="@+id/btnUseCurrentLocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="Use Current Location"
+                        android:textColor="@color/white" />
+
+                    <EditText
+                        android:id="@+id/etAddress"
+                        style="@style/editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:hint="Address"
+                        android:inputType="textPostalAddress" />
 
                     <EditText
                         android:id="@+id/etCity"
@@ -199,14 +210,18 @@
                         android:hint="City"
                         android:inputType="textCapWords" />
 
-                    <EditText
-                        android:id="@+id/etAddress"
-                        style="@style/editText"
-                        android:layout_width="match_parent"
+
+
+                    <Button
+                        android:id="@+id/btnOpenInMaps"
+                        style="@style/button_20"
+                        android:visibility="gone"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:hint="Address"
-                        android:inputType="textPostalAddress" />
+                        android:text="Open In Google Maps"
+                        android:textColor="@color/white"
+                        app:backgroundTint="@null" />
 
                     <EditText
                         android:id="@+id/etOccupation"
@@ -429,9 +444,9 @@
                         android:id="@+id/spAvailability"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        style="@style/editText"
                         android:layout_marginTop="6dp"
                         android:layout_marginHorizontal="@dimen/_25sdp"
-                        android:background="@drawable/spinner_bg"
                         android:padding="12dp" />
 
                     <EditText

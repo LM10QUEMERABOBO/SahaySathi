@@ -70,4 +70,5 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore-ktx")
     implementation("com.google.firebase:firebase-storage-ktx")
     implementation("com.google.firebase:firebase-messaging:23.4.1")
+    implementation("com.google.android.gms:play-services-location:21.2.0")
 }

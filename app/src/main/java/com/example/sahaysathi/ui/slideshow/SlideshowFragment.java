@@ -115,7 +115,7 @@ public class SlideshowFragment extends Fragment {
                     Toast.makeText(getContext(), "Logged out", Toast.LENGTH_SHORT).show();
 
                     Intent intent = new Intent(getActivity(), Login_Page.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
 
                     requireActivity().finish();

@@ -188,6 +188,28 @@
                         android:layout_marginHorizontal="@dimen/_25sdp"
                         android:padding="12dp" />
 
+                    <Button
+                        android:id="@+id/btnUseCurrentLocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="Use Current Location"
+                        android:textColor="@color/white" />
+
+                    <Button
+                        android:id="@+id/btnOpenInMaps"
+                        style="@style/button_20"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Open In Google Maps"
+                        android:textColor="@color/white"
+                        app:backgroundTint="@null" />
+
+
                     <EditText
                         android:id="@+id/etCity"
                         style="@style/editText"

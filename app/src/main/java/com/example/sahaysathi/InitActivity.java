@@ -28,13 +28,13 @@ public class InitActivity extends AppCompatActivity {
         image = findViewById(R.id.imageView);
         sharedPreferences = getSharedPreferences(ConstantSp.pref, MODE_PRIVATE);
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            //firebase user check
             FirebaseUser userId = FirebaseAuth.getInstance().getCurrentUser();
             if (userId == null) {
                 startActivity(new Intent(InitActivity.this, Login_Page.class));
                 finish();
             } else {
                 Intent intent = new Intent(InitActivity.this, MainActivity2.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();
 
