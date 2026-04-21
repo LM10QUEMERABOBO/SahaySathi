@@ -18,6 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
+            android:visibility="gone"
             app:cardCornerRadius="@dimen/_12sdp"
             app:cardElevation="@dimen/_8sdp">
 
@@ -26,7 +27,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@color/white"
-                android:visibility="gone"
                 android:padding="16dp">
 
                 <TextView
@@ -93,8 +93,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:orientation="vertical"
-                    android:padding="16dp"
-                    android:visibility="gone">
+                    android:padding="16dp">
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/circleImage"
@@ -153,8 +152,8 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:background="@color/white"
-                    android:padding="16dp"
-                    android:visibility="gone">
+
+                    android:padding="16dp">
 
                     <EditText
                         android:id="@+id/etVolunteerName"
@@ -210,8 +209,6 @@
                         android:hint="City"
                         android:inputType="textCapWords" />
 
-
-
                     <Button
                         android:id="@+id/btnOpenInMaps"
                         style="@style/button_20"
@@ -232,15 +229,6 @@
                         android:hint="Occupation / Profession"
                         android:inputType="textCapWords" />
 
-                    <EditText
-                        android:id="@+id/etExperience"
-                        style="@style/editText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:hint="Previous Volunteering Experience"
-                        android:inputType="textCapSentences" />
-
                     <Button
                         android:id="@+id/btnUpdateVolunteer"
                         style="@style/button_20"
@@ -249,6 +237,145 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="14dp"
                         android:text="Save Personal Details"
+                        android:textColor="@color/white"
+                        app:backgroundTint="@null" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- VOLUNTEER EXPERIENCE -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardVolunteerExperience"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:cardCornerRadius="@dimen/_12sdp"
+            app:cardElevation="@dimen/_8sdp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/dropVolunteerExperience"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="Volunteer Experience"
+                    android:textColor="@color/new_red"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/formVolunteerExperience"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/white"
+                    android:padding="16dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Do you have previous volunteering experience?"
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold" />
+
+                    <RadioGroup
+                        android:id="@+id/rgExperience"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/rbExperienceYes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Yes" />
+
+                        <RadioButton
+                            android:id="@+id/rbExperienceNo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="18dp"
+                            android:text="No" />
+                    </RadioGroup>
+
+                    <LinearLayout
+                        android:id="@+id/layoutExperienceDetails"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <EditText
+                            android:id="@+id/etExperienceTitle"
+                            style="@style/editText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Experience / Certificate Name"
+                            android:inputType="textCapWords" />
+
+                        <EditText
+                            android:id="@+id/etExperienceDescription"
+                            style="@style/editText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:gravity="top|start"
+                            android:hint="Describe your volunteering experience"
+                            android:inputType="textCapSentences|textMultiLine"
+                            android:minLines="3" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <Button
+                                android:id="@+id/btnPickCertificate"
+                                style="@style/button_20"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Upload PDF / Image"
+                                android:textColor="@color/white"
+                                app:backgroundTint="@null" />
+
+                            <ImageButton
+                                android:id="@+id/btnAddMoreCertificate"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:layout_marginStart="10dp"
+                                android:background="@android:color/transparent"
+                                android:contentDescription="Add more certificates"
+                                android:src="@android:drawable/ic_input_add"
+                                android:tint="@color/new_red" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layoutCertificateContainer"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:orientation="vertical" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btnUpdateVolunteerExperience"
+                        style="@style/button_20"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="14dp"
+                        android:text="Save Experience Details"
                         android:textColor="@color/white"
                         app:backgroundTint="@null" />
                 </LinearLayout>
@@ -429,7 +556,6 @@
                             android:layout_height="wrap_content"
                             android:text="Logistics"
                             android:checkable="true" />
-
                     </com.google.android.material.chip.ChipGroup>
 
                     <TextView
@@ -442,9 +568,9 @@
 
                     <Spinner
                         android:id="@+id/spAvailability"
+                        style="@style/editText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/editText"
                         android:layout_marginTop="6dp"
                         android:layout_marginHorizontal="@dimen/_25sdp"
                         android:padding="12dp" />
@@ -495,11 +621,11 @@
         <Button
             android:id="@+id/btnSubmitProfile"
             style="@style/button_20"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:layout_marginBottom="20dp"
-            android:visibility="gone"
             android:text="Submit Profile For Review"
             android:textColor="@color/white"
             app:backgroundTint="@null" />

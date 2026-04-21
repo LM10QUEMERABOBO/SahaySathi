@@ -93,8 +93,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:orientation="vertical"
-                    android:padding="16dp"
-                    android:visibility="gone">
+                    android:padding="16dp">
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/circleImage"
@@ -153,8 +152,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:background="@color/white"
-                    android:padding="16dp"
-                    android:visibility="gone">
+                    android:padding="16dp">
 
                     <EditText
                         android:id="@+id/etNgoName"
