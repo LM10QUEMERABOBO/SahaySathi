@@ -4,44 +4,62 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/blue"
+    android:orientation="vertical"
     tools:context=".ui.volunteer.browseRequests.BrowseRequestsFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/blue">
+        android:background="@color/blue"
+        android:orientation="vertical">
 
+
+
+        <!-- Search Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/etSearch"
+                style="@style/editText"
+                android:hint="Search Event"
+                android:layout_gravity="start"
+                android:layout_marginHorizontal="0dp"
+                android:layout_weight="1"
+                android:drawableStart="@drawable/ic_browse"
+                />
+
+            <Button
+                android:id="@+id/btnSearch"
+                style="@style/button_20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginStart="8dp"
+                android:text="Search"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp"
+                app:backgroundTint="@color/new_red" />
+        </LinearLayout>
         <TextView
             android:id="@+id/tvNoEventData"
             style="@style/textView_15"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/noEventText"
-            android:textSize="16sp"
-            android:textColor="@android:color/darker_gray"
             android:layout_gravity="center"
-            android:visibility="gone"/>
-
-        <!-- Search Bar -->
-        <EditText
-            android:id="@+id/etSearch"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/editSearchEvent"
-            android:padding="10dp"
-            android:drawableStart="@drawable/ic_browse"
-            style="@style/editText"
-            android:textColor="@color/black"
-            android:layout_margin="10dp"/>
-
+            android:text="@string/noEventText"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="16sp"
+            android:visibility="gone" />
         <!-- RecyclerView -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerEvents"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 </LinearLayout>

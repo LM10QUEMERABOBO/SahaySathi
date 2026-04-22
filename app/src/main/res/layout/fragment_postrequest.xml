@@ -4,7 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="@dimen/_20sdp"
     android:background="@color/blue">
 
     <LinearLayout
@@ -15,7 +14,6 @@
         android:padding="16dp">
 
         <!-- EVENT DETAILS -->
-
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,26 +22,26 @@
             app:cardElevation="4dp">
 
             <LinearLayout
-                android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:background="@color/white">
 
                 <TextView
                     android:id="@+id/dropEvent"
-                    android:textColor="@color/new_red"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:padding="16dp"
                     android:text="@string/pr_event_title"
+                    android:textColor="@color/new_red"
                     android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:padding="16dp"/>
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:id="@+id/formEvent"
-                    android:background="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/white"
                     android:orientation="vertical"
                     android:padding="16dp"
                     android:visibility="visible">
@@ -53,25 +51,24 @@
                         style="@style/editText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/pr_event_name"/>
+                        android:hint="Event name" />
 
                     <EditText
                         android:id="@+id/eventDescription"
                         style="@style/editText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/pr_event_description"
-                        android:layout_marginTop="10dp"/>
+                        android:layout_marginTop="10dp"
+                        android:hint="Event description"
+                        android:minLines="3"
+                        android:gravity="top|start" />
 
                 </LinearLayout>
 
             </LinearLayout>
-
         </com.google.android.material.card.MaterialCardView>
 
-
         <!-- LOCATION & TIME -->
-
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -80,66 +77,116 @@
             app:cardElevation="4dp">
 
             <LinearLayout
-                android:orientation="vertical"
-                android:background="@color/white"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white">
 
                 <TextView
+
+
                     android:id="@+id/dropLocation"
-                    android:textColor="@color/new_red"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/pr_location_title"
+                    android:padding="16dp"
+                    android:text="Location &amp; Time"
+                    android:textColor="@color/new_red"
                     android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:padding="16dp"/>
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:id="@+id/formLocation"
-                    android:background="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/white"
                     android:orientation="vertical"
-                    android:visibility="gone"
-                    android:padding="16dp">
+                    android:padding="16dp"
+                    android:visibility="gone">
 
                     <EditText
-                        android:id="@+id/eventLocation"
-                        android:layout_width="match_parent"
+                        android:id="@+id/venueName"
                         style="@style/editText"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/pr_location_name"/>
+                        android:hint="Venue / Place name *" />
+
+                    <EditText
+                        android:id="@+id/fullAddress"
+                        style="@style/editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:hint="Full address *"
+                        android:minLines="2"
+                        android:gravity="top|start" />
+
+                    <EditText
+                        android:id="@+id/landmark"
+                        style="@style/editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:hint="Nearby landmark" />
+
+                    <EditText
+                        android:id="@+id/areaSector"
+                        style="@style/editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:hint="Area / Sector / Locality" />
+
+                    <EditText
+                        android:id="@+id/postCity"
+                        style="@style/editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:hint="City *" />
+
+                    <EditText
+                        android:id="@+id/state"
+                        style="@style/editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:hint="State" />
+
+                    <EditText
+                        android:id="@+id/pincode"
+                        style="@style/editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:hint="Pincode"
+                        android:inputType="number" />
 
                     <EditText
                         android:id="@+id/eventDate"
                         style="@style/editText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:focusable="false"
+                        android:layout_marginTop="10dp"
                         android:clickable="true"
-                        android:hint="@string/pr_location_date"
-                        android:layout_marginTop="10dp"/>
+                        android:focusable="false"
+                        android:hint="Event date" />
 
                     <EditText
                         android:id="@+id/eventTime"
                         style="@style/editText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:focusable="false"
+                        android:layout_marginTop="10dp"
                         android:clickable="true"
-                        android:hint="@string/pr_location_time"
-                        android:layout_marginTop="10dp"/>
+                        android:focusable="false"
+                        android:hint="Event time" />
 
                 </LinearLayout>
 
             </LinearLayout>
-
         </com.google.android.material.card.MaterialCardView>
 
-
         <!-- VOLUNTEER REQUIREMENTS -->
-
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -148,104 +195,100 @@
             app:cardElevation="4dp">
 
             <LinearLayout
-                android:orientation="vertical"
-                android:background="@color/white"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white">
 
                 <TextView
                     android:id="@+id/dropVolunteer"
-                    android:textColor="@color/new_red"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:padding="16dp"
                     android:text="@string/pr_volunteer_title"
+                    android:textColor="@color/new_red"
                     android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:padding="16dp"/>
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:id="@+id/formVolunteer"
-                    android:background="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/white"
                     android:orientation="vertical"
-                    android:visibility="gone"
-                    android:padding="16dp">
+                    android:padding="16dp"
+                    android:visibility="gone">
 
                     <EditText
                         android:id="@+id/volunteerCount"
                         style="@style/editText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/pr_volunteer_count"/>
+                        android:hint="@string/pr_volunteer_count"
+                        android:inputType="number" />
 
                     <EditText
                         android:id="@+id/experienceRequired"
                         style="@style/editText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/pr_volunteer_experience"
-                        android:layout_marginTop="10dp"/>
+                        android:layout_marginTop="10dp"
+                        android:hint="@string/pr_volunteer_experience" />
 
                 </LinearLayout>
 
             </LinearLayout>
-
         </com.google.android.material.card.MaterialCardView>
 
-
-        <!-- MEDIA UPLOAD -->
-
+        <!-- MEDIA -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             app:cardCornerRadius="12dp"
+            android:visibility="gone"
             app:cardElevation="4dp">
 
             <LinearLayout
-                android:orientation="vertical"
-                android:background="@color/white"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white">
 
                 <TextView
                     android:id="@+id/dropMedia"
-                    android:textColor="@color/new_red"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:padding="16dp"
                     android:text="@string/pr_media_title"
+                    android:textColor="@color/new_red"
                     android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:padding="16dp"/>
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:id="@+id/formMedia"
-                    android:background="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/white"
                     android:orientation="vertical"
-                    android:visibility="gone"
-                    android:padding="16dp">
+                    android:padding="16dp"
+                    android:visibility="gone">
 
                     <Button
                         android:id="@+id/uploadImage"
                         style="@style/button_20"
-                        app:backgroundTint="@null"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="Upload Image"
                         android:textColor="@color/white"
-                        android:text="Upload Image"/>
+                        app:backgroundTint="@null" />
 
                 </LinearLayout>
 
             </LinearLayout>
-
         </com.google.android.material.card.MaterialCardView>
 
-
         <!-- DEADLINE -->
-
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -253,21 +296,20 @@
             app:cardElevation="4dp">
 
             <LinearLayout
-                android:orientation="vertical"
-                android:background="@color/white"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white">
 
                 <TextView
                     android:id="@+id/dropDeadline"
-                    android:textColor="@color/new_red"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:padding="16dp"
                     android:text="@string/pr_deadline_title"
-                    android:inputType="date"
+                    android:textColor="@color/new_red"
                     android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:padding="16dp"/>
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:id="@+id/formDeadline"
@@ -275,40 +317,40 @@
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:orientation="vertical"
-                    android:visibility="gone"
-                    android:padding="16dp">
+                    android:padding="16dp"
+                    android:visibility="gone">
 
                     <EditText
                         android:id="@+id/deadline"
                         style="@style/editText"
-                        android:focusable="false"
-                        android:clickable="true"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/pr_deadline"/>
+                        android:clickable="true"
+                        android:focusable="false"
+                        android:hint="@string/pr_deadline" />
 
                     <Button
                         android:id="@+id/submitRequest"
-                        app:backgroundTint="@null"
                         style="@style/button_20"
-                        android:textColor="@color/white"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
                         android:text="@string/pr_submit_button"
-                        android:layout_marginTop="15dp"/>
+                        android:textColor="@color/white"
+                        app:backgroundTint="@null" />
 
                 </LinearLayout>
 
             </LinearLayout>
-
         </com.google.android.material.card.MaterialCardView>
 
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_marginTop="@dimen/_250sdp"
             android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_250sdp"
             android:visibility="gone" />
+
     </LinearLayout>
 </ScrollView>

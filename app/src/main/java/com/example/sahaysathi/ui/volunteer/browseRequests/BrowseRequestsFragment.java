@@ -1,13 +1,14 @@
 package com.example.sahaysathi.ui.volunteer.browseRequests;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.content.Context;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -17,39 +18,32 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sahaysathi.R;
-import com.google.firebase.database.*;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class BrowseRequestsFragment extends Fragment {
 
     private EditText etSearch;
-    private RecyclerView recyclerView;
+    private Button btnSearch;
     private TextView tvNoData;
+    private RecyclerView recyclerView;
 
     private EventAdapter adapter;
 
     private final List<Event> eventList = new ArrayList<>();
     private final List<Event> filteredList = new ArrayList<>();
 
-    // Debounce handler
-    private final Handler handler = new Handler(Looper.getMainLooper());
-    private Runnable searchRunnable;
-
-    private static final long SEARCH_DELAY = 400;
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_browserequest, container, false);
 
         initViews(view);
         setupRecyclerView();
-        setupSearch();
-
+        setupSearchButton();
         loadEvents();
 
         return view;
@@ -57,6 +51,7 @@ public class BrowseRequestsFragment extends Fragment {
 
     private void initViews(View view) {
         etSearch = view.findViewById(R.id.etSearch);
+        btnSearch = view.findViewById(R.id.btnSearch);
         recyclerView = view.findViewById(R.id.recyclerEvents);
         tvNoData = view.findViewById(R.id.tvNoEventData);
     }
@@ -67,64 +62,80 @@ public class BrowseRequestsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
-    // 🔍 Debounced Search
-    private void setupSearch() {
-        etSearch.addTextChangedListener(new TextWatcher() { 
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+    private void setupSearchButton() {
+        btnSearch.setOnClickListener(v -> {
+            hideKeyboard();
+            String query = etSearch.getText().toString().trim();
+            filterEvents(query);
+        });
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (searchRunnable != null) {
-                    handler.removeCallbacks(searchRunnable);
-                }
-
-                searchRunnable = () -> filterEvents(s.toString().trim());
-                handler.postDelayed(searchRunnable, SEARCH_DELAY);
+        etSearch.setOnEditorActionListener((textView, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE) {
+                hideKeyboard();
+                String query = etSearch.getText().toString().trim();
+                filterEvents(query);
+                return true;
             }
-
-            @Override
-            public void afterTextChanged(Editable s) {}
+            return false;
         });
     }
 
     private void loadEvents() {
-
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         db.collection("ngo_requests")
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
-
                     eventList.clear();
 
                     for (DocumentSnapshot doc : queryDocumentSnapshots) {
                         Event event = doc.toObject(Event.class);
-
                         if (event != null) {
                             eventList.add(event);
                         }
                     }
 
-                    filterEvents(etSearch.getText().toString().trim());
+                    // Initially show all events
+                    filteredList.clear();
+                    filteredList.addAll(eventList);
+                    adapter.notifyDataSetChanged();
+                    updateUI();
                 })
                 .addOnFailureListener(e -> showNoData("Failed to load data"));
     }
 
     private void filterEvents(String query) {
-
         filteredList.clear();
-        if (query.isEmpty()) {
+
+        if (TextUtils.isEmpty(query)) {
             filteredList.addAll(eventList);
         } else {
-            String lowerQuery = query.toLowerCase();
+            String lowerQuery = query.toLowerCase(Locale.ROOT).trim();
 
             for (Event e : eventList) {
+                String eventName = safeLower(e.getEventName());
+                String location = safeLower(e.getLocation());
 
-                String name = e.getEventName() != null ? e.getEventName().toLowerCase() : "";
-                String location = e.getLocation() != null ? e.getLocation().toLowerCase() : "";
+                // New structured location fields support
+                String venueName = safeLower(e.getVenueName());
+                String fullAddress = safeLower(e.getFullAddress());
+                String landmark = safeLower(e.getLandmark());
+                String areaSector = safeLower(e.getAreaSector());
+                String city = safeLower(e.getCity());
+                String state = safeLower(e.getState());
+                String pincode = safeLower(e.getPincode());
+                String searchableLocation = safeLower(e.getSearchableLocation());
 
-                if (name.contains(lowerQuery) || location.contains(lowerQuery)) {
+                if (eventName.contains(lowerQuery)
+                        || location.contains(lowerQuery)
+                        || venueName.contains(lowerQuery)
+                        || fullAddress.contains(lowerQuery)
+                        || landmark.contains(lowerQuery)
+                        || areaSector.contains(lowerQuery)
+                        || city.contains(lowerQuery)
+                        || state.contains(lowerQuery)
+                        || pincode.contains(lowerQuery)
+                        || searchableLocation.contains(lowerQuery)) {
                     filteredList.add(e);
                 }
             }
@@ -134,11 +145,15 @@ public class BrowseRequestsFragment extends Fragment {
         updateUI();
     }
 
-    // 🎯 Handle empty state UI
+    private String safeLower(String value) {
+        return value == null ? "" : value.toLowerCase(Locale.ROOT).trim();
+    }
+
     private void updateUI() {
         if (filteredList.isEmpty()) {
             recyclerView.setVisibility(View.GONE);
             tvNoData.setVisibility(View.VISIBLE);
+            tvNoData.setText("No events found");
         } else {
             recyclerView.setVisibility(View.VISIBLE);
             tvNoData.setVisibility(View.GONE);
@@ -151,13 +166,13 @@ public class BrowseRequestsFragment extends Fragment {
         tvNoData.setText(message);
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    private void hideKeyboard() {
+        if (getActivity() == null) return;
 
-        // Prevent memory leak
-        if (searchRunnable != null) {
-            handler.removeCallbacks(searchRunnable);
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        View view = getActivity().getCurrentFocus();
+        if (imm != null && view != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
 }
