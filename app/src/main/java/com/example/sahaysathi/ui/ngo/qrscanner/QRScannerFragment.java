@@ -1,6 +1,9 @@
 package com.example.sahaysathi.ui.ngo.qrscanner;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.Manifest;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.sahaysathi.ConstantSp;
 import com.example.sahaysathi.R;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -23,7 +27,7 @@ public class QRScannerFragment extends Fragment {
 
     private CompoundBarcodeView barcodeView;
     private FirebaseFirestore db;
-
+    private String ngoId;
     private boolean isScanning = true;
 
     // ✅ Modern permission handler
@@ -44,7 +48,8 @@ public class QRScannerFragment extends Fragment {
 
         barcodeView = view.findViewById(R.id.barcode_scanner);
         db = FirebaseFirestore.getInstance();
-
+        SharedPreferences sp = requireActivity().getSharedPreferences(ConstantSp.pref, MODE_PRIVATE);
+        ngoId = sp.getString(ConstantSp.userid, "");
         checkPermissionAndStart();
 
         return view;
@@ -107,6 +112,20 @@ public class QRScannerFragment extends Fragment {
 
                     if (!doc.exists()) {
                         Toast.makeText(getContext(), "Invalid QR Code", Toast.LENGTH_SHORT).show();
+                        resumeScanning();
+                        return;
+                    }
+                    String qrNgoId = doc.getString("ngoId");
+                    String status = doc.getString("status");
+
+                    if (!ngoId.equals(qrNgoId)) {
+                        Toast.makeText(getContext(), "This QR is not for your NGO", Toast.LENGTH_SHORT).show();
+                        resumeScanning();
+                        return;
+                    }
+
+                    if (!"accepted".equalsIgnoreCase(status)) {
+                        Toast.makeText(getContext(), "Volunteer is not accepted yet", Toast.LENGTH_SHORT).show();
                         resumeScanning();
                         return;
                     }

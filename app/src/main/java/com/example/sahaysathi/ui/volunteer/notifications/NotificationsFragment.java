@@ -59,22 +59,35 @@ public class NotificationsFragment extends Fragment {
     private void loadData() {
 
         String uid = sharedPreferences.getString(ConstantSp.userid, "");
+
+        if (uid == null || uid.trim().isEmpty()) {
+            if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            }
+        }
+
+        if (uid == null || uid.trim().isEmpty()) {
+            return;
+        }
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         db.collection("applications")
                 .whereEqualTo("userId", uid)
                 .addSnapshotListener((value, error) -> {
 
-                    if (error != null) return;
+                    if (error != null) {
+                        return;
+                    }
 
                     list.clear();
-                    for (QueryDocumentSnapshot doc : value) {
 
-                        ApplicationModel model = doc.toObject(ApplicationModel.class);
-
-                        model.setApplicationId(doc.getId());
-
-                        list.add(model);
+                    if (value != null) {
+                        for (QueryDocumentSnapshot doc : value) {
+                            ApplicationModel model = doc.toObject(ApplicationModel.class);
+                            model.setApplicationId(doc.getId());
+                            list.add(model);
+                        }
                     }
 
                     adapter.notifyDataSetChanged();

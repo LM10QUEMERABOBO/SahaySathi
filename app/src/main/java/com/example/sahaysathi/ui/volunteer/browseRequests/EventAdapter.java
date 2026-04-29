@@ -46,8 +46,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
             intent.putExtra("location", event.getLocation());
             intent.putExtra("description", event.getDescription());
             intent.putExtra("deadline", event.getDeadline());
-
-            // ✅ NEW
+            intent.putExtra("ngoId", event.getNgoId());
             intent.putExtra("date", event.getDate());
             intent.putExtra("time", event.getTime());
             intent.putExtra("volunteerCount", event.getVolunteerCount());

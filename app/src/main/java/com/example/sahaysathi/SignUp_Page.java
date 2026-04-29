@@ -86,6 +86,10 @@ public class SignUp_Page extends AppCompatActivity {
         String location = locationField.getText().toString().trim();
 
         // ✅ Validation (same as your code)
+        if (role.isEmpty()) {
+            Toast.makeText(this, "Please select Volunteer or NGO", Toast.LENGTH_SHORT).show();
+            return;
+        }
         if (name.isEmpty()) {
             signup_name.setError("Enter Name");
             return;
@@ -131,6 +135,8 @@ public class SignUp_Page extends AppCompatActivity {
                 email,
                 password,
                 role,
+                contact,
+                location,
                 (success, message) -> {
 
                     if (success) {

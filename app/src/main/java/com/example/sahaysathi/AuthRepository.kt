@@ -31,6 +31,8 @@ class AuthRepository {
         email: String,
         password: String,
         role: String,
+        phone: String,
+        city: String,
         callback: (Boolean, String?) -> Unit
     ) {
         auth.createUserWithEmailAndPassword(email, password)
@@ -41,11 +43,13 @@ class AuthRepository {
                     val userId = auth.currentUser?.uid ?: ""
 
                     val userMap = hashMapOf(
-                        "userId" to userId, // ✅ ADD THIS
+                        "userId" to userId,
                         "name" to name,
                         "email" to email,
                         "role" to role,
-                        "createdAt" to FieldValue.serverTimestamp() // ✅ ADD THIS
+                        "phone" to phone,
+                        "city" to city,
+                        "createdAt" to FieldValue.serverTimestamp()
                     )
 
                     db.collection("users")

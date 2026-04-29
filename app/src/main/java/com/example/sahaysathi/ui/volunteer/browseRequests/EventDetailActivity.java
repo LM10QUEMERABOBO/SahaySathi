@@ -22,8 +22,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
     private TextView title, city, description, dateTv, timeTv, deadlineStatus;
     private Button btnApply;
-
-    private String eventId, deadline, date, time, volunteerLimit;
+    private String eventId, ngoId, deadline, date, time, volunteerLimit;
     private FirebaseFirestore db;
     SharedPreferences sharedPreferences;
 
@@ -60,11 +59,11 @@ public class EventDetailActivity extends AppCompatActivity {
         date = getIntent().getStringExtra("date");
         time = getIntent().getStringExtra("time");
         volunteerLimit = getIntent().getStringExtra("volunteerCount");
-
+        ngoId = getIntent().getStringExtra("ngoId");
         title.setText(getIntent().getStringExtra("title"));
         city.setText(getIntent().getStringExtra("location"));
         description.setText(getIntent().getStringExtra("description"));
-
+        Toast.makeText(this,eventId,Toast.LENGTH_SHORT).show();
         // SET NEW DATA
         dateTv.setText("Date: " + date);
         timeTv.setText("Time: " + time);
@@ -98,13 +97,14 @@ public class EventDetailActivity extends AppCompatActivity {
                 .get()
                 .addOnSuccessListener(query -> {
 
-                    int acceptedCount = query.size();
-                    int limit = Integer.parseInt(volunteerLimit);
+                    int limit;
 
-                    if (acceptedCount >= limit) {
-                        Toast.makeText(this, "Volunteer limit reached", Toast.LENGTH_SHORT).show();
-                    } else {
+                    try {
+                        limit = Integer.parseInt(volunteerLimit);
                         showConfirmationDialog();
+                    } catch (Exception e) {
+                        Toast.makeText(this, "Invalid volunteer limit", Toast.LENGTH_SHORT).show();
+                        return;
                     }
                 });
     }
@@ -117,17 +117,13 @@ public class EventDetailActivity extends AppCompatActivity {
                 .setNegativeButton("No", null)
                 .show();
     }
-
     private void checkAndApply() {
-
         String userId = sharedPreferences.getString(ConstantSp.userid, "");
-
         db.collection("applications")
                 .whereEqualTo("eventId", eventId)
                 .whereEqualTo("userId", userId)
                 .get()
                 .addOnSuccessListener(query -> {
-
                     if (!query.isEmpty()) {
                         Toast.makeText(this, "Already applied", Toast.LENGTH_SHORT).show();
                     } else {
@@ -145,14 +141,15 @@ public class EventDetailActivity extends AppCompatActivity {
         map.put("eventId", eventId);
         map.put("userId", userId);
         map.put("status", "pending");
+        map.put("ngoId", ngoId);
         map.put("eventName", title.getText().toString());
         map.put("location", city.getText().toString());
         map.put("timestamp", System.currentTimeMillis());
 
         btnApply.setEnabled(false);
 
-        db.collection("applications").document(applicationId)
-                .set(map)
+        db.collection("applications")
+                .add(map)
                 .addOnSuccessListener(unused -> {
                     Toast.makeText(this, "Application Submitted", Toast.LENGTH_SHORT).show();
                     finish();
