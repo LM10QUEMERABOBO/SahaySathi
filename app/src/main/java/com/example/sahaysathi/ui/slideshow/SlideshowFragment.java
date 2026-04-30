@@ -34,7 +34,6 @@ public class SlideshowFragment extends Fragment {
     LinearLayout formUserPref, formAboutUs, formContactUs;
 
     String userId;
-    TextView tvName;
     Switch switchDarkMode, switchNotifications;
     Button btnLogout, btnContactMail;
 
@@ -45,8 +44,6 @@ public class SlideshowFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_slideshow, container, false);
-
-        tvName = view.findViewById(R.id.tvName);
         switchDarkMode = view.findViewById(R.id.switchDarkMode);
         switchNotifications = view.findViewById(R.id.switchNotifications);
         btnLogout = view.findViewById(R.id.btnLogout);
@@ -66,8 +63,6 @@ public class SlideshowFragment extends Fragment {
 
         userId = sp.getString(ConstantSp.userid, "");
 
-        String name = sp.getString(ConstantSp.name, "User");
-        tvName.setText("Hello " + name + " 👋");
 
         switchDarkMode.setChecked(sp.getBoolean("dark_mode", false));
         switchNotifications.setChecked(sp.getBoolean("notifications", true));

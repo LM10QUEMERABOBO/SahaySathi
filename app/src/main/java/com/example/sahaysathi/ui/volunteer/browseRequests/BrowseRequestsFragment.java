@@ -1,5 +1,6 @@
 package com.example.sahaysathi.ui.volunteer.browseRequests;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -7,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.content.Context;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -21,7 +21,9 @@ import com.example.sahaysathi.R;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -36,6 +38,8 @@ public class BrowseRequestsFragment extends Fragment {
 
     private final List<Event> eventList = new ArrayList<>();
     private final List<Event> filteredList = new ArrayList<>();
+
+    private static final String DATE_FORMAT = "d/M/yyyy";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -90,14 +94,21 @@ public class BrowseRequestsFragment extends Fragment {
 
                     for (DocumentSnapshot doc : queryDocumentSnapshots) {
                         Event event = doc.toObject(Event.class);
-                        if (event != null) {
-                            eventList.add(event);
+
+                        if (event == null) {
+                            continue;
                         }
+
+                        if (isEventDatePassed(event.getDate())) {
+                            continue;
+                        }
+
+                        eventList.add(event);
                     }
 
-                    // Initially show all events
                     filteredList.clear();
                     filteredList.addAll(eventList);
+
                     adapter.notifyDataSetChanged();
                     updateUI();
                 })
@@ -116,7 +127,6 @@ public class BrowseRequestsFragment extends Fragment {
                 String eventName = safeLower(e.getEventName());
                 String location = safeLower(e.getLocation());
 
-                // New structured location fields support
                 String venueName = safeLower(e.getVenueName());
                 String fullAddress = safeLower(e.getFullAddress());
                 String landmark = safeLower(e.getLandmark());
@@ -145,6 +155,25 @@ public class BrowseRequestsFragment extends Fragment {
         updateUI();
     }
 
+    private boolean isEventDatePassed(String eventDate) {
+        try {
+            if (eventDate == null || eventDate.trim().isEmpty()) {
+                return false;
+            }
+
+            SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
+            sdf.setLenient(false);
+
+            Date parsedEventDate = sdf.parse(eventDate);
+            Date today = sdf.parse(sdf.format(new Date()));
+
+            return parsedEventDate != null && parsedEventDate.before(today);
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     private String safeLower(String value) {
         return value == null ? "" : value.toLowerCase(Locale.ROOT).trim();
     }
@@ -153,7 +182,7 @@ public class BrowseRequestsFragment extends Fragment {
         if (filteredList.isEmpty()) {
             recyclerView.setVisibility(View.GONE);
             tvNoData.setVisibility(View.VISIBLE);
-            tvNoData.setText("No events found");
+            tvNoData.setText("No active events found");
         } else {
             recyclerView.setVisibility(View.VISIBLE);
             tvNoData.setVisibility(View.GONE);
@@ -171,6 +200,7 @@ public class BrowseRequestsFragment extends Fragment {
 
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         View view = getActivity().getCurrentFocus();
+
         if (imm != null && view != null) {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }

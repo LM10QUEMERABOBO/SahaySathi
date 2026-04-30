@@ -12,16 +12,28 @@ public class ApplicationModel {
     private String location;
     private String instructions;
 
+    // ✅ ADD THIS
+    private String date;
+
     public ApplicationModel() {}
+
     public String getApplicationId() { return applicationId; }
     public void setApplicationId(String applicationId) { this.applicationId = applicationId; }
+
     public String getEventId() { return eventId; }
+
     public String getUserId() { return userId; }
     public void setUserId(String userId) { this.userId = userId; }
+
     public String getStatus() { return status; }
+
     public String getEventName() { return eventName; }
 
     public String getlocation() { return location; }
 
     public String getInstructions() { return instructions; }
+
+    // ✅ ADD THESE
+    public String getDate() { return date; }
+    public void setDate(String date) { this.date = date; }
 }

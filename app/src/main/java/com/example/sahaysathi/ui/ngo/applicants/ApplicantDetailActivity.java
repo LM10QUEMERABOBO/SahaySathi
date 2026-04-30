@@ -163,6 +163,7 @@ public class ApplicantDetailActivity extends AppCompatActivity {
                 )
                 .addOnSuccessListener(unused ->
                         Toast.makeText(this, "Volunteer accepted successfully", Toast.LENGTH_SHORT).show())
+
                 .addOnFailureListener(e ->
                         Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }

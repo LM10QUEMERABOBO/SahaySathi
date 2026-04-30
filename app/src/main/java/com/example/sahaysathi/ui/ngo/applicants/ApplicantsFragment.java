@@ -29,8 +29,11 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashSet;
+import java.util.Locale;
 import java.util.Set;
 
 public class ApplicantsFragment extends Fragment {
@@ -68,11 +71,138 @@ public class ApplicantsFragment extends Fragment {
 
         noDataText.setVisibility(View.GONE);
         btnExport.setVisibility(View.GONE);
+
         btnExport.setOnClickListener(v -> showEventSelectionDialog());
 
         fetchApplicants();
 
         return view;
+    }
+
+    private void fetchApplicants() {
+        db.collection("applications")
+                .whereEqualTo("ngoId", ngoId)
+                .get()
+                .addOnSuccessListener(applicationSnapshots -> {
+
+                    applicantList.clear();
+                    btnExport.setVisibility(View.GONE);
+
+                    if (applicationSnapshots.isEmpty()) {
+                        noDataText.setVisibility(View.VISIBLE);
+                        adapter.notifyDataSetChanged();
+                        return;
+                    }
+
+                    final int total = applicationSnapshots.size();
+                    final int[] completed = {0};
+
+                    for (DocumentSnapshot appDoc : applicationSnapshots) {
+                        processApplicantDocument(appDoc, () -> {
+                            completed[0]++;
+
+                            if (completed[0] == total) {
+                                adapter.notifyDataSetChanged();
+
+                                if (applicantList.isEmpty()) {
+                                    noDataText.setVisibility(View.VISIBLE);
+                                    noDataText.setText("No Active Applicants Available");
+                                } else {
+                                    noDataText.setVisibility(View.GONE);
+                                }
+
+                                updateExportButtonVisibility();
+                            }
+                        });
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    noDataText.setVisibility(View.VISIBLE);
+                    noDataText.setText("Failed to load applicants");
+                    btnExport.setVisibility(View.GONE);
+                });
+    }
+
+    private void processApplicantDocument(DocumentSnapshot appDoc, Runnable onComplete) {
+
+        String volunteerId = appDoc.getString("userId");
+        String status = appDoc.getString("status");
+        String appId = appDoc.getId();
+        String eventId = appDoc.getString("eventId");
+        String eventName = appDoc.getString("eventName");
+        String location = appDoc.getString("location");
+
+        String eventDate = appDoc.getString("date");
+
+        if (!TextUtils.isEmpty(eventDate)) {
+            if (isEventDatePassed(eventDate)) {
+                onComplete.run();
+                return;
+            }
+
+            addApplicant(appId, volunteerId, status, eventName, location, onComplete);
+            return;
+        }
+
+        if (TextUtils.isEmpty(eventId)) {
+            addApplicant(appId, volunteerId, status, eventName, location, onComplete);
+            return;
+        }
+
+        db.collection("ngo_requests")
+                .document(eventId)
+                .get()
+                .addOnSuccessListener(eventDoc -> {
+                    String fetchedEventDate = eventDoc.getString("date");
+
+                    if (isEventDatePassed(fetchedEventDate)) {
+                        onComplete.run();
+                        return;
+                    }
+
+                    addApplicant(appId, volunteerId, status, eventName, location, onComplete);
+                })
+                .addOnFailureListener(e ->
+                        addApplicant(appId, volunteerId, status, eventName, location, onComplete)
+                );
+    }
+
+    private void addApplicant(String appId,
+                              String volunteerId,
+                              String status,
+                              String eventName,
+                              String location,
+                              Runnable onComplete) {
+
+        if (TextUtils.isEmpty(volunteerId)) {
+            onComplete.run();
+            return;
+        }
+
+        db.collection("users")
+                .document(volunteerId)
+                .get()
+                .addOnSuccessListener(userDoc -> {
+                    if (userDoc.exists()) {
+                        String name = userDoc.getString("name");
+                        String city = userDoc.getString("city");
+                        String skill = userDoc.getString("skill");
+
+                        applicantList.add(new Applicant(
+                                appId,
+                                volunteerId,
+                                name != null ? name : "N/A",
+                                city != null ? city : "N/A",
+                                skill != null ? skill : "N/A",
+                                status,
+                                eventName != null ? eventName : "N/A",
+                                location != null ? location : "N/A"
+                        ));
+                    }
+
+                    onComplete.run();
+                })
+                .addOnFailureListener(e -> onComplete.run());
     }
 
     private void showEventSelectionDialog() {
@@ -88,31 +218,69 @@ public class ApplicantsFragment extends Fragment {
 
                     Set<String> eventSet = new LinkedHashSet<>();
 
+                    final int total = querySnapshot.size();
+                    final int[] completed = {0};
+
                     for (QueryDocumentSnapshot doc : querySnapshot) {
                         String eventName = doc.getString("eventName");
-                        if (!TextUtils.isEmpty(eventName)) {
-                            eventSet.add(eventName);
+                        String eventId = doc.getString("eventId");
+                        String eventDate = doc.getString("date");
+
+                        Runnable finishOne = () -> {
+                            completed[0]++;
+
+                            if (completed[0] == total) {
+                                showEventDialogFromSet(eventSet);
+                            }
+                        };
+
+                        if (!TextUtils.isEmpty(eventDate)) {
+                            if (!isEventDatePassed(eventDate) && !TextUtils.isEmpty(eventName)) {
+                                eventSet.add(eventName);
+                            }
+                            finishOne.run();
+                        } else if (!TextUtils.isEmpty(eventId)) {
+                            db.collection("ngo_requests")
+                                    .document(eventId)
+                                    .get()
+                                    .addOnSuccessListener(eventDoc -> {
+                                        String fetchedDate = eventDoc.getString("date");
+
+                                        if (!isEventDatePassed(fetchedDate) && !TextUtils.isEmpty(eventName)) {
+                                            eventSet.add(eventName);
+                                        }
+
+                                        finishOne.run();
+                                    })
+                                    .addOnFailureListener(e -> finishOne.run());
+                        } else {
+                            if (!TextUtils.isEmpty(eventName)) {
+                                eventSet.add(eventName);
+                            }
+                            finishOne.run();
                         }
                     }
-
-                    if (eventSet.isEmpty()) {
-                        Toast.makeText(getContext(), "No event names found", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-
-                    String[] eventArray = eventSet.toArray(new String[0]);
-
-                    new AlertDialog.Builder(requireContext())
-                            .setTitle("Select Event")
-                            .setItems(eventArray, (dialog, which) -> {
-                                String selectedEvent = eventArray[which];
-                                exportAcceptedApplicantsToCsv(selectedEvent);
-                            })
-                            .show();
                 })
                 .addOnFailureListener(e ->
                         Toast.makeText(getContext(), "Failed to load events: " + e.getMessage(), Toast.LENGTH_SHORT).show()
                 );
+    }
+
+    private void showEventDialogFromSet(Set<String> eventSet) {
+        if (eventSet.isEmpty()) {
+            Toast.makeText(getContext(), "No active accepted events found", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String[] eventArray = eventSet.toArray(new String[0]);
+
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Select Event")
+                .setItems(eventArray, (dialog, which) -> {
+                    String selectedEvent = eventArray[which];
+                    exportAcceptedApplicantsToCsv(selectedEvent);
+                })
+                .show();
     }
 
     private void exportAcceptedApplicantsToCsv(String selectedEventName) {
@@ -128,73 +296,142 @@ public class ApplicantsFragment extends Fragment {
                     }
 
                     ArrayList<String[]> rows = new ArrayList<>();
+
                     final int total = querySnapshot.size();
                     final int[] completed = {0};
 
                     for (QueryDocumentSnapshot doc : querySnapshot) {
-                        String volunteerId = doc.getString("userId");
-                        String eventName = doc.getString("eventName");
-
-                        if (TextUtils.isEmpty(volunteerId)) {
-                            rows.add(new String[]{
-                                    "N/A",
-                                    "N/A",
-                                    "N/A",
-                                    "N/A",
-                                    safe(eventName),
-                                    "accepted"
-                            });
-
+                        processExportDocument(doc, rows, selectedEventName, () -> {
                             completed[0]++;
+
                             if (completed[0] == total) {
-                                createCsvFile(rows, selectedEventName);
+                                if (rows.isEmpty()) {
+                                    Toast.makeText(getContext(), "No active accepted applicants found for this event", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    createCsvFile(rows, selectedEventName);
+                                }
                             }
-                            continue;
-                        }
-
-                        db.collection("users")
-                                .document(volunteerId)
-                                .get()
-                                .addOnSuccessListener(userDoc -> {
-                                    String name = userDoc.getString("name");
-                                    String city = userDoc.getString("city");
-                                    String phone = userDoc.getString("phone");
-                                    String email = userDoc.getString("email");
-
-                                    rows.add(new String[]{
-                                            safe(name),
-                                            safe(city),
-                                            safe(phone),
-                                            safe(email),
-                                            safe(eventName),
-                                            "accepted"
-                                    });
-
-                                    completed[0]++;
-                                    if (completed[0] == total) {
-                                        createCsvFile(rows, selectedEventName);
-                                    }
-                                })
-                                .addOnFailureListener(e -> {
-                                    rows.add(new String[]{
-                                            "N/A",
-                                            "N/A",
-                                            "N/A",
-                                            "N/A",
-                                            safe(eventName),
-                                            "accepted"
-                                    });
-
-                                    completed[0]++;
-                                    if (completed[0] == total) {
-                                        createCsvFile(rows, selectedEventName);
-                                    }
-                                });
+                        });
                     }
                 })
                 .addOnFailureListener(e ->
                         Toast.makeText(getContext(), "Export failed: " + e.getMessage(), Toast.LENGTH_SHORT).show()
                 );
+    }
+
+    private void processExportDocument(QueryDocumentSnapshot doc,
+                                       ArrayList<String[]> rows,
+                                       String selectedEventName,
+                                       Runnable onComplete) {
+
+        String eventDate = doc.getString("date");
+        String eventId = doc.getString("eventId");
+
+        if (!TextUtils.isEmpty(eventDate)) {
+            if (isEventDatePassed(eventDate)) {
+                onComplete.run();
+                return;
+            }
+
+            addExportRow(doc, rows, selectedEventName, onComplete);
+            return;
+        }
+
+        if (!TextUtils.isEmpty(eventId)) {
+            db.collection("ngo_requests")
+                    .document(eventId)
+                    .get()
+                    .addOnSuccessListener(eventDoc -> {
+                        String fetchedDate = eventDoc.getString("date");
+
+                        if (isEventDatePassed(fetchedDate)) {
+                            onComplete.run();
+                            return;
+                        }
+
+                        addExportRow(doc, rows, selectedEventName, onComplete);
+                    })
+                    .addOnFailureListener(e -> addExportRow(doc, rows, selectedEventName, onComplete));
+        } else {
+            addExportRow(doc, rows, selectedEventName, onComplete);
+        }
+    }
+
+    private void addExportRow(QueryDocumentSnapshot doc,
+                              ArrayList<String[]> rows,
+                              String selectedEventName,
+                              Runnable onComplete) {
+
+        String volunteerId = doc.getString("userId");
+
+        if (TextUtils.isEmpty(volunteerId)) {
+            rows.add(new String[]{
+                    "N/A",
+                    "N/A",
+                    "N/A",
+                    "N/A",
+                    safe(selectedEventName),
+                    "accepted",
+                    "No"
+            });
+
+            onComplete.run();
+            return;
+        }
+
+        db.collection("users")
+                .document(volunteerId)
+                .get()
+                .addOnSuccessListener(userDoc -> {
+                    String name = userDoc.getString("name");
+                    String city = userDoc.getString("city");
+                    String phone = userDoc.getString("phone");
+                    String email = userDoc.getString("email");
+
+                    rows.add(new String[]{
+                            safe(name),
+                            safe(city),
+                            safe(phone),
+                            safe(email),
+                            safe(selectedEventName),
+                            "accepted",
+                            "No"
+                    });
+
+                    onComplete.run();
+                })
+                .addOnFailureListener(e -> {
+                    rows.add(new String[]{
+                            "N/A",
+                            "N/A",
+                            "N/A",
+                            "N/A",
+                            safe(selectedEventName),
+                            "accepted",
+                            "No"
+                    });
+
+                    onComplete.run();
+                });
+    }
+
+    private boolean isEventDatePassed(String eventDate) {
+        try {
+            if (eventDate == null || eventDate.trim().isEmpty()) {
+                return false;
+            }
+
+            SimpleDateFormat sdf = new SimpleDateFormat("d/M/yyyy", Locale.getDefault());
+            sdf.setLenient(false);
+
+            Date parsedEventDate = sdf.parse(eventDate);
+            Date today = sdf.parse(sdf.format(new Date()));
+
+            return parsedEventDate != null && parsedEventDate.before(today);
+
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     private String safe(String value) {
@@ -223,9 +460,9 @@ public class ApplicantsFragment extends Fragment {
                 writer.append(csvEscape(row[2])).append(",");
                 writer.append(csvEscape(row[3])).append(",");
                 writer.append(csvEscape(row[4])).append(",");
-                writer.append(csvEscape(row[5])).append("\n");
+                writer.append(csvEscape(row[5])).append(",");
+                writer.append(csvEscape(row[6])).append("\n");
             }
-
             writer.flush();
             writer.close();
 
@@ -252,65 +489,6 @@ public class ApplicantsFragment extends Fragment {
         startActivity(Intent.createChooser(intent, "Share CSV File"));
     }
 
-    private void fetchApplicants() {
-        db.collection("applications")
-                .whereEqualTo("ngoId", ngoId)
-                .get()
-                .addOnSuccessListener(applicationSnapshots -> {
-
-                    applicantList.clear();
-                    btnExport.setVisibility(View.GONE);
-
-                    if (applicationSnapshots.isEmpty()) {
-                        noDataText.setVisibility(View.VISIBLE);
-                        adapter.notifyDataSetChanged();
-                        return;
-                    } else {
-                        noDataText.setVisibility(View.GONE);
-                    }
-
-                    for (DocumentSnapshot appDoc : applicationSnapshots) {
-                        String volunteerId = appDoc.getString("userId");
-                        String status = appDoc.getString("status");
-                        String appId = appDoc.getId();
-                        String eventName = appDoc.getString("eventName");
-                        String location = appDoc.getString("location");
-
-                        if (TextUtils.isEmpty(volunteerId)) {
-                            continue;
-                        }
-
-                        db.collection("users")
-                                .document(volunteerId)
-                                .get()
-                                .addOnSuccessListener(userDoc -> {
-                                    if (userDoc.exists()) {
-                                        String name = userDoc.getString("name");
-                                        String city = userDoc.getString("city");
-                                        String skill = userDoc.getString("skill");
-
-                                        applicantList.add(new Applicant(
-                                                appId,
-                                                volunteerId,
-                                                name != null ? name : "N/A",
-                                                city != null ? city : "N/A",
-                                                skill != null ? skill : "N/A",
-                                                status,
-                                                eventName != null ? eventName : "N/A",
-                                                location != null ? location : "N/A"
-                                        ));
-
-                                        adapter.notifyDataSetChanged();
-                                        updateExportButtonVisibility();
-                                    }
-                                });
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    noDataText.setVisibility(View.VISIBLE);
-                    btnExport.setVisibility(View.GONE);
-                });
-    }
     private void updateExportButtonVisibility() {
         boolean hasAcceptedApplicant = false;
 

@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sahaysathi.ConstantSp;
 import com.example.sahaysathi.R;
+import com.example.sahaysathi.services.NotificationHelper;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
@@ -63,7 +64,6 @@ public class EventDetailActivity extends AppCompatActivity {
         title.setText(getIntent().getStringExtra("title"));
         city.setText(getIntent().getStringExtra("location"));
         description.setText(getIntent().getStringExtra("description"));
-        Toast.makeText(this,eventId,Toast.LENGTH_SHORT).show();
         // SET NEW DATA
         dateTv.setText("Date: " + date);
         timeTv.setText("Time: " + time);
@@ -151,7 +151,7 @@ public class EventDetailActivity extends AppCompatActivity {
         db.collection("applications")
                 .add(map)
                 .addOnSuccessListener(unused -> {
-                    Toast.makeText(this, "Application Submitted", Toast.LENGTH_SHORT).show();
+                    NotificationHelper.appliedEventSuccess(this, title.getText().toString());
                     finish();
                 })
                 .addOnFailureListener(e -> {

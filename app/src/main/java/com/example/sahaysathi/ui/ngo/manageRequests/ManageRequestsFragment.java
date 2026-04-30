@@ -19,7 +19,10 @@ import com.example.sahaysathi.R;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class ManageRequestsFragment extends Fragment {
 
@@ -39,30 +42,22 @@ public class ManageRequestsFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_managerequest, container, false);
 
-        // Initialize Views
         recyclerView = view.findViewById(R.id.recyclerEvents);
         noDataText = view.findViewById(R.id.noDataText);
 
-        // SharedPreferences
         sharedPreferences = requireActivity().getSharedPreferences(ConstantSp.pref, MODE_PRIVATE);
-
-        // Firestore
         db = FirebaseFirestore.getInstance();
 
-        // List
         list = new ArrayList<>();
 
-        // Adapter (FIXED)
         adapter = new EventAdapter(getContext(), list, event -> {
             Log.d(TAG, "Clicked Event ID: " + event.id);
             // Future: Open Applicants Screen
         });
 
-        // RecyclerView Setup
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
-        // Load Data
         loadData();
 
         return view;
@@ -101,11 +96,18 @@ public class ManageRequestsFragment extends Fragment {
 
                         Log.d(TAG, "Doc ID: " + doc.getId());
 
+                        String eventDate = doc.getString("date");
+
+                        if (isEventDatePassed(eventDate)) {
+                            Log.d(TAG, "Skipped past event: " + doc.getId());
+                            continue;
+                        }
+
                         Event event = new Event(
                                 doc.getId(),
                                 doc.getString("eventName"),
                                 doc.getString("location"),
-                                doc.getString("date"),
+                                eventDate,
                                 doc.getLong("appliedCount") != null ? doc.getLong("appliedCount").intValue() : 0,
                                 doc.getLong("selectedCount") != null ? doc.getLong("selectedCount").intValue() : 0
                         );
@@ -113,16 +115,34 @@ public class ManageRequestsFragment extends Fragment {
                         list.add(event);
                     }
 
-                    // Notify Adapter (FIXED)
                     adapter.notifyDataSetChanged();
 
-                    // Empty State Handling
                     if (list.isEmpty()) {
                         noDataText.setVisibility(View.VISIBLE);
-                        noDataText.setText("No Requests Posted Yet");
+                        noDataText.setText("No Active Requests Available");
                     } else {
                         noDataText.setVisibility(View.GONE);
                     }
                 });
+    }
+
+    private boolean isEventDatePassed(String eventDate) {
+        try {
+            if (eventDate == null || eventDate.trim().isEmpty()) {
+                return false;
+            }
+
+            SimpleDateFormat sdf = new SimpleDateFormat("d/M/yyyy", Locale.getDefault());
+            sdf.setLenient(false);
+
+            Date parsedEventDate = sdf.parse(eventDate);
+            Date today = sdf.parse(sdf.format(new Date()));
+
+            return parsedEventDate != null && parsedEventDate.before(today);
+
+        } catch (Exception e) {
+            Log.e(TAG, "Invalid event date: " + eventDate, e);
+            return false;
+        }
     }
 }

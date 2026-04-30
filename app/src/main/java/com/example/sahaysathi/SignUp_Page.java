@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sahaysathi.AuthRepository;
+import com.example.sahaysathi.services.NotificationHelper;
 
 public class SignUp_Page extends AppCompatActivity {
 
@@ -142,7 +143,7 @@ public class SignUp_Page extends AppCompatActivity {
                     if (success) {
 
                         Toast.makeText(this, "Signup Successful!", Toast.LENGTH_LONG).show();
-
+                        NotificationHelper.registrationSuccess(this, name);
                         // Go to Login
                         startActivity(new Intent(SignUp_Page.this, Login_Page.class));
                         finish();

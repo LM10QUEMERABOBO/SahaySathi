@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.sahaysathi.ConstantSp;
 import com.example.sahaysathi.R;
+import com.example.sahaysathi.services.NotificationHelper;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -218,6 +219,7 @@ public class PostRequestFragment extends Fragment {
                     progressBar.setVisibility(View.GONE);
                     submitRequest.setEnabled(true);
                     Toast.makeText(getContext(), "Request Posted", Toast.LENGTH_SHORT).show();
+                    NotificationHelper.postRequestSuccess(requireContext(), eventName.getText().toString());
                     clearForm();
                 })
                 .addOnFailureListener(e -> {
